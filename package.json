@@ -1,5 +1,5 @@
 {
-  "name": "sing-app-vue",
+  "name": "mybank-vue",
   "version": "4.5.0",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "bootstrap-vue": "^2.0.0-rc.11",
+    "core-js": "^2.6.5",
     "css-loader": "^1.0.0",
     "d3": "3.5.17",
     "easy-pie-chart": "^2.1.7",

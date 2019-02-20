@@ -15,9 +15,6 @@ import AnalyticsPage from '@/pages/Dashboard/Dashboard';
 
 import PayeesPage from '@/pages/Payees/Payees';
 
-// Charts
-import ChartsPage from '@/pages/Charts/Charts';
-
 // Ui
 import IconsPage from '@/pages/Icons/Icons';
 import NotificationsPage from '@/pages/Notifications/Notifications';
@@ -62,11 +59,6 @@ export default new Router({
           path: 'notifications',
           name: 'NotificationsPage',
           component: NotificationsPage,
-        },
-        {
-          path: 'components/charts',
-          name: 'ChartsPage',
-          component: ChartsPage,
         },
         {
           path: 'payees',
