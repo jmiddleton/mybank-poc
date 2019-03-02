@@ -4,6 +4,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 
 import layout from './layout';
+import payeesModule from './modules/payees.js';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -11,6 +12,7 @@ Vue.use(VueAxios, axios);
 export default new Vuex.Store({
   modules: {
     layout,
+    payees: payeesModule
   },
   state: {
     accounts: [],
@@ -42,6 +44,8 @@ export default new Vuex.Store({
     },
     SET_BALANCES (state, balances) {
       state.balances= balances.data.balances;
+      state.totalBalance= 0;
+      state.totalAvailableBalance= 0;
 
       state.balances.forEach(balance => {
         state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);

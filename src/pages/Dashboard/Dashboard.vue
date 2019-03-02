@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="col-md-12 col-lg-10">
     <b-breadcrumb>
       <b-breadcrumb-item>Home</b-breadcrumb-item>
       <b-breadcrumb-item active>Dashboard</b-breadcrumb-item>
@@ -10,11 +10,13 @@
         <div class="pb-xlg h-100">
           <Widget class="h-100 mb-0">
             <div class="row flex-nowrap">
-              <div xs="3" class="col">
-                <span class="widget-icon"><i class="glyphicon glyphicon-usd text-success"></i></span>
+              <div xs="3">
+                <span class="widget-icon">
+                  <i class="glyphicon glyphicon-usd text-success"></i>
+                </span>
               </div>
               <div xs="9" class="col"><h6 class="m-0">TOTAL BALANCE</h6>
-                <p class="h2 m-0 fw-normal">$ {{totalBalance}}</p>
+                <p class="h2 m-0 fw-normal">{{totalBalance}}</p>
               </div>
             </div>
             <div class="d-flex flex-wrap justify-content-between">
@@ -61,18 +63,22 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col xs="12">
-        <div v-for="account in accounts">
-        <Widget title="" settings customHeader>
-            <h5><span class='glyphicon glyphicon-tags'>&nbsp;</span>
-            <span class='fw-semi-bold'>{{ account.displayName }}</span></h5>
-            <h6><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='fw-semi-bold '>{{ account.maskedNumber }}</span></h6>
-            <div v-for="balance in balances">
+      <b-col>
+        <b-list-group class="widgetBody widget-body">
+          <b-list-group-item v-for="account in accounts" :key="account.accountId" class="list-group list-group-lg">
+            <span class="notificationIcon thumb-sm">
+              <img class="rounded-circle" :src="require('../../assets/banks/' + account.institution + '.png')" alt="..." />
+            </span>
+            <div v-for="balance in balances" :key="balance.accountId">
               <div v-if="account.accountId == balance.accountId" class="stats-item float-right"><div class="stat-item"><h6 class="name fs-sm">Available Balance</h6><p class="value">$ {{ balance.deposit.availableBalance.amount }}</p></div>
               <div v-if="account.accountId == balance.accountId" class="stat-item float-right"><h6 class="name fs-sm">Balance</h6><p class="value">$ {{ balance.deposit.currentBalance.amount }}</p></div></div>
             </div>
-          </Widget>
-        </div>
+            <span class='fw-semi-bold'>{{ account.displayName }}</span>
+            <p class="deemphasize text-ellipsis m-0">
+              {{ account.maskedNumber }}
+            </p>
+          </b-list-group-item>
+        </b-list-group>
       </b-col>
     </b-row>  
   </div>
@@ -130,7 +136,7 @@ export default {
           labelBoxBorderColor: '#ffffff',
         },
       });
-    },
+    }
   },
   mounted() {
     this.initChart();

@@ -4,8 +4,8 @@ import isScreen from '@/core/screenHelper';
 export default {
   namespaced: true,
   state: {
-    sidebarClose: false,
-    sidebarStatic: false,
+    sidebarClose: true,
+    sidebarStatic: true,
     sidebarActiveElement: null,
     chatOpen: false,
   },

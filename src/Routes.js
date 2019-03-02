@@ -14,6 +14,7 @@ import GoogleMapPage from '@/pages/Maps/Google';
 import AnalyticsPage from '@/pages/Dashboard/Dashboard';
 
 import PayeesPage from '@/pages/Payees/Payees';
+import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
 // Ui
 import IconsPage from '@/pages/Icons/Icons';
@@ -64,6 +65,11 @@ export default new Router({
           path: 'payees',
           name: 'PayeesPage',
           component: PayeesPage,
+        },
+        {
+          path: 'payees/:payeeId',
+          name: 'CreatePayees',
+          component: CreatePayeesPage,
         },
         {
           path: 'components/maps',

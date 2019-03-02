@@ -1,5 +1,5 @@
 <template>
-  <div class="tables-basic">
+  <div class="tables-basic col-md-12 col-lg-10">
     <b-breadcrumb>
       <b-breadcrumb-item>Home</b-breadcrumb-item>
       <b-breadcrumb-item active>Manage Payess</b-breadcrumb-item>
@@ -8,65 +8,37 @@
     <b-row>
       <b-col>
         <Widget
-          title=""
-          customHeader settings close
-        >
-          <div class="table-resposive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="hidden-sm-down">#</th>
-                  <th>Name</th>
-                  <th class="hidden-sm-down">BSB</th>
-                  <th class="hidden-sm-down">Account</th>
-                  <th class="hidden-sm-down">Payee Type</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="row in tableStyles" :key="row.id">
-                  <td>{{row.id}}</td>
-                  <td>
-                    {{row.description}}
-                    <div v-if="row.label">
-                      <b-badge :variant="row.label.colorClass">{{row.label.text}}</b-badge>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="mb-0">
-                      <small>
-                        <span class="fw-semi-bold">Type:</span>
-                        <span class="text-muted">&nbsp; {{row.info.type}}</span>
-                      </small>
-                    </p>
-                    <p>
-                      <small>
-                        <span class="fw-semi-bold">Dimensions:</span>
-                        <span class="text-muted">&nbsp; {{row.info.dimensions}}</span>
-                      </small>
-                    </p>
-                  </td>
-                  <td class="text-semi-muted">
-                    {{parseDate(row.date)}}
-                  </td>
-                  <td class="text-semi-muted">
-                    {{row.size}}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="clearfix">
-            <div class="float-right">
-              <b-button variant="default" class="mr-xs" size="sm">Send to...</b-button>
-              <b-dropdown variant="inverse" class="mr-xs" size="sm" text="Clear" right>
-                <b-dropdown-item>Clear</b-dropdown-item>
-                <b-dropdown-item>Move ...</b-dropdown-item>
-                <b-dropdown-item>Something else here</b-dropdown-item>
-                <b-dropdown-divider />
-                <b-dropdown-item>Separated link</b-dropdown-item>
-              </b-dropdown>
+          title="" customHeader refresh settings>
+            <payee-filter-bar></payee-filter-bar>
+            <vuetable ref="vuetable" 
+              :fields="fields" 
+              :api-mode="false"
+              :data-manager="dataManager"
+              track-by="payeeId"
+              :sort-order="sortOrder"
+              pagination-path="pagination"
+              :css="css.table"
+              @vuetable:pagination-data="onPaginationData"
+            >
+              <template slot="actions" slot-scope="props">
+                <div class="table-button-container">
+                    <button class="btn btn-warning" @click="editRow(props.rowData)">
+                      <span class="fa fa-edit"></span></button>
+                    <button class="btn btn-danger" @click="deleteRow(props.rowData)">
+                      <span class="fa fa-trash"></span></button>
+                </div>
+              </template>
+            </vuetable>
+             <div class="ui basic segment grid">
+              <vuetable-pagination-info ref="paginationInfo"
+              :css="css.paginationInfo"
+              ></vuetable-pagination-info>
+              
+              <vuetable-pagination ref="pagination"
+                :css="css.pagination"
+                @vuetable-pagination:change-page="onChangePage"
+              ></vuetable-pagination>
             </div>
-          </div>
         </Widget>
       </b-col>
    </b-row>
@@ -74,140 +46,166 @@
 </template>
 
 <script>
-import $ from 'jquery';
 import Vue from 'vue';
+import VueEvents from 'vue-events'
 import Widget from '@/components/Widget/Widget';
 import 'imports-loader?jQuery=jquery,this=>window!jquery-sparkline'; // eslint-disable-line
+import 'imports-loader?$=jquery,this=>window!messenger/build/js/messenger'; // eslint-disable-line
+import Vuetable from 'vuetable-2'
+import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
+import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
+import PayeeFilterBar from './PayeeFilterBar.vue'
+import _ from "lodash";
+import CssConfig from './VuetableCssConfig.js';
+import axios from 'axios';
+
+const { Messenger } = window;
+
+Vue.use(VueEvents)
 
 export default {
   name: 'Payees',
-  components: { Widget },
+  components: { 
+    Widget, 
+    Vuetable, 
+    'vuetable-pagination': VuetablePagination, 
+    VuetablePaginationInfo,
+    PayeeFilterBar
+  },
   data() {
     return {
-      tableStyles: [
-        {
-          id: 1,
-          picture: require('../../assets/tables/1.jpg'), // eslint-disable-line global-require
-          description: 'Palo Alto',
-          info: {
-            type: 'JPEG',
-            dimensions: '200x150',
-          },
-          date: new Date('September 14, 2012'),
-          size: '45.6 KB',
-          progress: {
-            percent: 29,
-            colorClass: 'success',
-          },
-        },
-        {
-          id: 2,
-          picture: require('../../assets/tables/2.jpg'), // eslint-disable-line global-require
-          description: 'The Sky',
-          info: {
-            type: 'PSD',
-            dimensions: '2400x1455',
-          },
-          date: new Date('November 14, 2012'),
-          size: '15.3 MB',
-          progress: {
-            percent: 33,
-            colorClass: 'warning',
-          },
-        },
-        {
-          id: 3,
-          picture: require('../../assets/tables/3.jpg'), // eslint-disable-line global-require
-          description: 'Down the road',
-          label: {
-            colorClass: 'danger',
-            text: 'INFO!',
-          },
-          info: {
-            type: 'JPEG',
-            dimensions: '200x150',
-          },
-          date: new Date('September 14, 2012'),
-          size: '49.0 KB',
-          progress: {
-            percent: 38,
-            colorClass: 'inverse',
-          },
-        },
-        {
-          id: 4,
-          picture: require('../../assets/tables/4.jpg'), // eslint-disable-line global-require
-          description: 'The Edge',
-          info: {
-            type: 'PNG',
-            dimensions: '210x160',
-          },
-          date: new Date('September 15, 2012'),
-          size: '69.1 KB',
-          progress: {
-            percent: 17,
-            colorClass: 'danger',
-          },
-        },
-        {
-          id: 5,
-          picture: require('../../assets/tables/5.jpg'), // eslint-disable-line global-require
-          description: 'Fortress',
-          info: {
-            type: 'JPEG',
-            dimensions: '1452x1320',
-          },
-          date: new Date('October 1, 2012'),
-          size: '2.3 MB',
-          progress: {
-            percent: 41,
-            colorClass: 'primary',
-          },
-        },
-      ],
       checkboxes1: [false, false, false, false],
-      checkboxes2: [false, false, false, false, false, false],
-      checkboxes3: [false, false, false, false, false, false],
-    };
+      perPage: 20,
+      localData: [],
+      fields: [ 
+        {
+          name:'name',
+          title: 'Name',
+          sortField: 'name'
+        }, 
+        {
+          name:'description',
+          title: 'Description',
+          sortField: 'description'
+        },
+        {
+          name:'BSB',
+          title: 'BSB'
+        }, 
+        {name:'accountNumber',
+        title: 'Number'}, 
+        {name:'payeeType',
+        title: 'Payee Type'}, 
+        {
+          name: 'actions',
+          title: 'Actions'
+        }
+      ],
+      sortOrder: [
+        {
+          field: "name",
+          direction: "asc"
+        }
+      ],
+      css: CssConfig
+    }
   },
   methods: {
-    parseDate(date) {
-      const dateSet = date.toDateString().split(' ');
-      return `${date.toLocaleString('en-us', { month: 'long' })} ${dateSet[2]}, ${dateSet[3]}`;
+    onPaginationData(paginationData) {
+      this.$refs.pagination.setPaginationData(paginationData);
+      this.$refs.paginationInfo.setPaginationData(paginationData);
     },
-    checkAll(ev, checkbox) {
-      const checkboxArr = (new Array(this[checkbox].length)).fill(ev.target.checked);
-      Vue.set(this, checkbox, checkboxArr);
+    onChangePage(page) {
+      this.$refs.vuetable.changePage(page);
     },
-    changeCheck(ev, checkbox, id) {
-      this[checkbox][id] = ev.target.checked;
-      if (!ev.target.checked) {
-        this[checkbox][0] = false;
+    onFilterSet (filterText) {
+      this.searchFor= filterText;
+      if(this.$refs.vuetable !== undefined){
+        this.$refs.vuetable.refresh();
       }
     },
-    getRandomData() {
-      const result = [];
-
-      for (let i = 0; i <= 8; i += 1) {
-        result.push(Math.floor(Math.random() * 20) + 1);
-      }
-
-      return result;
+    editRow(data){
+      this.$router.push({ path: "/app/payees/" + data.payeeId });
     },
-    initCharts() {
-      const colors = ['#547fff', '#9964e3', '#f55d5d', '#ffc247', '#3abf94'];
+    deleteRow(data) {
+      if (confirm("Are you sure you want to delete the record?")){
+        console.log('deleted ' + data.payeeId);
+        this.$store.dispatch('payees/deletePayee', data.payeeId);
 
-      $.each($('.sparkline-chart'), (id, chart) => {
-        $(chart).sparkline(this.getRandomData(), {
-          type: 'bar',
-          barColor: colors[Math.floor(Math.random() * colors.length)],
+        let index = this.localData.indexOf(data);
+        this.localData.splice(index, 1);
+
+        if(this.$refs.vuetable !== undefined){
+          this.$refs.vuetable.refresh();
+        }
+
+        Messenger().post({
+          extraClasses: this.locationClasses,
+          message: data.name + ' was deleted successfully!!!',
+          type: 'success',
+          showCloseButton: true,
         });
-      });
+      }
     },
+    dataManager(sortOrder, pagination) {
+      let local = this.localData;
+      if (local === undefined || local.length < 1) return;
+
+      if (this.searchFor) {
+        // the text should be case insensitive
+        let txt = new RegExp(this.searchFor, 'i')
+        
+        // search on name, description
+        local = _.filter(local, function(item) {
+          return item.name.search(txt) >= 0 || item.description.search(txt) >= 0
+        })
+      }
+
+      // sortOrder can be empty, so we have to check for that as well
+      // if (sortOrder.length > 0) {
+      //   console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
+      //   local = _.orderBy(
+      //     local,
+      //     sortOrder[0].sortField,
+      //     sortOrder[0].direction
+      //   );
+      // }
+
+      pagination = this.$refs.vuetable.makePagination(
+        local.length,
+        this.perPage
+      );
+      let from = pagination.from - 1;
+      let to = from + this.perPage;
+
+      return {
+        pagination: pagination,
+        data: _.slice(local, from, to)
+      };
+    }
+  },
+  created() {
+    axios
+      .get('https://5a2u1vztie.execute-api.ap-southeast-2.amazonaws.com/dev/payees')
+      .then(r => r.data)
+      .then(payees => {
+        this.localData= payees;
+      }).catch(function (error) {
+        console.log(error);
+    });
+  },
+  watch: {
+    localData (newVal, oldVal) {
+      this.$refs.vuetable.refresh()
+    }
   },
   mounted() {
-    this.initCharts();
-  },
+    //FIX: this is only used to load payees in the store but not used here.
+    //vuetable tries to load the data before this method is executed. 
+    //this.$store.dispatch('payees/loadPayees');
+    this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
+    this.$events.$on('delete-item', eventData => this.onDeleteItem(eventData))
+  }
 };
 </script>
 
