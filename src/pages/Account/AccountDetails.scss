@@ -1,0 +1,45 @@
+@import '../../styles/app';
+
+.stats-row {
+  margin-top: -38px;
+  margin-left: 100px;
+}
+
+.profileAvatar {
+  border: 3px solid #fff;
+}
+
+.profileContactContainer{
+  margin-top: -45px;
+}
+
+.profileStatValue {
+  font-size: 25px;
+  font-weight: 300 !important;
+  margin-bottom: 0;
+}
+
+.thumb, .thumb-lg, .thumb-sm, .thumb-xl, .thumb-xs {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  margin-left: 20px;
+}
+.thumb-xl {
+    width: 80px;
+}
+.mb-3, .my-3, .mt-3 {
+  margin-bottom: 0rem !important;
+}
+
+.widget-top{
+  border-top-left-radius: .3rem;
+  border-top-right-radius: .3rem;
+}
+
+.btn-transfer {
+  top: auto;
+  bottom: 0;
+  z-index: 1;
+  margin-right: 20px;
+}

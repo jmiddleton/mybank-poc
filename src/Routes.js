@@ -11,7 +11,9 @@ import TypographyPage from '@/pages/Typography/Typography';
 import GoogleMapPage from '@/pages/Maps/Google';
 
 // Main
-import AnalyticsPage from '@/pages/Dashboard/Dashboard';
+import Dashboard from '@/pages/Dashboard/Dashboard';
+import AccountDetails from '@/pages/Account/AccountDetails';
+import CreditCardDetails from '@/pages/Account/CreditCardDetails';
 
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
@@ -43,8 +45,18 @@ export default new Router({
       children: [
         {
           path: 'dashboard',
-          name: 'AnalyticsPage',
-          component: AnalyticsPage,
+          name: 'Dashboard',
+          component: Dashboard,
+        },
+        {
+          path: 'accounts/:accountId',
+          name: 'AccountDetails',
+          component: AccountDetails,
+        },
+        {
+          path: 'creditcards/:accountId',
+          name: 'CreditCardDetails',
+          component: CreditCardDetails,
         },
         {
           path: 'typography',

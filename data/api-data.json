@@ -10,8 +10,9 @@
           "openStatus": "OPEN",
           "isOwned": "true",
           "productCategory": "PERS_AT_CALL_DEPOSITS",
-          "productName": "string",
-          "institution": "cba"
+          "productName": "Smart Access",
+          "institution": "cba",
+          "accountType": "ACCOUNT"
         },
         {
           "accountId": "33333333fffff",
@@ -21,8 +22,21 @@
           "openStatus": "OPEN",
           "isOwned": "true",
           "productCategory": "PERS_AT_CALL_DEPOSITS",
+          "productName": "Day to Day Account",
+          "institution": "hsbc",
+          "accountType": "ACCOUNT"
+        },
+        {
+          "accountId": "5365635645",
+          "displayName": "Credit Card",
+          "nickname": "string",
+          "maskedNumber": "**** **** **** 1922",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "PERS_CRED_AND_CHRG_CARDS",
           "productName": "string",
-          "institution": "hsbc"
+          "institution": "citi",
+          "accountType": "CREDIT_CARD"
         }
       ]
     },
@@ -38,6 +52,105 @@
       "totalPages": 0
     }
   },
+  "accountDetails": [
+    {
+        "accountId": "5245245rfsfg",
+        "displayName": "Smart Access",
+        "nickname": "string",
+        "maskedNumber": "063000 3452450",
+        "openStatus": "OPEN",
+        "isOwned": "true",
+        "productCategory": "PERS_AT_CALL_DEPOSITS",
+        "productName": "Smart Access",
+        "bsb": "string",
+        "accountNumber": "string",
+        "bundleName": "string",
+        "specificAccountUType": "",
+        "institution": "cba",
+        "depositRates": [
+          {
+            "depositRateType": "FIXED",
+            "rate": "1.50",
+            "calculationFrequency": "string",
+            "applicationFrequency": "string",
+            "additionalValue": "string",
+            "additionalInfo": "string",
+            "additionalInfoUri": "string"
+          },
+          {
+            "depositRateType": "BONUS",
+            "rate": "1.80",
+            "calculationFrequency": "string",
+            "applicationFrequency": "string",
+            "additionalValue": "string",
+            "additionalInfo": "string",
+            "additionalInfoUri": "string"
+          }
+        ]
+    },
+    {
+      "accountId": "33333333fffff",
+      "displayName": "Day to Day Account",
+      "nickname": "string",
+      "maskedNumber": "342085 5635658",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "PERS_AT_CALL_DEPOSITS",
+      "productName": "Day to Day Account",
+      "institution": "hsbc",
+      "accountType": "ACCOUNT",
+      "depositRates": [
+        {
+          "depositRateType": "FIXED",
+          "rate": "0.50",
+          "calculationFrequency": "string",
+          "applicationFrequency": "string",
+          "additionalValue": "string",
+          "additionalInfo": "string",
+          "additionalInfoUri": "string"
+        },
+        {
+          "depositRateType": "BONUS",
+          "rate": "2.00",
+          "calculationFrequency": "string",
+          "applicationFrequency": "string",
+          "additionalValue": "string",
+          "additionalInfo": "string",
+          "additionalInfoUri": "string"
+        },
+        {
+          "depositRateType": "PROMOTION",
+          "rate": "0.60",
+          "calculationFrequency": "string",
+          "applicationFrequency": "string",
+          "additionalValue": "string",
+          "additionalInfo": "string",
+          "additionalInfoUri": "string"
+        }
+      ]
+    },
+    {
+      "accountId": "5365635645",
+      "displayName": "Credit Card",
+      "nickname": "string",
+      "maskedNumber": "**** **** **** 1922",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "PERS_CRED_AND_CHRG_CARDS",
+      "productName": "string",
+      "bsb": "string",
+      "accountNumber": "string",
+      "bundleName": "string",
+      "institution": "citi",
+      "specificAccountUType": "creditCard",
+      "creditCard": {
+        "minPaymentAmount": "string",
+        "paymentDueAmount": "string",
+        "paymentCurrency": "string",
+        "paymentDueDate": "string"
+      }
+    }
+  ],
   "balances": {
     "data": {
       "balances": [
@@ -65,6 +178,28 @@
             },
             "availableBalance": {
               "amount": "3000",
+              "currency": "AUD"
+            }
+          }
+        },
+        {
+          "accountId": "5365635645",
+          "balanceUType": "lending",
+          "lending": {
+            "accountBalance": {
+              "amount": "5500",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "4500",
+              "currency": "AUD"
+            },
+            "creditLimit": {
+              "amount": "10000",
+              "currency": "AUD"
+            },
+            "amortisedLimit": {
+              "amount": "0",
               "currency": "AUD"
             }
           }

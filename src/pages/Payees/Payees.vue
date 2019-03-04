@@ -1,7 +1,7 @@
 <template>
   <div class="tables-basic col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item>Home</b-breadcrumb-item>
+      <b-breadcrumb-item><span class="fi flaticon-home"></span></b-breadcrumb-item>
       <b-breadcrumb-item active>Manage Payess</b-breadcrumb-item>
     </b-breadcrumb>
     <h1 class="page-title">Manage Payees</h1>
@@ -77,7 +77,10 @@ export default {
       checkboxes1: [false, false, false, false],
       perPage: 20,
       localData: [],
-      fields: [ 
+      fields: [
+        {
+          name:'payeeId'
+        }, 
         {
           name:'name',
           title: 'Name',
@@ -202,6 +205,7 @@ export default {
   mounted() {
     //FIX: this is only used to load payees in the store but not used here.
     //vuetable tries to load the data before this method is executed. 
+    //https://glebbahmutov.com/blog/vue-vuex-rest-todomvx/
     //this.$store.dispatch('payees/loadPayees');
     this.$events.$on('filter-set', eventData => this.onFilterSet(eventData))
     this.$events.$on('delete-item', eventData => this.onDeleteItem(eventData))

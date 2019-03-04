@@ -1,10 +1,10 @@
 <template>
   <div class="col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item>Home</b-breadcrumb-item>
-      <b-breadcrumb-item active>Dashboard</b-breadcrumb-item>
+      <b-breadcrumb-item><span class="fi flaticon-home"></span></b-breadcrumb-item>
+      <b-breadcrumb-item active>Accounts</b-breadcrumb-item>
     </b-breadcrumb>
-    <h1 class="page-title">Dashboard</h1>
+    <h1 class="page-title">Account Summary</h1>
     <b-row>
       <b-col xs="4">
         <div class="pb-xlg h-100">
@@ -64,19 +64,45 @@
     </b-row>
     <b-row>
       <b-col>
+        <h3>Accounts</h3>
         <b-list-group class="widgetBody widget-body">
-          <b-list-group-item v-for="account in accounts" :key="account.accountId" class="list-group list-group-lg">
+          <b-list-group-item v-for="account in filteredAccounts" :key="account.accountId" class="list-group list-group-lg">
+            <span class="notificationIcon thumb-sm">
+              <img :src="require('../../assets/banks/' + account.institution + '.png')" alt="..." />
+            </span>
+            <div v-for="balance in balances" :key="balance.accountId">
+              <div v-if="account.accountId === balance.accountId" class="stat-item float-right">
+                <div class="stat-item"><h6 class="name fs-sm">Available Balance</h6><p class="value">$ {{ balance.deposit.availableBalance.amount }}</p></div>
+                <div class="stat-item float-right"><h6 class="name fs-sm">Balance</h6><p class="value">$ {{ balance.deposit.currentBalance.amount }}</p></div>
+              </div>
+            </div>
+            <a @click="getAccountDetails(account.accountId)"><span class='fw-semi-bold'>{{ account.displayName }}</span>&nbsp;&nbsp;<span class="fa fa-external-link"></span></a>
+            <p class="deemphasize text-ellipsis m-0">
+              {{ account.maskedNumber }}
+            </p>
+          </b-list-group-item>
+        </b-list-group>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <h3>Credit Cards</h3>
+        <b-list-group class="widgetBody widget-body">
+          <b-list-group-item v-for="account in filteredCreditCards" :key="account.accountId" class="list-group list-group-lg">
             <span class="notificationIcon thumb-sm">
               <img class="rounded-circle" :src="require('../../assets/banks/' + account.institution + '.png')" alt="..." />
             </span>
             <div v-for="balance in balances" :key="balance.accountId">
-              <div v-if="account.accountId == balance.accountId" class="stats-item float-right"><div class="stat-item"><h6 class="name fs-sm">Available Balance</h6><p class="value">$ {{ balance.deposit.availableBalance.amount }}</p></div>
-              <div v-if="account.accountId == balance.accountId" class="stat-item float-right"><h6 class="name fs-sm">Balance</h6><p class="value">$ {{ balance.deposit.currentBalance.amount }}</p></div></div>
+              <div v-if="account.accountId === balance.accountId" class="stats-item float-right">
+                <div class="stat-item"><h6 class="name fs-sm">Limit</h6><p class="value">$ {{ balance.lending.creditLimit.amount }}</p></div>
+                <div class="stat-item"><h6 class="name fs-sm">Available Balance</h6><p class="value">$ {{ balance.lending.availableBalance.amount }}</p></div>
+                <div class="stat-item float-right"><h6 class="name fs-sm">Balance</h6><p class="value">$ {{ balance.lending.accountBalance.amount }}</p></div>
+              </div>
             </div>
-            <span class='fw-semi-bold'>{{ account.displayName }}</span>
-            <p class="deemphasize text-ellipsis m-0">
-              {{ account.maskedNumber }}
-            </p>
+              <a @click="getCreditCardDetails(account.accountId)"><span class='fw-semi-bold'>{{ account.displayName }}</span>&nbsp;&nbsp;<span class="fa fa-external-link"></span></a>
+              <p class="deemphasize text-ellipsis m-0">
+                {{ account.maskedNumber }}
+              </p>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -91,12 +117,18 @@ import 'imports-loader?jQuery=jquery,this=>window!flot';
 import 'imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie';
 /* eslint-enable */
 import Widget from '@/components/Widget/Widget';
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   name: 'Dashboard',
   components: { Widget },
   methods: {
+    getAccountDetails(accountId){
+        this.$router.push({ path: "/app/accounts/" + accountId });
+    },
+    getCreditCardDetails(accountId){
+        this.$router.push({ path: "/app/creditcards/" + accountId });
+    },
     getRandomData() {
       const arr = [];
 
@@ -117,7 +149,6 @@ export default {
           data: Math.floor(Math.random() * 100) + 1,
         });
       }
-
       return data;
     },
     initChart() {
@@ -140,14 +171,29 @@ export default {
   },
   mounted() {
     this.initChart();
-    this.$store.dispatch('loadAccountSummary');
-    this.$store.dispatch('loadAccountBalances');
+    this.$store.dispatch('accounts/loadAccountSummary');
+    this.$store.dispatch('accounts/loadAccountBalances');
     
     window.addEventListener('resize', this.initChart);
   },
-  computed: mapState([
-    'accounts', 'balances', 'totalBalance', 'totalAvailableBalance'
-  ])
+  computed: {
+    filteredCreditCards: function () {
+      return this.$store.getters['accounts/accountsList'].filter(function (acc) {
+        return acc.accountType === "CREDIT_CARD";
+      })
+    },
+    filteredAccounts: function () {
+      return this.$store.getters['accounts/accountsList'].filter(function (acc) {
+        return acc.accountType === "ACCOUNT";
+      })
+    },
+      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
+    ...mapGetters("accounts", [
+      'balances',
+      'totalBalance',
+      'totalAvailableBalance'
+    ])
+}
 };
 </script>
 

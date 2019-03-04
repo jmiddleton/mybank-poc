@@ -1,7 +1,7 @@
 <template>
 <div>
     <b-breadcrumb>
-      <b-breadcrumb-item>Home</b-breadcrumb-item>
+      <b-breadcrumb-item><span class="fi flaticon-home"></span></b-breadcrumb-item>
       <b-breadcrumb-item>Manage Payess</b-breadcrumb-item>
       <b-breadcrumb-item active v-if="payeeId === 'new'">Create Payes</b-breadcrumb-item>
       <b-breadcrumb-item active v-else>Update Payes</b-breadcrumb-item>

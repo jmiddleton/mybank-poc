@@ -5,6 +5,7 @@ import VueAxios from 'vue-axios';
 
 import layout from './layout';
 import payeesModule from './modules/payees.js';
+import accountsModule from './modules/accounts.js';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -12,45 +13,14 @@ Vue.use(VueAxios, axios);
 export default new Vuex.Store({
   modules: {
     layout,
-    payees: payeesModule
+    payees: payeesModule,
+    accounts: accountsModule
   },
   state: {
-    accounts: [],
-    balances: [],
-    totalBalance: 0,
-    totalAvailableBalance: 0
   },
   actions: {
-    loadAccountSummary ({ commit }) {
-      axios
-        .get('http://localhost:4000/accounts')
-        .then(r => r.data)
-        .then(accounts => {
-          commit('SET_ACCOUNTS', accounts);
-        })
-    },
-    loadAccountBalances ({ commit }) {
-      axios
-        .get('http://localhost:4000/balances')
-        .then(r => r.data)
-        .then(balances => {
-          commit('SET_BALANCES', balances);
-        })
-    }
+    
   },
   mutations: {
-    SET_ACCOUNTS (state, accounts) {
-      state.accounts= accounts.data.accounts;
-    },
-    SET_BALANCES (state, balances) {
-      state.balances= balances.data.balances;
-      state.totalBalance= 0;
-      state.totalAvailableBalance= 0;
-
-      state.balances.forEach(balance => {
-        state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);
-        state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
-      });
-    }
   }
 });
