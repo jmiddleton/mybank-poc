@@ -47,15 +47,16 @@
                       :key="rate.depositRateType"
                       class="profileStat stat-item">
                       <p class="profileStatValue value text-right">{{rate.rate}}%</p>
-                      <h6 class="name">{{rate.depositRateType}}</h6>
+                        <h6 class="name">{{rate.depositRateType}} &nbsp;
+                          <a v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''" target="new" :href="rate.additionalInfoUri"><span class="fa fa-external-link"></span></a></h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <p class="lead mt-xlg">Transactions</p>
-              
+              <h4>Transaction History</h4>
+              <transaction-table></transaction-table>
             </div>
           </div>
         </div>
@@ -64,13 +65,17 @@
   </div>
 </template>
 <script>
+
 import Widget from "@/components/Widget/Widget";
 import { mapState, mapGetters } from "vuex";
+import TransactionTable from './TransactionTable.vue'
+
 const { Messenger } = window;
 
 export default {
   components: {
-    Widget
+    Widget,
+    'transaction-table': TransactionTable
   },
   data() {
     return {
@@ -84,7 +89,7 @@ export default {
     }
   },
   methods: {},
-  computed: mapGetters("accounts", ["account"])
+  computed: mapGetters("accounts", ["account", "transactions"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />

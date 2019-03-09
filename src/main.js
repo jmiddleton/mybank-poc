@@ -12,7 +12,9 @@ import VueFormGenerator from 'vue-form-generator'
 import store from './store';
 import router from './Routes';
 import App from './App';
-
+import VueDateFns from "vue-date-fns";
+ 
+Vue.use(VueDateFns);
 Vue.use(BootstrapVue);
 Vue.use(VueTouch);
 Vue.use(Trend);

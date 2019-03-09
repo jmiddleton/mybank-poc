@@ -1,0 +1,5 @@
+{
+    "/accounts": "/accounts",
+    "/accountDetails/:accountId": "/accountDetails/:accountId",
+    "/accounts/:accountId/transactions": "/transactions/:accountId"
+}

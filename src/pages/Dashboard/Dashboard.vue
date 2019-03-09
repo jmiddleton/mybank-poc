@@ -187,7 +187,6 @@ export default {
         return acc.accountType === "ACCOUNT";
       })
     },
-      // map `this.doneCount` to `this.$store.getters.doneTodosCount`
     ...mapGetters("accounts", [
       'balances',
       'totalBalance',
