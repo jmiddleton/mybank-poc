@@ -3,27 +3,70 @@ import _ from "lodash";
 
 const base_path = "http://localhost:4000";
 const state = {
+  categories: [
+    {
+      id: "TRANS_AND_SAVINGS_ACCOUNTS",
+      name: "Saving Accounts"
+    },{
+      id: "TERM_DEPOSITS",
+      name: "Term Deposits"
+    },{
+      id: "TRAVEL_CARDS",
+      name: "Travel Cards"
+    },{
+      id: "REGULATED_TRUST_ACCOUNTS",
+      name: "Trust Accounts"
+    },{
+      id: "RESIDENTIAL_MORTGAGES",
+      name: "Mortgages"
+    },{
+      id: "CRED_AND_CHRG_CARDS",
+      name: "Credit Cards"
+    },{
+      id: "PERS_LOANS",
+      name: "Personal Loans"
+    },{
+      id: "MARGIN_LOANS",
+      name: "Margin Loans"
+    },{
+      id: "LEASES",
+      name: "Leases"
+    },{
+      id: "TRADE_FINANCE",
+      name: "Trades"}
+  ],
   accounts: [],
   balances: [],
   totalBalance: 0,
   totalAvailableBalance: 0,
-  account: {}
+  account: {},
+  balance: 0
 }
 
 const getters = {
-  accountsList: state => { 
+  categories: state => {
+    return state.categories;
+  },
+  accountsByCategory: state =>{
+    var result= _.reduce(state.accounts, function(result, account) {
+      (result[account.productCategory] || (result[account.productCategory] = [])).push(account);
+      return result;
+    }, {});
+    return result;
+  },
+  accountsList: state => {
     return state.accounts;
   },
-  account: state => { 
+  account: state => {
     return state.account;
   },
-  balances: state => { 
+  balances: state => {
     return state.balances;
   },
-  totalBalance: state => { 
+  totalBalance: state => {
     return state.totalBalance;
   },
-  totalAvailableBalance: state => { 
+  totalAvailableBalance: state => {
     return state.totalAvailableBalance;
   }
 }
@@ -31,7 +74,7 @@ const getters = {
 const actions = {
   loadAccountSummary({ commit }) {
     axios
-      .get(base_path+'/accounts')
+      .get(base_path + '/accounts')
       .then(r => r.data)
       .then(accounts => {
         commit('SET_ACCOUNTS', accounts);
@@ -39,7 +82,7 @@ const actions = {
   },
   getAccountById({ commit }, accountId) {
     axios
-      .get(base_path+'/accountDetails/' + accountId)
+      .get(base_path + '/accountDetails/' + accountId)
       .then(r => r.data)
       .then(account => {
         commit('SET_ACCOUNT', account);
@@ -49,7 +92,7 @@ const actions = {
   },
   loadAccountBalances({ commit }) {
     axios
-      .get(base_path+'/balances')
+      .get(base_path + '/balances')
       .then(r => r.data)
       .then(balances => {
         commit('SET_BALANCES', balances);
@@ -74,6 +117,9 @@ const mutations = {
       if (balance.balanceUType === 'deposit') {
         state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);
         state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
+      } else {
+        state.totalBalance = Math.round(state.totalBalance - parseFloat(balance.lending.accountBalance.amount), 2);
+        state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.lending.availableBalance.amount);
       }
     });
   }

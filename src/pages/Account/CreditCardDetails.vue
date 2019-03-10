@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item><span class="fi flaticon-home"></span></b-breadcrumb-item>
+      <b-breadcrumb-item>
+        <span class="fi flaticon-home"></span>
+      </b-breadcrumb-item>
       <b-breadcrumb-item>Accounts</b-breadcrumb-item>
       <b-breadcrumb-item active>Credit Card Details</b-breadcrumb-item>
     </b-breadcrumb>
@@ -15,22 +17,40 @@
                 Make a Payment
               </a>
               <h1>{{account.displayName}}</h1>
-              <h3>{{account.maskedNumber}}</h3><span class="badge badge-success badge-pill">{{account.openStatus}}</span>
+              <h3>{{account.maskedNumber}}</h3>
+              <span class="badge badge-success badge-pill">{{account.openStatus}}</span>
               <h5>
-                <div class="profileStat stat-item float-right stats-row mt-3">
-                  <div class="profileStat stat-item">
-                    <p class="profileStatValue value text-right">$ </p>
-                    <h6 class="name">Available Balance</h6>
-                  </div>
-                  <div class="profileStat stat-item">
-                    <p class="profileStatValue value text-right">$ </p>
-                    <h6 class="name text-right">Balance</h6>
+                <div v-for="balance in balances" :key="balance.accountId">
+                  <div
+                    v-if="account.accountId === balance.accountId"
+                    class="stats-item float-right"
+                  >
+                    <div class="profileStat stat-item float-right stats-row mt-3">
+                      <div class="profileStat stat-item">
+                        <p
+                          class="profileStatValue value text-right"
+                        >$ {{ balance.lending.creditLimit.amount }}</p>
+                        <h6 class="name text-right">Limit</h6>
+                      </div>
+                      <div class="profileStat stat-item">
+                        <p
+                          class="profileStatValue value text-right"
+                        >$ {{ balance.lending.availableBalance.amount }}</p>
+                        <h6 class="name text-right">Available Balance</h6>
+                      </div>
+                      <div class="profileStat stat-item">
+                        <p
+                          class="profileStatValue value text-right"
+                        >$ {{ balance.lending.accountBalance.amount }}</p>
+                        <h6 class="name text-right">Balance</h6>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </h5>
             </div>
             <div class="row">
-              <div xs="12" class="col-md-5">
+              <div xs="12">
                 <div class="profileContactContainer">
                   <span class="thumb-xl mb-3" v-if="account !== undefined">
                     <img
@@ -39,28 +59,33 @@
                       class="profileAvatar rounded-circle"
                     >
                   </span>
-                  
-                  <div v-if="account.depositRates" class="stats-row col-md-12" xs="12">
-                    <div
-                      v-for="rate in account.depositRates"
-                      :key="rate.depositRateType"
-                      class="profileStat stat-item">
-                      <p class="profileStatValue value text-right">{{rate.rate}}%</p>
-                      <h6 class="name">{{rate.depositRateType}}</h6>
+
+                  <div v-if="account.creditCard" class="stats-row col-md-12" xs="12">
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >${{account.creditCard.minPaymentAmount}}</p>
+                      <h6 class="name text-right">Min Payment</h6>
+                    </div>
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >${{account.creditCard.paymentDueAmount}}</p>
+                      <h6 class="name text-right">Due Amount</h6>
+                    </div>
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >{{account.creditCard.paymentDueDate | date('DD MMMM')}}</p>
+                      <h6 class="name text-right">Due Date</h6>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row">
-              <p
-                class="lead mt-xlg"
-              >My name is Adam Johns and here is my new Sing user profile page.</p>
-              <p class="text-muted">
-                I love reading people's summaries page especially
-                those who are in the same industry as me.
-                Sometimes it's much easier to find your concentration during the night.
-              </p>
+              <h4>Transaction History</h4>
+              <transaction-table></transaction-table>
             </div>
           </div>
         </div>
@@ -70,29 +95,30 @@
 </template>
 <script>
 import Widget from "@/components/Widget/Widget";
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters } from "vuex";
+import TransactionTable from "./TransactionTable.vue";
+
 const { Messenger } = window;
 
 export default {
   components: {
-    Widget
+    Widget,
+    "transaction-table": TransactionTable
   },
   data() {
     return {
-      accountId: ''
-    }
+      accountId: ""
+    };
   },
   created() {
     this.accountId = this.$route.params.accountId;
-    if(this.accountId !== undefined || this.accountId !== ''){
-      this.$store.dispatch('accounts/getAccountById', this.accountId);
+    if (this.accountId !== undefined || this.accountId !== "") {
+      this.$store.dispatch("accounts/getAccountById", this.accountId);
+      this.$store.dispatch("accounts/loadAccountBalances");
     }
   },
-  methods: {
-  },
-  computed: mapGetters("accounts", [
-    'account'
-  ])
+  methods: {},
+  computed: mapGetters("accounts", ["account", "balances"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />

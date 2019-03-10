@@ -46,12 +46,12 @@
       <h5>Transactions not available</h5>
     </span>
 
-    <b-button
+    <button
       v-if="transactions && transactions.length > 0"
-      class="btn btn-outline-primary center"
+      class="width-150 btn btn-outline-primary"
       v-on:click="getTransactionsByAccountId()"
       v-cloak
-    >{{ buttonText }}</b-button>
+    >{{ buttonText }}</button>
   </div>
 </template>
 <script>

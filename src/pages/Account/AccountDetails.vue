@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item><span class="fi flaticon-home"></span></b-breadcrumb-item>
+      <b-breadcrumb-item>
+        <span class="fi flaticon-home"></span>
+      </b-breadcrumb-item>
       <b-breadcrumb-item>Accounts</b-breadcrumb-item>
       <b-breadcrumb-item active>Account Details</b-breadcrumb-item>
     </b-breadcrumb>
@@ -18,20 +20,29 @@
               <h3>{{account.maskedNumber}}</h3>
               <span class="badge badge-success badge-pill">{{account.openStatus}}</span>
               <h5>
-                <div class="profileStat stat-item float-right stats-row mt-3">
-                  <div class="profileStat stat-item">
-                    <p class="profileStatValue value text-right">$</p>
-                    <h6 class="name">Available Balance</h6>
-                  </div>
-                  <div class="profileStat stat-item">
-                    <p class="profileStatValue value text-right">$</p>
-                    <h6 class="name text-right">Balance</h6>
+                <div v-for="balance in balances" :key="balance.accountId">
+                  <div
+                    v-if="account.accountId === balance.accountId"
+                    class="profileStat stat-item float-right stats-row mt-3"
+                  >
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >$ {{ balance.deposit.availableBalance.amount }}</p>
+                      <h6 class="name text-right">Available Balance</h6>
+                    </div>
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >$ {{ balance.deposit.currentBalance.amount }}</p>
+                      <h6 class="name text-right">Balance</h6>
+                    </div>
                   </div>
                 </div>
               </h5>
             </div>
             <div class="row">
-              <div xs="12" class="col-md-5">
+              <div xs="12">
                 <div class="profileContactContainer">
                   <span class="thumb-xl mb-3" v-if="account !== undefined">
                     <img
@@ -40,15 +51,24 @@
                       class="profileAvatar rounded-circle"
                     >
                   </span>
-                  
+
                   <div v-if="account.depositRates" class="stats-row col-md-12" xs="12">
                     <div
                       v-for="rate in account.depositRates"
                       :key="rate.depositRateType"
-                      class="profileStat stat-item">
+                      class="profileStat stat-item"
+                    >
                       <p class="profileStatValue value text-right">{{rate.rate}}%</p>
-                        <h6 class="name">{{rate.depositRateType}} &nbsp;
-                          <a v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''" target="new" :href="rate.additionalInfoUri"><span class="fa fa-external-link"></span></a></h6>
+                      <h6 class="name text-right">
+                        {{rate.depositRateType}} &nbsp;
+                        <a
+                          v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
+                          target="new"
+                          :href="rate.additionalInfoUri"
+                        >
+                          <span class="fa fa-external-link"></span>
+                        </a>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -65,17 +85,16 @@
   </div>
 </template>
 <script>
-
 import Widget from "@/components/Widget/Widget";
 import { mapState, mapGetters } from "vuex";
-import TransactionTable from './TransactionTable.vue'
+import TransactionTable from "./TransactionTable.vue";
 
 const { Messenger } = window;
 
 export default {
   components: {
     Widget,
-    'transaction-table': TransactionTable
+    "transaction-table": TransactionTable
   },
   data() {
     return {
@@ -86,10 +105,11 @@ export default {
     this.accountId = this.$route.params.accountId;
     if (this.accountId !== undefined || this.accountId !== "") {
       this.$store.dispatch("accounts/getAccountById", this.accountId);
+      this.$store.dispatch("accounts/loadAccountBalances");
     }
   },
   methods: {},
-  computed: mapGetters("accounts", ["account", "transactions"])
+  computed: mapGetters("accounts", ["account","balances"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />

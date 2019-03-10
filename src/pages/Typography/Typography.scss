@@ -1,0 +1,21 @@
+@import '../../styles/app';
+
+.dropdown li {
+  border-bottom: 1px;
+}
+
+.dropdown li:last-child {
+  border-bottom: none;
+}
+
+.dropdown li a {
+  padding: 10px 20px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  font-size: 1.25em;
+}
+
+.dropdown li a .fa {
+  padding-right: 0.5em;
+}
