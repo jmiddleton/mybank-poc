@@ -17,9 +17,9 @@
       />
       <NavLink
         header="Transfers"
-        link="/app/typography"
+        link="/app/transfers"
         iconName="flaticon-list"
-        index="typography"
+        index="transfers"
         isHeader
       />
       <NavLink
@@ -30,23 +30,18 @@
         isHeader
       />
       <NavLink
+        header="Spending"
+        link="/app/spending"
+        iconName="fi flaticon-controls"
+        index="spending"
+        isHeader
+      />
+      <NavLink
         header="Notifications"
         link="/app/notifications"
         iconName="flaticon-star"
         index="notifications"
         isHeader
-      />
-      <NavLink
-        :activeItem="activeItem"
-        header="Components"
-        link="/app/components"
-        iconName="flaticon-network"
-        index="components"
-        :childrenLinks="[
-          { header: 'Charts', link: '/app/components/charts' },
-          { header: 'Icons', link: '/app/components/icons' },
-          { header: 'Maps', link: '/app/components/maps' },
-        ]"
       />
     </ul>
   </nav>

@@ -23,8 +23,7 @@
           "isOwned": "true",
           "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
           "productName": "Day to Day Account",
-          "institution": "hsbc",
-          "accountType": "ACCOUNT"
+          "institution": "hsbc"
         },
         {
           "accountId": "5365635645",
@@ -35,8 +34,18 @@
           "isOwned": "true",
           "productCategory": "CRED_AND_CHRG_CARDS",
           "productName": "string",
-          "institution": "citi",
-          "accountType": "CREDIT_CARD"
+          "institution": "citi"
+        },
+        {
+          "accountId": "451212111",
+          "displayName": "Term Deposit",
+          "nickname": "string",
+          "maskedNumber": "TD-3431922",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "TERM_DEPOSITS",
+          "productName": "High Interest Savings Account",
+          "institution": "rabo"
         }
       ]
     },
@@ -200,6 +209,20 @@
             },
             "amortisedLimit": {
               "amount": "0",
+              "currency": "AUD"
+            }
+          }
+        },
+        {
+          "accountId": "451212111",
+          "balanceUType": "deposit",
+          "deposit": {
+            "currentBalance": {
+              "amount": "135000",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "135000",
               "currency": "AUD"
             }
           }

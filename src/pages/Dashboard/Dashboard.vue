@@ -120,10 +120,13 @@ export default {
   components: { Widget, StackedBar },
   methods: {
     getAccountDetails(account) {
+      //TODO: externalise this in a key-value pair map.
       if(account.productCategory === "TRANS_AND_SAVINGS_ACCOUNTS"){
         this.$router.push({ path: "/app/accounts/" + account.accountId });
-      }else{
+      }else if(account.productCategory === "CRED_AND_CHRG_CARDS"){
         this.$router.push({ path: "/app/creditcards/" + account.accountId });
+      }else{
+        this.$router.push({ path: "/app/termdeposit/" + account.accountId });
       }
     },
 

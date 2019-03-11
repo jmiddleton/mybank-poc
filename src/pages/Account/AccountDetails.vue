@@ -12,10 +12,10 @@
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body">
             <div class="widget-title widget-top widget-padding-md clearfix bg-primary text-white">
-              <a href="#" class="float-right btn-transfer btn btn-outline btn-sm mb-2">
+              <button @click="makeTransfer()" class="float-right btn-transfer btn btn-outline btn-sm mb-2">
                 <i class="fa fa-edit mr-2"></i>
                 Make a Transfer
-              </a>
+              </button>
               <h1>{{account.displayName}}</h1>
               <h3>{{account.maskedNumber}}</h3>
               <span class="badge badge-success badge-pill">{{account.openStatus}}</span>
@@ -108,7 +108,12 @@ export default {
       this.$store.dispatch("accounts/loadAccountBalances");
     }
   },
-  methods: {},
+  methods: {
+    makeTransfer(){
+      this.$router.push({ path: "/app/transfers/" + this.accountId });
+    }
+
+  },
   computed: mapGetters("accounts", ["account","balances"])
 };
 </script>

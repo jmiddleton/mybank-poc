@@ -29,10 +29,10 @@ export default {
   },
   methods: {
     createPayee() {
-        this.$router.push({ path: "/app/payees/new" });
+      this.$router.push({ path: "/app/payees/new" });
     },
-    doFilter () {
-      this.$events.fire('filter-set', this.filterText)
+    doFilter() {
+      this.$events.fire("filter-set", this.filterText);
     }
   }
 };
