@@ -19,14 +19,14 @@
                 <v-select
                   label="label"
                   v-model="selectedFromAccount"
-                  :options="fromAccountList"
+                  :options="accountList"
                   @change="changedFromAccount"
                 >
                   <template slot="option" slot-scope="option">
                     <span>
                       <img
                         class="thumb-sm"
-                        :src="require('../../assets/banks/' + option.institution + '.png')"
+                        :src="require('../../assets/banks/' + option.imgName + '.png')"
                       >
                       {{option.label}}
                     </span>
@@ -39,12 +39,12 @@
                 <h6>To Account</h6>
               </b-col>
               <b-col cols="10">
-                <v-select label="label" v-model="selectedToAccount" :options="toAccountList">
+                <v-select label="label" max-height="220px" v-model="selectedToAccount" :options="toAccountList">
                   <template slot="option" slot-scope="option">
                     <span>
                       <img
                         class="thumb-sm"
-                        :src="require('../../assets/banks/' + option.institution + '.png')"
+                        :src="require('../../assets/banks/' + option.imgName + '.png')"
                       >
                       {{option.label}}
                     </span>
@@ -126,40 +126,51 @@ export default {
   created() {
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
+    this.$store.dispatch("payees/loadPayees");
   },
   mounted() {
     let fromAccountId = this.$route.params.accountId;
 
     this.selectedFromAccount = _.find(
-      this.filteresAccountList,
-      _.matchesProperty("accountId", this.fromAccountId)
-    );
+      this.accountList, function(acc) {
+        return fromAccountId === undefined || acc.accountId === fromAccountId;
+      });
 
-    this.toAccountList = _.filter(this.filteresAccountList, function(acc) {
-      return localAccount === undefined || acc.accountId !== localAccount;
-    });
+    this.loadToAccountList(fromAccountId);
   },
   methods: {
     changedFromAccount(eventData) {
       var filterAccount = "";
-      this.toAccountList = _.filter(this.filteresAccountList, function(acc) {
-        return (
-          eventData.accountId === undefined ||
-          acc.accountId !== eventData.accountId
-        );
+      this.loadToAccountList(eventData.accountId);
+    },
+    loadToAccountList(fromAccountId) {
+      //get accounts which are allowed to transfer money.
+      this.toAccountList = _.filter(this.accountList, function(acc) {
+        return fromAccountId === undefined || acc.accountId !== fromAccountId;
       });
+      
+      //add payees - TODO: optimise this
+      this.toAccountList = _.concat(this.toAccountList, this.selectPayeeList);
     }
   },
   computed: {
-    fromAccountList() {
-      return this.filteresAccountList;
-    },
-    filteresAccountList() {
+    accountList() {
       return _.map(this.accountsList, function(account) {
         return {
           label: account.displayName + " - " + account.maskedNumber,
           accountId: account.accountId,
-          institution: account.institution
+          isPayee: false,
+          imgName: account.institution
+        };
+      });
+    },
+    selectPayeeList() {
+      return _.map(this.$store.getters["payees/getPayees"].data, function(payee) {
+        return {
+          label: payee.name + " - " + payee.BSB + " " + payee.accountNumber,
+          accountId: payee.payeeId,
+          isPayee: true,
+          imgName: "payee"
         };
       });
     },

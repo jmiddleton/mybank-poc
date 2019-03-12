@@ -1,5 +1,9 @@
 @import '../../styles/app';
 
+.dropdown-toggle::after{
+  content: none;
+}
+
 .dropdown li {
   border-bottom: 1px;
 }
