@@ -189,7 +189,7 @@ export default {
   },
   created() {
     axios
-      .get('https://5a2u1vztie.execute-api.ap-southeast-2.amazonaws.com/dev/payees')
+      .get('https://5a2u1vztie.execute-api.ap-southeast-2.amazonaws.com/dev/payees2')
       .then(r => r.data)
       .then(payees => {
         this.localData= payees;

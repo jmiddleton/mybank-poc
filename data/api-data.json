@@ -11,8 +11,7 @@
           "isOwned": "true",
           "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
           "productName": "Net Saver",
-          "institution": "cba",
-          "accountType": "ACCOUNT"
+          "institution": "cba"
         },
         {
           "accountId": "33333333fffff",
@@ -74,7 +73,7 @@
       "bsb": "string",
       "accountNumber": "string",
       "bundleName": "string",
-      "specificAccountUType": "",
+      "specificAccountUType": "depositRates",
       "institution": "cba",
       "depositRates": [
         {
@@ -107,7 +106,7 @@
       "productCategory": "PERS_AT_CALL_DEPOSITS",
       "productName": "Day to Day Account",
       "institution": "hsbc",
-      "accountType": "ACCOUNT",
+      "specificAccountUType": "depositRates",
       "depositRates": [
         {
           "depositRateType": "FIXED",

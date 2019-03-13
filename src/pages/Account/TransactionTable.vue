@@ -59,7 +59,7 @@ import Widget from "@/components/Widget/Widget";
 import axios from "axios";
 import { mapGetters } from "vuex";
 
-const base_path = "http://localhost:4000";
+const base_path = "http://localhost:3000/cds-au/v1/banking";
 
 export default {
   name: "TransactionTable",
