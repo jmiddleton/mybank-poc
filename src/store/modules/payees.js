@@ -1,7 +1,6 @@
 import axios from 'axios';
 import _ from "lodash";
 
-const base_path = "https://5a2u1vztie.execute-api.ap-southeast-2.amazonaws.com";
 const state = {
   payeesList: [],
   payee: {}
@@ -43,7 +42,7 @@ const getters = {
 const actions = {
   getPayeeById: (state) => (id) => {
     axios
-      .get(base_path + '/dev/payees/'+ id)
+      .get('/payees/'+ id)
       .then(r => r.data)
       .then(payee => {
         commit('SET_PAYEE', payee);
@@ -53,7 +52,7 @@ const actions = {
   },
   loadPayees ({ commit }, data) {
     axios
-      .get(base_path + '/dev/payees')
+      .get('/payees')
       .then(r => r.data)
       .then(payees => {
         commit('SET_PAYEES', payees);
@@ -73,7 +72,7 @@ const actions = {
     };
   
     axios
-      .post(base_path + '/dev/payees', newpayee)
+      .post('/payees', newpayee)
       .then(function (response) {
         console.log(response);
       })
@@ -83,7 +82,7 @@ const actions = {
   },
   deletePayee ({ commit }, payeeId) {
     axios
-      .delete(base_path + '/dev/payees/' + payeeId)
+      .delete('/payees/' + payeeId)
       .then(function (response) {
         //let index = state.payeesList.data.indexOf(response);
         //state.payeesList.data.splice(index, 1);
@@ -94,7 +93,7 @@ const actions = {
   },
   updatePayee ({ commit }, payee) {
     axios
-      .put(base_path + '/dev/payees/' + payee.payeeId, payee)
+      .put('/payees/' + payee.payeeId, payee)
       .then(function (response) {
         console.log(response);
       })

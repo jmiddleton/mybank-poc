@@ -45,7 +45,7 @@
     <span v-else class="center">
       <h5>Transactions not available</h5>
     </span>
-
+    
     <button
       v-if="transactions && transactions.length > 0"
       class="width-150 btn btn-outline-primary"
@@ -58,8 +58,6 @@
 import Widget from "@/components/Widget/Widget";
 import axios from "axios";
 import { mapGetters } from "vuex";
-
-const base_path = "http://localhost:3000/cds-au/v1/banking";
 
 export default {
   name: "TransactionTable",
@@ -74,15 +72,7 @@ export default {
   methods: {
     getTransactionsByAccountId() {
       axios
-        .get(
-          base_path + "/accounts/" + this.accountId + "/transactions"
-          /*{
-          params: {
-            page: this.page,
-            page-size: 25
-          }
-        }*/
-        )
+        .get("/accounts/" + this.accountId + "/transactions")
         .then(r => r.data)
         .then(txnResult => {
           if (txnResult.data) {
@@ -95,7 +85,7 @@ export default {
                 this.transactions.push(txns[i]);
               }
               this.page++;
-            }else{
+            } else {
               this.buttonText = "No more transactions";
             }
           }

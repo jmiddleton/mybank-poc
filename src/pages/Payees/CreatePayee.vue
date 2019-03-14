@@ -110,7 +110,7 @@ export default {
   created(){
     this.payeeId = this.$route.params.payeeId;
     if(this.payeeId != 'new'){
-      axios.get('https://5a2u1vztie.execute-api.ap-southeast-2.amazonaws.com/dev/payees/'+ this.payeeId)
+      axios.get('/payees/'+ this.payeeId)
         .then(r => r.data)
         .then(payee => {
           if(typeof payee === 'object'){

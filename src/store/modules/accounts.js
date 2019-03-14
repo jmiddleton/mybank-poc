@@ -1,7 +1,6 @@
 import axios from 'axios';
 import _ from "lodash";
 
-const base_path = "http://localhost:3000/cds-au/v1/banking";
 const state = {
   categories: [
     {
@@ -74,7 +73,7 @@ const getters = {
 const actions = {
   loadAccountSummary({ commit }) {
     axios
-      .get(base_path + '/accounts')
+      .get('/accounts')
       .then(r => r.data)
       .then(accounts => {
         commit('SET_ACCOUNTS', accounts);
@@ -82,7 +81,7 @@ const actions = {
   },
   getAccountById({ commit }, accountId) {
     axios
-      .get(base_path + '/accounts/' + accountId)
+      .get('/accounts/' + accountId)
       .then(r => r.data)
       .then(account => {
         commit('SET_ACCOUNT', account);
@@ -92,7 +91,7 @@ const actions = {
   },
   loadAccountBalances({ commit }) {
     axios
-      .get(base_path + '/accounts/balances')
+      .get('/accounts/balances')
       .then(r => r.data)
       .then(balances => {
         commit('SET_BALANCES', balances);
