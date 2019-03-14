@@ -13,15 +13,18 @@
         <td class="type-width">
           <span class="notificationIcon thumb-sm">
             <img
-              v-if="props.merchantCategoryCode"
+              v-if="props.merchantCategoryCode && props.merchantCategoryCode !== 'null'"
               :src="require('../../assets/merchant-category/' + props.merchantCategoryCode + '.png')"
               alt="..."
             >
           </span>
         </td>
         <td class="date-width">
-          <p>
+          <p v-if="props.postingDateTime && props.postingDateTime != null">
             <span class>{{props.postingDateTime | date('DD MMM YYYY')}}</span>
+          </p>
+          <p v-else>
+            <span class>{{props.valueDateTime | date('DD MMM YYYY')}}</span>
           </p>
         </td>
         <td class="description-left">

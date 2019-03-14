@@ -1,14 +1,15 @@
 [
   {
     'repeat(15, 50)': {
-      accountId: '{{random("5245245rfsfg", "33333333fffff", "5365635645")}}',
+      customerId: '{{random("test", "test_123", "test_456")}}',
+      accountId: '{{random("5245245rfsfg", "33333333fffff")}}#{{objectId()}}',
       transactionId: '{{guid()}}',
       isDetailAvailable: false,
       type: '{{random("PAYMENT", "FEE", "INTEREST_CHARGED", "TRANSFER_INCOMING")}}',
       status: '{{random("PENDING", "POSTED")}}',
       description: '{{lorem(3, "words")}}',
       postingDateTime(tags) {
-          return this.status === "POSTED" ? new Date() : "";
+          return this.status === "POSTED" ? new Date() : "null";
       },
       valueDateTime(tags) {
         return new Date();
