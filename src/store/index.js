@@ -6,6 +6,7 @@ import VueAxios from 'vue-axios';
 import layout from './layout';
 import payeesModule from './modules/payees.js';
 import accountsModule from './modules/accounts.js';
+import transactionsModule from './modules/transactions.js';
 
 axios.defaults.baseURL = 'http://localhost:3000/cds-au/v1/banking';
 axios.defaults.headers.common['x-api-key'] = 'd41d8cd98f00b204e9800998ecf8427e';
@@ -18,7 +19,8 @@ export default new Vuex.Store({
   modules: {
     layout,
     payees: payeesModule,
-    accounts: accountsModule
+    accounts: accountsModule,
+    transactions: transactionsModule
   },
   state: {
   },

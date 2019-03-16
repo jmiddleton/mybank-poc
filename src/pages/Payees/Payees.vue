@@ -85,21 +85,17 @@ export default {
           name: "payeeId"
         },
         {
-          name: "name",
+          name: "nickname",
           title: "Name",
-          sortField: "name"
+          sortField: "nickname"
         },
         {
           name: "description",
           title: "Description",
           sortField: "description"
         },
-        {
-          name: "BSB",
-          title: "BSB"
-        },
-        { name: "accountNumber", title: "Number" },
-        { name: "payeeType", title: "Payee Type" },
+        { name: "creationDate", title: "Created" },
+        { name: "type", title: "Payee Type" },
         {
           name: "actions",
           title: "Actions"
@@ -107,7 +103,7 @@ export default {
       ],
       sortOrder: [
         {
-          field: "name",
+          field: "nickname",
           direction: "asc"
         }
       ],
@@ -162,7 +158,7 @@ export default {
         // search on name, description
         local = _.filter(local, function(item) {
           return (
-            item.name.search(txt) >= 0 || item.description.search(txt) >= 0
+            item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
           );
         });
       }

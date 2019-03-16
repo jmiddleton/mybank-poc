@@ -167,7 +167,7 @@ export default {
     selectPayeeList() {
       return _.map(this.$store.getters["payees/getPayees"].data, function(payee) {
         return {
-          label: payee.name + " - " + payee.BSB + " " + payee.accountNumber,
+          label: payee.nickname,
           accountId: payee.payeeId,
           isPayee: true,
           imgName: "payee"

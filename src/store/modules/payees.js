@@ -60,19 +60,9 @@ const actions = {
         console.log(error);
       });
   },
-  createPayee ({ commit }, formPayee) {
-    var newpayee = {
-      "payeeId": formPayee.payeeId,
-      "customerId": "12345",
-      "name": formPayee.name,
-      "description": formPayee.description,
-      "BSB": formPayee.BSB,
-      "accountNumber": formPayee.accountNumber,
-      "payeeType": formPayee.payeeType
-    };
-  
+  createPayee ({ commit }, newPayee) {
     axios
-      .post('/payees', newpayee)
+      .post('/payees', newPayee)
       .then(function (response) {
         console.log(response);
       })

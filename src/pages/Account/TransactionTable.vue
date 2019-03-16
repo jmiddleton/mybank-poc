@@ -50,60 +50,48 @@
     </span>
     
     <button
-      v-if="transactions && transactions.length > 0"
-      class="width-150 btn btn-outline-primary"
+      :disabled="!nextkey || nextkey === ''"
+      v-if="nextkey && nextkey.length > 0"
+      class="width-250 btn btn-outline-primary"
       v-on:click="getTransactionsByAccountId()"
       v-cloak
-    >{{ buttonText }}</button>
+    >Load More...</button>
+    <span v-else class="center text-danger">
+      <h5>{{ message }}</h5>
+    </span>
   </div>
 </template>
 <script>
 import Widget from "@/components/Widget/Widget";
 import axios from "axios";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "TransactionTable",
   components: { Widget },
   data() {
     return {
-      page: 0,
-      transactions: [],
-      buttonText: "Load more..."
+      accountId: ""
     };
   },
   methods: {
     getTransactionsByAccountId() {
-      axios
-        .get("/accounts/" + this.accountId + "/transactions")
-        .then(r => r.data)
-        .then(txnResult => {
-          if (txnResult.data) {
-            var from = this.page * 10;
-            var txns = txnResult.data.transactions.slice(from, from + 10);
-            var len = txns.length;
-            if (len > 0) {
-              // Loop on data and push in transactions
-              for (let i = 0; i < txns.length; i++) {
-                this.transactions.push(txns[i]);
-              }
-              this.page++;
-            } else {
-              this.buttonText = "No more transactions";
-            }
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      this.$store.dispatch("transactions/loadTransactionsByAccountId", {
+        accountId: this.accountId,
+        firstPage: false
+      });
     }
   },
   created() {
     this.accountId = this.$route.params.accountId;
     if (this.accountId !== undefined || this.accountId !== "") {
-      this.getTransactionsByAccountId();
+      this.$store.dispatch("transactions/loadTransactionsByAccountId", {
+        accountId: this.accountId,
+        firstPage: true
+      });
     }
-  }
+  },
+  computed: mapState("transactions", ["transactions", "message", "nextkey"])
 };
 </script>
 
