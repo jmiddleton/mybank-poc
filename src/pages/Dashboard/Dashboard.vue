@@ -7,8 +7,11 @@
         </b-breadcrumb-item>
         <b-breadcrumb-item active>Accounts</b-breadcrumb-item>
       </b-breadcrumb>
-      <h1 class="page-title">Account Summary
-        <a href="#" class="float-right btn btn-outline-primary"><i class="fa fa-edit mr-2"></i>Link Account</a>
+      <h1 class="page-title">
+        Account Summary
+        <a href="#" class="float-right btn btn-outline-primary">
+          <i class="fa fa-edit mr-2"></i>Link Account
+        </a>
       </h1>
       <b-row>
         <b-col xs="4">
@@ -45,14 +48,9 @@
         <b-col xs="4">
           <div class="pb-xlg">
             <Widget class="h-100 mb-0" title="SPENDING">
-              <b-row>
-                <b-col xs="12" md="6" lg="7" class="text-center">
-                  <div ref="chartContainer" style="height: 120px"/>
-                </b-col>
-                <b-col xs="12" md="5" lg="4">
-                  <div ref="chartLegend"/>
-                </b-col>
-              </b-row>
+              <div class="mt mb">
+                <SpendingsChart/>
+              </div>
             </Widget>
           </div>
         </b-col>
@@ -60,7 +58,7 @@
           <div class="pb-xlg">
             <Widget class="mb-0" title="AVERAGE SAVINGS">
               <div class="mt mb">
-                <StackedBar />
+                <AverageSavingsChart/>
               </div>
             </Widget>
           </div>
@@ -73,7 +71,8 @@
           <h3>{{getCategoryName(category)}}</h3>
           <b-list-group class="widgetBody widget-body">
             <b-list-group-item
-              v-for="account in accounts" :key="account.accountId"
+              v-for="account in accounts"
+              :key="account.accountId"
               class="list-group list-group-lg"
             >
               <span class="notificationIcon thumb-sm">
@@ -111,98 +110,58 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 /* eslint-enable */
 import Widget from "@/components/Widget/Widget";
-import StackedBar from './AverageSavingsChart';
+import AverageSavingsChart from "./AverageSavingsChart";
+import SpendingsChart from "./SpendingsChart";
 
 import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Dashboard",
-  components: { Widget, StackedBar },
+  components: { Widget, AverageSavingsChart, SpendingsChart },
   methods: {
     getAccountDetails(account) {
       //TODO: externalise this in a key-value pair map.
-      if(account.productCategory === "TRANS_AND_SAVINGS_ACCOUNTS"){
+      if (account.productCategory === "TRANS_AND_SAVINGS_ACCOUNTS") {
         this.$router.push({ path: "/app/accounts/" + account.accountId });
-      }else if(account.productCategory === "CRED_AND_CHRG_CARDS"){
+      } else if (account.productCategory === "CRED_AND_CHRG_CARDS") {
         this.$router.push({ path: "/app/creditcards/" + account.accountId });
-      }else{
+      } else {
         this.$router.push({ path: "/app/termdeposit/" + account.accountId });
       }
     },
 
-    getCategoryName(category){
-      var cat= _.find(this.$store.getters["accounts/categories"], ['id', category]);
-      if(cat){
+    getCategoryName(category) {
+      var cat = _.find(this.$store.getters["accounts/categories"], [
+        "id",
+        category
+      ]);
+      if (cat) {
         return cat.name;
       }
       return "";
     },
 
-    getAvailableBalance(balance){
-      if(balance.balanceUType === "deposit"){
+    getAvailableBalance(balance) {
+      if (balance.balanceUType === "deposit") {
         return balance.deposit.availableBalance.amount;
-      }else if(balance.balanceUType === "lending"){
+      } else if (balance.balanceUType === "lending") {
         return balance.lending.availableBalance.amount;
       }
       return "";
     },
 
-    getCurrentBalance(balance){
-      if(balance.balanceUType === "deposit"){
+    getCurrentBalance(balance) {
+      if (balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
-      }else if(balance.balanceUType === "lending"){
+      } else if (balance.balanceUType === "lending") {
         return balance.lending.accountBalance.amount;
       }
       return "";
-    },
-    
-
-    getRandomData() {
-      const arr = [];
-
-      for (let i = 0; i < 25; i += 1) {
-        arr.push(Math.random().toFixed(1) * 10);
-      }
-
-      return arr;
-    },
-    getData() {
-      const data = [];
-      const seriesCount = 5;
-      const accessories = ["Supermarket", "Transport", "Shopping", "Housing", "Others"];
-
-      for (let i = 0; i < seriesCount; i += 1) {
-        data.push({
-          label: accessories[i],
-          data: Math.floor(Math.random() * 100) + 1
-        });
-      }
-      return data;
-    },
-    initChart() {
-      $.plot(this.$refs.chartContainer, this.getData(), {
-        series: {
-          pie: {
-            innerRadius: 0.8,
-            show: true,
-            fill: 0.5
-          }
-        },
-        colors: ["#ffc247", "#f55d5d", "#9964e3"],
-        legend: {
-          noColumns: 1,
-          container: this.$refs.chartLegend,
-          labelBoxBorderColor: "#ffffff"
-        }
-      });
     }
   },
   mounted() {
-    this.initChart();
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
-
-    window.addEventListener("resize", this.initChart);
   },
   computed: {
     ...mapGetters("accounts", [
