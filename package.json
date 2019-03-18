@@ -33,6 +33,7 @@
     "jquery-ui": "^1.12.1",
     "line-awesome": "icons8/line-awesome",
     "messenger": "git+https://github.com/HubSpot/messenger.git#v1.4.2",
+    "moment": "^2.24.0",
     "napa": "^3.0.0",
     "node-sass": "^4.9.0",
     "nvd3": "1.8.6",

@@ -104,11 +104,6 @@
 </template>
 
 <script>
-import $ from "jquery";
-/* eslint-disable */
-import "imports-loader?jQuery=jquery,this=>window!flot";
-import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
-/* eslint-enable */
 import Widget from "@/components/Widget/Widget";
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";

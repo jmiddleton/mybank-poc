@@ -61,6 +61,7 @@ import PayeeFilterBar from "./PayeeFilterBar.vue";
 import _ from "lodash";
 import CssConfig from "./VuetableCssConfig.js";
 import axios from "axios";
+import moment from "moment";
 
 const { Messenger } = window;
 
@@ -94,7 +95,7 @@ export default {
           title: "Description",
           sortField: "description"
         },
-        { name: "creationDate", title: "Created" },
+        { name: "created", title: "Created"},
         { name: "type", title: "Payee Type" },
         {
           name: "actions",
@@ -111,6 +112,10 @@ export default {
     };
   },
   methods: {
+    formatDate(value) {
+      if (value == null) return "";
+      return moment(new Date(value)).format("YYYY-MM-DD");
+    },
     onPaginationData(paginationData) {
       this.$refs.pagination.setPaginationData(paginationData);
       this.$refs.paginationInfo.setPaginationData(paginationData);
@@ -191,7 +196,10 @@ export default {
       .get("/payees")
       .then(r => r.data)
       .then(payees => {
-        this.localData = payees;
+        payees.forEach(element => {
+          element.created = this.formatDate(element.created);
+          this.localData.push(element);  
+        });
       })
       .catch(function(error) {
         console.log(error);
