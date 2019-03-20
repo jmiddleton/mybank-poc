@@ -51,7 +51,7 @@ export default {
             fill: 0.2
           }
         },
-        colors: ["#ffc247", "#f55d5d", "#9964e3"],
+        colors: ["#ffc247", "#f55d5d", "#9964e3", "#78c448"],
         legend: {
           container: this.$refs.spendingsLegend,
           labelBoxBorderColor: "#ffffff"

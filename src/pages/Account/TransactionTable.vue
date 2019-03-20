@@ -17,13 +17,14 @@
               :src="require('../../assets/merchant-category/' + props.merchantCategoryCode + '.png')"
               alt="..."
             >
+            <img
+              v-else
+              :src="require('../../assets/merchant-category/undefined.png')"
+            >
           </span>
         </td>
         <td class="date-width">
-          <p v-if="props.postingDateTime && props.postingDateTime != null">
-            <span class>{{props.postingDateTime | date('DD MMM YYYY')}}</span>
-          </p>
-          <p v-else>
+          <p>
             <span class>{{props.valueDateTime | date('DD MMM YYYY')}}</span>
           </p>
         </td>
@@ -36,7 +37,7 @@
             <small>
               <span class="fw-semi-bold">Ref:</span>
               <span>&nbsp; {{props.reference}}</span>
-              <span>&nbsp;|&nbsp;Value Date: {{props.valueDateTime | date('DD/MM/YYYY')}}</span>
+              <span v-if="props.postingDateTime" >&nbsp;|&nbsp;Date: {{props.postingDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </p>
         </td>

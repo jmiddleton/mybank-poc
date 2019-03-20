@@ -1,11 +1,11 @@
 [
   {
-    'repeat(15, 50)': {
-      customerId: '{{random("test", "test_123", "test_456")}}',
-      accountId: '{{random("5245245rfsfg", "33333333fffff")}}#{{objectId()}}',
+    'repeat(1, 10)': {
+      customerId: "test",
+      accountId: '{{random("5245245rfsfg", "33333333fffff")}}#{{moment().subtract(1, "months").format()}}#{{objectId()}}',
       transactionId: '{{guid()}}',
       isDetailAvailable: false,
-      type: '{{random("PAYMENT", "FEE", "INTEREST_CHARGED", "TRANSFER_INCOMING")}}',
+      type: '{{random("FEE", "INTEREST_CHARGED", "TRANSFER_INCOMING")}}',
       status: '{{random("PENDING", "POSTED")}}',
       description: '{{lorem(3, "words")}}',
       postingDateTime(tags) {
@@ -17,11 +17,15 @@
       executionDateTime(tags) {
         return new Date();
       },
-      amount: '{{floating(10, 200, 2, "0.00")}}',
+      amount(tags){
+        return this.type === "PAYMENT" ? tags.floating(1000, 3000, 2, "0.00"): tags.floating(-510, -20, 2, "0.00");
+      },
       currency: 'AUD',
       reference: '{{objectId()}}',
       merchantName: '{{company().toUpperCase()}}',
-      merchantCategoryCode: '{{random("4111", "5139", "5411", "5462" , "")}}'
+      merchantCategoryCode(tags){
+        return "" + tags.random("4111", "5139", "5411", "5462" , "0732", "null");
+      }
     }
   }
 ]

@@ -20,7 +20,7 @@ const actions = {
         axios
             .get("/accounts/" + filter.accountId + "/transactions", {
                 params: {
-                    "page-size": 7,
+                    "page-size": 25,
                     "text": "searchtext",
                     "start-time": "",
                     "end-time": "",

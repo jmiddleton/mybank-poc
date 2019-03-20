@@ -33,7 +33,7 @@ export default {
       for (let i = 0; i < savings.length; i++) {
         var serie= [i, savings[i].totalSavings];
         this.data.push([serie]);
-        this.ticks.push([i, savings[i].monthName] );
+        this.ticks.push([i, savings[i].monthName.substring(0, 3)] );
       }
     },
     createChart() {
@@ -62,14 +62,14 @@ export default {
           axisLabelFontSizePixels: 10,
           axisLabelPadding: 10
         },
-        colors: ["#78c448", "#dbd9f4"]
+        colors: ["#78c448"]
       });
     }
   },
   mounted() {
     axios
       .get("/analytics/savings/" + moment().subtract(3, 'months').format("YYYY-MM"), {
-        "page-size": 3
+        "page-size": 4
       })
       .then(r => r.data)
       .then(savings => {

@@ -12,11 +12,12 @@
         <a href="#" class="float-right btn btn-outline-primary">
           <i class="fa fa-edit mr-2"></i>Link Account
         </a>
+        <a href="" data-widgster="load" class="small text-gray-light la la-refresh"></a>
       </h1>
       <b-row>
         <b-col xs="4">
           <div class="pb-xlg h-100">
-            <Widget class="h-100 mb-0">
+            <Widget class="h-100 mb-0" title="TOTAL BALANCE">
               <div class="row flex-nowrap">
                 <div xs="3">
                   <span class="widget-icon">
@@ -24,21 +25,14 @@
                   </span>
                 </div>
                 <div xs="9" class="col">
-                  <h6 class="m-0 text-right">TOTAL BALANCE</h6>
-                  <p class="h2 m-0 fw-normal text-right">{{totalBalance}}</p>
+                  <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
                 </div>
               </div>
               <div class="d-flex flex-wrap justify-content-between">
                 <div class="mt">
-                  <h6>$ {{totalAvailableBalance}}</h6>
-                  <p class="text-muted mb-0">
-                    <small>Available Balance</small>
-                  </p>
-                </div>
-                <div class="mt">
-                  <h6>2.5%</h6>
+                  <h5>$ {{totalAvailableBalance}}</h5>
                   <p class="text-muted mb-0 mr">
-                    <small>Rate</small>
+                    <small>Available Balance</small>
                   </p>
                 </div>
               </div>
