@@ -17,9 +17,9 @@
             <button class="btn btn-outline-info btn-sm" @click="changeMonth(1)">Next</button>
           </div>
           <div class="sidebarAlerts">
-            <label ref="spendingSidebar" />
+            <label ref="spendingSidebar"/>
             <b-alert
-              v-for="category in chartData"
+              v-for="category in slidebarData"
               :key="category.id"
               class="sidebarAlert"
               variant="transparent"
@@ -48,7 +48,9 @@
         </Widget>
       </b-col>
       <b-col xs="6">
-        <Widget title="Category Spending" refresh settings></Widget>
+        <Widget title="Category Spending" refresh settings>
+          <div ref="categoryChart" :style="{ height: '325px' }"/>
+        </Widget>
       </b-col>
     </b-row>
   </div>
@@ -57,15 +59,17 @@
 <script>
 import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
-
 import $ from "jquery";
 import "imports-loader?jQuery=jquery,this=>window!flot";
-import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
+import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.time";
+require("../../core/jquery.flot.orderBars.js");
+
 import axios from "axios";
 import moment from "moment";
 
 const { Messenger } = window;
 const mformat = "YYYY-MM";
+
 export default {
   name: "Spending",
   components: {
@@ -74,19 +78,19 @@ export default {
   data() {
     return {
       rawSpendings: [],
-      ticks: [],
-      chartData: [],
+      slidebarData: [],
+      barchartData: [],
       currentMonth: 0,
       maxvalue: 100
     };
   },
   methods: {
-    generateChartData() {
-      this.chartData = [];
-      this.$refs.spendingSidebar.innerText= "";
+    generateslidebarData() {
+      this.slidebarData = [];
+      this.$refs.spendingSidebar.innerText = "";
 
       if (!this.rawSpendings) {
-        return this.chartData;
+        return this.slidebarData;
       }
 
       for (let i = 0; i < this.rawSpendings.length; i++) {
@@ -95,6 +99,7 @@ export default {
         if (!moment(spend.month, mformat).isSame(this.currentMonth)) {
           continue;
         }
+
         const value = Math.abs(spend.totalSpent);
         var serie = {
           id: i,
@@ -108,11 +113,11 @@ export default {
           this.maxvalue = value * (value * 0.5);
         }
 
-        this.chartData.push(serie);
+        this.slidebarData.push(serie);
       }
 
-      if(this.chartData.length === 0 ){
-        this.$refs.spendingSidebar.innerText= "No data found";
+      if (this.slidebarData.length === 0) {
+        this.$refs.spendingSidebar.innerText = "No data found";
       }
     },
     changeMonth(month) {
@@ -125,8 +130,8 @@ export default {
       }
 
       if (this.isLocalAvailable(this.currentMonth)) {
-        this.generateChartData();
-      }else{
+        this.generateslidebarData();
+      } else {
         this.loadSpending(this.currentMonth);
       }
     },
@@ -145,9 +150,80 @@ export default {
         .then(spendings => {
           if (spendings && spendings.data) {
             this.rawSpendings = spendings.data.spendings;
-            this.generateChartData();
+            this.generateslidebarData();
           }
         });
+    },
+    getCategoryChartData() {
+      this.barchartData = [];
+
+      if (!this.rawSpendings) {
+        return this.barchartData;
+      }
+
+      var index = 0;
+      var order = 1;
+      for (let i = 0; i < this.rawSpendings.length; i++) {
+        const spend = this.rawSpendings[i];
+        const month = spend.month.substring(0, 7);
+
+        var serie = _.find(this.barchartData, { label: spend.category });
+        if (serie) {
+          index = serie.data.length;
+        } else {
+          serie = {
+            data: [],
+            label: spend.category,
+            bars: {
+              show: true,
+              barWidth: 15 * 24 * 60 * 60 * 300,
+              fill: 0.65,
+              lineWidth: 1,
+              order: order++
+            }
+          };
+          index = 0;
+          this.barchartData.push(serie);
+        }
+        serie.data.push([
+          moment(month, mformat).valueOf(),
+          Math.abs(spend.totalSpent)
+        ]);
+      }
+
+      if (this.barchartData.length === 0) {
+        return (this.$refs.categoryChart.innerText = "No data found");
+      }
+    },
+    createCategoryChart() {
+      this.getCategoryChartData();
+
+      $.plot($(this.$refs.categoryChart), this.barchartData, {
+        xaxis: {
+          mode: "time",
+          tickLength: 0,
+          tickSize: [1, "month"],
+          axisLabel: "Month",
+          axisLabelUseCanvas: true,
+          axisLabelFontSizePixels: 10,
+          axisLabelPadding: 10
+        },
+        grid: {
+          hoverable: true,
+          borderWidth: 0
+        },
+        legend: {
+          backgroundColor: "transparent",
+          labelBoxBorderColor: "none"
+        }
+      });
+    }
+  },
+  watch: {
+    rawSpendings(newVal, oldVal) {
+      if (this.barchartData && this.barchartData.length === 0) {
+        this.createCategoryChart();
+      }
     }
   },
   created() {},
