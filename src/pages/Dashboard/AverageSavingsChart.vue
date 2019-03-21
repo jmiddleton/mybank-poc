@@ -2,7 +2,6 @@
   <b-row>
     <b-col xs="12">
       <div ref="savingsChart" :style="{ height: '100px' }"/>
-      <span v-if="!isDataAvailable">No Data Found</span>
     </b-col>
   </b-row>
 </template>
@@ -19,7 +18,6 @@ export default {
   name: "AverageSavingsChart",
   data() {
     return {
-      isDataAvailable: false,
       ticks: [],
       data: []
     };
@@ -37,6 +35,10 @@ export default {
       }
     },
     createChart() {
+      if(this.data.length == 0){
+        return this.$refs.savingsChart.innerText= "No data found";
+      }
+
       return $.plot($(this.$refs.savingsChart), this.data, {
         series: {
           bars: {
@@ -76,9 +78,6 @@ export default {
         if (savings && savings.data) {
           this.getSavingsData(savings.data.savings)
           this.createChart();
-          this.isDataAvailable = true;
-        } else {
-          this.isDataAvailable = false;
         }
       });
   }

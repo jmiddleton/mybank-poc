@@ -2,7 +2,6 @@
   <b-row>
     <b-col xs="6">
       <div ref="spendingsChart" :style="{ height: '100px' }"/>
-      <span v-if="!isDataAvailable">No Data Found</span>
     </b-col>
     <b-col xs="6">
       <div ref="spendingsLegend" :style="{ height: '100px' }"/>
@@ -23,7 +22,6 @@ export default {
   name: "SpendingsChart",
   data() {
     return {
-      isDataAvailable: false
     };
   },
   methods: {
@@ -43,6 +41,10 @@ export default {
       return data;
     },
     createChart(data) {
+      if(data.length == 0){
+        return this.$refs.spendingsChart.innerText= "No data found";
+      }
+
       return $.plot(this.$refs.spendingsChart, data, {
         series: {
           pie: {
@@ -60,16 +62,12 @@ export default {
     }
   },
   mounted() {
-    //TODO: use current year/month
     axios
       .get("/analytics/spendings/" + moment().format("YYYY-MM"))
       .then(r => r.data)
       .then(spendings => {
         if (spendings && spendings.data) {
           this.createChart(this.getSpendingsData(spendings.data.spendings));
-          this.isDataAvailable = true;
-        } else {
-          this.isDataAvailable = false;
         }
       });
   }

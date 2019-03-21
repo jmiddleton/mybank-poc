@@ -18,6 +18,8 @@ import CreditCardDetails from '@/pages/Account/CreditCardDetails';
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
+import SpendingPage from '@/pages/Analytics/Spending';
+
 Vue.use(Router);
 
 export default new Router({
@@ -64,6 +66,11 @@ export default new Router({
           component: TransfersPage,
         },
         {
+          path: 'spending',
+          name:'SpendingPage',
+          component: SpendingPage
+        },
+        {
           path: 'payees',
           name: 'PayeesPage',
           component: PayeesPage,
@@ -74,7 +81,7 @@ export default new Router({
           component: CreatePayeesPage,
         },
         {
-          path: 'components/maps',
+          path: 'branches',
           name: 'GoogleMapPage',
           component: GoogleMapPage,
         },

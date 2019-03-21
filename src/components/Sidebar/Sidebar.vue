@@ -23,13 +23,6 @@
         isHeader
       />
       <NavLink
-        header="Payees"
-        link="/app/payees"
-        iconName="flaticon-equal-1"
-        index="tables"
-        isHeader
-      />
-      <NavLink
         header="Spending"
         link="/app/spending"
         iconName="fi flaticon-controls"
@@ -37,10 +30,24 @@
         isHeader
       />
       <NavLink
+        header="Payees"
+        link="/app/payees"
+        iconName="flaticon-equal-1"
+        index="tables"
+        isHeader
+      />
+      <NavLink
         header="Notifications"
         link="/app/notifications"
         iconName="flaticon-star"
         index="notifications"
+        isHeader
+      />
+      <NavLink
+        header="Branches"
+        link="/app/branches"
+        iconName="fi flaticon-map-location"
+        index="branches"
         isHeader
       />
     </ul>
