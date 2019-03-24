@@ -40,152 +40,70 @@
   },
   "accountDetails": [
     {
-      "accountId": "5245245rfsfg",
-      "displayName": "Net Saver",
+      "accountId": "666666666",
+      "displayName": "Flexible Saving II",
       "nickname": "string",
-      "maskedNumber": "063000 3452450",
+      "maskedNumber": "536803 5860345-0",
       "openStatus": "OPEN",
       "isOwned": "true",
       "productCategory": "PERS_AT_CALL_DEPOSITS",
-      "productName": "Net Saver",
+      "productName": "Flexible Saving II",
       "bsb": "string",
       "accountNumber": "string",
       "bundleName": "string",
       "specificAccountUType": "depositRates",
-      "institution": "cba",
       "depositRates": [
         {
           "depositRateType": "FIXED",
-          "rate": "1.50",
-          "calculationFrequency": "string",
-          "applicationFrequency": "string",
-          "additionalValue": "string",
-          "additionalInfo": "string",
-          "additionalInfoUri": "https://www.commbank.com.au/banking/netbank-saver.html?ei=NBSaver1"
+          "rate": "2.50",
+          "additionalInfoUri": "https://www.westpac.com.au/personal-banking/bank-accounts/savings-accounts/life/?layout=full&cid=wc:dp:LifeSEM_1811:sem::life&utm_source=&utm_medium=sem&utm_campaign=LifeSEM_1811&param=saving%20account&param=e&gclid=EAIaIQobChMIi7mbu-eX4QIVDRSPCh39dAeoEAAYASAAEgJkwfD_BwE&gclsrc=aw.ds"
         },
         {
           "depositRateType": "BONUS",
-          "rate": "1.80",
-          "calculationFrequency": "string",
-          "applicationFrequency": "string",
-          "additionalValue": "string",
-          "additionalInfo": "string",
-          "additionalInfoUri": ""
+          "rate": "2.80"
         }
       ]
     },
     {
-      "accountId": "33333333fffff",
-      "displayName": "Day to Day Account",
+      "accountId": "451212111",
+      "displayName": "Term Deposit",
       "nickname": "string",
       "maskedNumber": "342085 5635658",
       "openStatus": "OPEN",
       "isOwned": "true",
       "productCategory": "PERS_AT_CALL_DEPOSITS",
-      "productName": "Day to Day Account",
-      "institution": "hsbc",
+      "productName": "Term Deposit",
       "specificAccountUType": "depositRates",
       "depositRates": [
         {
           "depositRateType": "FIXED",
-          "rate": "0.50",
-          "calculationFrequency": "string",
-          "applicationFrequency": "string",
-          "additionalValue": "string",
-          "additionalInfo": "string",
-          "additionalInfoUri": "https://www.hsbc.com.au/accounts/products/day-to-day/"
+          "rate": "1.50",
+          "additionalInfoUri": "https://www.rabodirect.com.au/high-interest-savings-account/"
         },
         {
           "depositRateType": "BONUS",
-          "rate": "2.00",
-          "calculationFrequency": "string",
-          "applicationFrequency": "string",
-          "additionalValue": "string",
-          "additionalInfo": "string",
-          "additionalInfoUri": ""
+          "rate": "3.00"
         },
         {
           "depositRateType": "PROMOTION",
-          "rate": "0.60",
-          "calculationFrequency": "string",
-          "applicationFrequency": "string",
-          "additionalValue": "string",
-          "additionalInfo": "string",
-          "additionalInfoUri": ""
+          "rate": "1.60"
         }
       ]
-    },
-    {
-      "accountId": "5365635645",
-      "displayName": "Credit Card",
-      "nickname": "string",
-      "maskedNumber": "**** **** **** 1922",
-      "openStatus": "OPEN",
-      "isOwned": "true",
-      "productCategory": "PERS_CRED_AND_CHRG_CARDS",
-      "productName": "string",
-      "bsb": "string",
-      "accountNumber": "string",
-      "bundleName": "string",
-      "institution": "citi",
-      "specificAccountUType": "creditCard",
-      "creditCard": {
-        "minPaymentAmount": "120",
-        "paymentDueAmount": "1500",
-        "paymentCurrency": "AUD",
-        "paymentDueDate": "2019-03-08T22:29:32.279Z"
-      }
     }
   ],
   "balances": {
     "data": {
       "balances": [
         {
-          "accountId": "5245245rfsfg",
+          "accountId": "666666666",
           "balanceUType": "deposit",
           "deposit": {
             "currentBalance": {
-              "amount": "1234.90",
+              "amount": "5000.90",
               "currency": "AUD"
             },
             "availableBalance": {
-              "amount": "2000",
-              "currency": "AUD"
-            }
-          }
-        },
-        {
-          "accountId": "33333333fffff",
-          "balanceUType": "deposit",
-          "deposit": {
-            "currentBalance": {
-              "amount": "3500.90",
-              "currency": "AUD"
-            },
-            "availableBalance": {
-              "amount": "3000",
-              "currency": "AUD"
-            }
-          }
-        },
-        {
-          "accountId": "5365635645",
-          "balanceUType": "lending",
-          "lending": {
-            "accountBalance": {
-              "amount": "5500",
-              "currency": "AUD"
-            },
-            "availableBalance": {
-              "amount": "4500",
-              "currency": "AUD"
-            },
-            "creditLimit": {
-              "amount": "10000",
-              "currency": "AUD"
-            },
-            "amortisedLimit": {
-              "amount": "0",
+              "amount": "3500",
               "currency": "AUD"
             }
           }
