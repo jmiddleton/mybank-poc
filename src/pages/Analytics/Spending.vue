@@ -35,13 +35,10 @@
                 </span>
                 <h6>{{category.title}}</h6>
 
-                <b-progress
-                  class="sidebarProgress progress-md"
-                  :variant="category.color"
-                  :value="category.total"
-                  :max="maxvalue"
-                />
-                <small>{{category.footer}}</small>
+                <div class="sidebarProgress progress-md">
+                  <b-progress :variant="category.color" :value="category.total" :max="maxvalue"/>
+                  <small class="float-right">{{category.footer}}</small>
+                </div>
               </div>
             </b-alert>
           </div>
