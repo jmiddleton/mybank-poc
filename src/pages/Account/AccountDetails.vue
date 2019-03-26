@@ -16,9 +16,9 @@
                 <i class="fa fa-edit mr-2"></i>
                 Make a Transfer
               </button>
-              <h1>{{account.displayName}}</h1>
+              <h1>{{account.displayName}} <span class="badge badge-success">{{account.openStatus}}</span></h1>
               <h3>{{account.maskedNumber}}</h3>
-              <span class="badge badge-success badge-pill">{{account.openStatus}}</span>
+              <span class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
               <h5>
                 <div v-for="balance in balances" :key="balance.accountId">
                   <div
@@ -85,9 +85,17 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
 import { mapState, mapGetters } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
+import moment from "moment";
+
+Vue.filter('formatDate', function(value) {
+  if (value) {
+    return moment(value).format('DD MMM hh:mm')
+  }
+});
 
 const { Messenger } = window;
 

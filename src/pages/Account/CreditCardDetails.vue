@@ -16,9 +16,9 @@
                 <i class="fa fa-edit mr-2"></i>
                 Make a Payment
               </a>
-              <h1>{{account.displayName}}</h1>
+              <h1>{{account.displayName}} <span class="badge badge-success badge-pill">{{account.openStatus}}</span></h1>
               <h3>{{account.maskedNumber}}</h3>
-              <span class="badge badge-success badge-pill">{{account.openStatus}}</span>
+              <span class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
               <h5>
                 <div v-for="balance in balances" :key="balance.accountId">
                   <div

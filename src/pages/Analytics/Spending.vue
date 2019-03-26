@@ -107,7 +107,7 @@ export default {
         };
 
         if (this.maxvalue < value) {
-          this.maxvalue = value * (value * 0.5);
+          this.maxvalue = value + (value * 0.8);
         }
 
         this.slidebarData.push(serie);
