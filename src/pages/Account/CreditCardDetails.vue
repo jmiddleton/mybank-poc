@@ -18,7 +18,7 @@
               </a>
               <h1>{{account.displayName}} <span class="badge badge-success badge-pill">{{account.openStatus}}</span></h1>
               <h3>{{account.maskedNumber}}</h3>
-              <span class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
+              <span v-if="account.updated" class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
               <h5>
                 <div v-for="balance in balances" :key="balance.accountId">
                   <div

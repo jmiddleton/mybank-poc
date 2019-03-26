@@ -89,7 +89,7 @@
                 <span class="fa fa-external-link"></span>
               </a>
               <p class="deemphasize text-ellipsis m-0">{{ account.maskedNumber }}</p>
-              <p class="text-muted mb-0 mr"><small>Updated: {{ account.updated | formatDate }}</small></p>
+              <p v-if="account.updated" class="text-muted mb-0 mr"><small>Updated: {{ account.updated | formatDate }}</small></p>
             </b-list-group-item>
           </b-list-group>
         </b-col>
@@ -108,7 +108,7 @@ import { mapState, mapGetters } from "vuex";
 
 Vue.filter('formatDate', function(value) {
   if (value) {
-    return moment(value).format('DD MMM hh:mm')
+    return moment(value).format('DD MMM')
   }
 });
 

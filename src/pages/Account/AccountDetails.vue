@@ -12,13 +12,23 @@
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body">
             <div class="widget-title widget-top widget-padding-md clearfix bg-primary text-white">
-              <button @click="makeTransfer()" class="float-right btn-transfer btn btn-outline btn-sm mb-2">
+              <button
+                @click="makeTransfer()"
+                class="float-right btn-transfer btn btn-outline btn-sm mb-2"
+              >
                 <i class="fa fa-edit mr-2"></i>
                 Make a Transfer
               </button>
-              <h1>{{account.displayName}} <span class="badge badge-success">{{account.openStatus}}</span></h1>
+              <h1>
+                {{account.displayName}}
+                <a @click="refresh()" data-widgster="load" class="small text-white la la-refresh"></a>
+              </h1>
               <h3>{{account.maskedNumber}}</h3>
-              <span class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
+              <span class="badge badge-success">{{account.openStatus}}</span>&nbsp;
+              <span
+                v-if="account.updated"
+                class="btn btn-outline btn-xs"
+              >Updated {{account.updated | formatDate}}</span>
               <h5>
                 <div v-for="balance in balances" :key="balance.accountId">
                   <div
@@ -90,10 +100,11 @@ import Widget from "@/components/Widget/Widget";
 import { mapState, mapGetters } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 import moment from "moment";
+import axios from "axios";
 
-Vue.filter('formatDate', function(value) {
+Vue.filter("formatDate", function(value) {
   if (value) {
-    return moment(value).format('DD MMM hh:mm')
+    return moment(value).format("DD MMM");
   }
 });
 
@@ -117,12 +128,15 @@ export default {
     }
   },
   methods: {
-    makeTransfer(){
+    refresh() {
+      axios.post("/accounts/" + this.accountId + "/refresh");
+      location.reload();
+    },
+    makeTransfer() {
       this.$router.push({ path: "/app/transfers/" + this.accountId });
     }
-
   },
-  computed: mapGetters("accounts", ["account","balances"])
+  computed: mapGetters("accounts", ["account", "balances"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />
