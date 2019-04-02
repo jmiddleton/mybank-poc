@@ -21,6 +21,7 @@ import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
 import SpendingPage from '@/pages/Analytics/Spending';
 import CallbackPage from '@/pages/LandingPage/Callback';
+import ProfilePage from '@/pages/Profile/Profile';
 
 Vue.use(Router);
 
@@ -91,6 +92,11 @@ const router = new Router({
           path: 'branches',
           name: 'GoogleMapPage',
           component: GoogleMapPage,
+        },
+        {
+          path: 'profile',
+          name: 'Profile',
+          component: ProfilePage,
         },
       ],
     },

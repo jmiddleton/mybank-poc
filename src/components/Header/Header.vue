@@ -39,8 +39,8 @@
             <span class="fw-semi-bold">{{ this.$auth.profile.nickname }}</span>
           </span>
         </template>
-        <b-dropdown-item>
-          <i class="la la-user"/> My Account
+        <b-dropdown-item @click="profile">
+          <i class="la la-user"/> My Profle
         </b-dropdown-item>
         <b-dropdown-divider/>
         <b-dropdown-item-button @click="logout">
@@ -96,6 +96,9 @@ export default {
     logout() {
       this.$auth.logOut();
       this.$router.push("/");
+    },
+    profile(){
+      this.$router.push("/app/profile");
     }
   },
   created() {
