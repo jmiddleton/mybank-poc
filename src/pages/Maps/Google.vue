@@ -1,16 +1,16 @@
 <template>
   <div>
     <h1 class="mapTitle page-title">
-      Google <span class="fw-semi-bold">Maps</span>
+      Branches
     </h1>
     <div class="mapContainer">
       <GmapMap
-        :center="{lat: -37.813179, lng: 144.950259}"
+        :center="{lat: -33.9681478, lng:151.1265894}"
         :zoom="12"
         style="width: 100%; height: inherit"
       >
       <GmapMarker
-        :position="{lat: -37.813179, lng: 144.950259}"
+        :position="{lat: -33.9681478, lng:151.1265894}"
       />
       </GmapMap>
     </div>
@@ -19,8 +19,8 @@
 
 <script>
 export default {
-  name: 'GoogleMap',
+  name: 'Branches',
 };
 </script>
 
-<style src="./Google.scss" lang="scss" scoped />
+<style src="./Branches.scss" lang="scss" scoped />

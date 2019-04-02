@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-breadcrumb>
-      <b-breadcrumb-item>
+      <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
       </b-breadcrumb-item>
       <b-breadcrumb-item active>Transfer and Payments</b-breadcrumb-item>

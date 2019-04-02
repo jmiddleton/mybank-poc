@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import auth from "./auth/authService";
 
 import Layout from '@/components/Layout/Layout';
-import Login from '@/pages/Login/Login';
+import LandingPage from '@/pages/LandingPage/LandingPage';
 import ErrorPage from '@/pages/Error/Error';
 // Core
 import TransfersPage from '@/pages/Transfers/Transfers';
@@ -19,16 +20,22 @@ import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
 import SpendingPage from '@/pages/Analytics/Spending';
+import CallbackPage from '@/pages/LandingPage/Callback';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
+      path: '/',
+      name: 'LandingPage',
+      component: LandingPage,
+    },
+    {
+      path: '/callback',
+      name: 'callback',
+      component: CallbackPage
     },
     {
       path: '/error',
@@ -67,7 +74,7 @@ export default new Router({
         },
         {
           path: 'spending',
-          name:'SpendingPage',
+          name: 'SpendingPage',
           component: SpendingPage
         },
         {
@@ -89,3 +96,15 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.path === "/" || to.path === "/callback" || auth.isAuthenticated()) {
+    return next();
+  }
+
+  // Specify the current path as the customState parameter, meaning it
+  // will be returned to the application after auth
+  auth.login({ target: to.path });
+});
+
+export default router;

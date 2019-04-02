@@ -1,10 +1,9 @@
 <template>
   <div class="col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item>
+      <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
       </b-breadcrumb-item>
-      <b-breadcrumb-item>Accounts</b-breadcrumb-item>
       <b-breadcrumb-item active>Account Details</b-breadcrumb-item>
     </b-breadcrumb>
     <b-row>

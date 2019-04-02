@@ -13,6 +13,7 @@ import store from './store';
 import router from './Routes';
 import App from './App';
 import VueDateFns from "vue-date-fns";
+import AuthPlugin from "./auth";
  
 Vue.use(VueDateFns);
 Vue.use(BootstrapVue);
@@ -24,6 +25,7 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyB7OXmzfQYua_1LEhRdqsoYzyJOPh9hGLg',
   },
 });
+Vue.use(AuthPlugin);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

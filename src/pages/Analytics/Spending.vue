@@ -1,7 +1,7 @@
 <template>
   <div class="tables-basic col-md-12 col-lg-10">
     <b-breadcrumb>
-      <b-breadcrumb-item>
+      <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
       </b-breadcrumb-item>
       <b-breadcrumb-item active>My Spending</b-breadcrumb-item>

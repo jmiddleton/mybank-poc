@@ -5,7 +5,6 @@
         <b-breadcrumb-item>
           <span class="fi flaticon-home"></span>
         </b-breadcrumb-item>
-        <b-breadcrumb-item active>Accounts</b-breadcrumb-item>
       </b-breadcrumb>
       <h1 class="page-title">
         Account Summary
