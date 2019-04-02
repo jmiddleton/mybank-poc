@@ -14,8 +14,6 @@ const webAuth = new auth0.WebAuth({
     scope: 'openid profile email'
 });
 
-
-
 class AuthService extends EventEmitter {
     idToken = null;
     profile = null;

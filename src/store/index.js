@@ -10,7 +10,6 @@ import transactionsModule from './modules/transactions.js';
 
 axios.defaults.baseURL = 'http://localhost:3000/mybank/v1';
 axios.defaults.headers.common['x-api-key'] = 'd41d8cd98f00b204e9800998ecf8427e';
-//axios.defaults.headers.common['Authorization'] = 'Bearer test';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);

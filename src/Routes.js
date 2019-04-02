@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import auth from "./auth/authService";
+//import auth from "./auth/authService";
 
 import Layout from '@/components/Layout/Layout';
 import LandingPage from '@/pages/LandingPage/LandingPage';
@@ -97,14 +97,14 @@ const router = new Router({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.path === "/" || to.path === "/callback" || auth.isAuthenticated()) {
-    return next();
-  }
+//router.beforeEach((to, from, next) => {
+  // if (to.path === "/" || to.path === "/callback" || auth.isAuthenticated()) {
+  //   return next();
+  // }
 
   // Specify the current path as the customState parameter, meaning it
   // will be returned to the application after auth
-  auth.login({ target: to.path });
-});
+  //auth.login({ target: to.path });
+//});
 
 export default router;

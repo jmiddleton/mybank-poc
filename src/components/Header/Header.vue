@@ -36,7 +36,7 @@
             <img class="rounded-circle" :src="this.$auth.profile.picture" alt="...">
           </span>
           <span class="small">
-            <span class="fw-semi-bold">{{ this.$auth.profile.name }}</span>
+            <span class="fw-semi-bold">{{ this.$auth.profile.nickname }}</span>
           </span>
         </template>
         <b-dropdown-item>
