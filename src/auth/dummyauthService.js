@@ -10,11 +10,7 @@ class AuthService extends EventEmitter {
 
     // Starts the user login flow
     login(customState) {
-        if(customState){
-            //window.location= customState.target;
-        }else{
-            //window.location= '/app/dashboard';
-        }
+        window.location = '/callback';
     }
 
     // Handles the callback request from Auth0
