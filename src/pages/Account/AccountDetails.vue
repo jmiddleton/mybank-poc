@@ -129,7 +129,7 @@ export default {
   methods: {
     refresh() {
       axios.post("/accounts/" + this.accountId + "/refresh");
-      location.reload();
+      window.location = "/app/accounts/" + this.accountId ;
     },
     makeTransfer() {
       this.$router.push({ path: "/app/transfers/" + this.accountId });
