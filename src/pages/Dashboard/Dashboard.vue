@@ -7,7 +7,7 @@
         </b-breadcrumb-item>
       </b-breadcrumb>
       <h1 class="page-title">
-        Account Summary
+        My Dashboard
         <a href="#" class="float-right btn btn-outline-primary">
           <i class="fa fa-edit mr-2"></i>Link Account
         </a>

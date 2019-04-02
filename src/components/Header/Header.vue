@@ -5,11 +5,6 @@
         <a class="d-md-down-none px-2" href="#" @click="toggleSidebarMethod" id="barsTooltip">
           <i class="la la-bars la-lg"/>
         </a>
-        <b-tooltip target="barsTooltip" placement="bottom">
-          Turn on/off
-          <br>sidebar
-          <br>collapsing
-        </b-tooltip>
         <a class="fs-lg d-lg-none" href="#" @click="switchSidebarMethod">
           <span class="rounded rounded-lg bg-gray text-white d-md-none">
             <i class="la la-bars la-lg"/>

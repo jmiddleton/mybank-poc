@@ -9,7 +9,7 @@
     </header>
     <ul class="nav">
       <NavLink
-        header="Accounts"
+        header="My Dashboard"
         link="/app/dashboard"
         iconName="flaticon-home"
         index="dashboard"
@@ -64,22 +64,7 @@ export default {
   components: { NavLink },
   data() {
     return {
-      alerts: [
-        {
-          id: 0,
-          title: 'Sales Report',
-          value: 15,
-          footer: 'Calculating x-axis bias... 65%',
-          color: 'info',
-        },
-        {
-          id: 1,
-          title: 'Personal Responsibility',
-          value: 20,
-          footer: 'Provide required notes',
-          color: 'danger',
-        },
-      ],
+
     };
   },
   methods: {
