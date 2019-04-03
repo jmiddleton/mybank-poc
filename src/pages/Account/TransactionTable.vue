@@ -13,14 +13,8 @@
         <td class="type-width">
           <span class="notificationIcon thumb-sm">
             <img
-              v-if="props.merchantCategoryCode && props.merchantCategoryCode !== 'null'"
-              :src="require('../../assets/merchant-category/' + props.merchantCategoryCode + '.png')"
-              alt="..."
-            >
-            <img
-              v-else
-              :src="require('../../assets/merchant-category/undefined.png')"
-            >
+              :src="require('../../assets/categories/' + props.category + '.png')"
+              alt="...">
           </span>
         </td>
         <td class="date-width">
@@ -37,7 +31,9 @@
             <small>
               <span class="fw-semi-bold">Ref:</span>
               <span>&nbsp; {{props.reference}}</span>
-              <span v-if="props.postingDateTime" >&nbsp;|&nbsp;Date: {{props.postingDateTime | date('DD/MM/YYYY')}}</span>
+              <span
+                v-if="props.postingDateTime"
+              >&nbsp;|&nbsp;Date: {{props.postingDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </p>
         </td>
@@ -49,7 +45,7 @@
     <span v-else class="center">
       <h5>Transactions not available</h5>
     </span>
-    
+
     <button
       :disabled="!nextkey || nextkey === ''"
       v-if="nextkey && nextkey.length > 0"

@@ -1,4 +1,4 @@
-import authService from './dummyauthService';
+import authService from './authService';
 
 export default {
     install(Vue) {
