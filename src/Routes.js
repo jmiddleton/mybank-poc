@@ -3,7 +3,6 @@ import Router from 'vue-router';
 //import auth from "./auth/authService";
 
 import Layout from '@/components/Layout/Layout';
-import LandingPage from '@/pages/LandingPage/LandingPage';
 import ErrorPage from '@/pages/Error/Error';
 // Core
 import TransfersPage from '@/pages/Transfers/Transfers';
@@ -23,15 +22,23 @@ import SpendingPage from '@/pages/Analytics/Spending';
 import CallbackPage from '@/pages/LandingPage/Callback';
 import ProfilePage from '@/pages/Profile/Profile';
 
+import AppHeader from "@/components/Layout/AppHeader";
+import AppFooter from "@/components/Layout/AppFooter";
+import Landing from "@/pages/LandingPage/Landing.vue";
+
 Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'LandingPage',
-      component: LandingPage,
+      path: "/",
+      name: "LandingPage",
+      components: {
+        header: AppHeader,
+        default: Landing,
+        footer: AppFooter
+      }
     },
     {
       path: '/callback',

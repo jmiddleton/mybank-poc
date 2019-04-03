@@ -14,7 +14,10 @@ import router from './Routes';
 import App from './App';
 import VueDateFns from "vue-date-fns";
 import AuthPlugin from "./auth";
- 
+import Argon from "./core/argon-kit";
+
+Vue.use(Argon);
+
 Vue.use(VueDateFns);
 Vue.use(BootstrapVue);
 Vue.use(VueTouch);
