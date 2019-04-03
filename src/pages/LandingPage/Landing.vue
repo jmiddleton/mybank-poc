@@ -7,21 +7,15 @@
           <span></span>
           <span></span>
           <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
         </div>
         <div class="container shape-container d-flex">
           <div class="col px-0">
             <div class="row">
               <div class="col-lg-6">
-                <h3 class="text-white">
-                  One single and secure place
-                  <span>to manage and track your banks accounts</span>
-                </h3>
+                <h1 class="text-white">
+                  <strong>One single and secure place
+                  <span>to manage and track your banks accounts</span></strong>
+                </h1>
                 <p class="lead text-white">
                   The design system comes with four pre-built pages to help
                   you get started faster. You can change the text and images and you're good to
@@ -74,9 +68,6 @@
     </section>
     <section class="section section section-shaped my-0 overflow-hidden">
       <div class="shape shape-style-1 bg-gradient-warning shape-skew">
-        <span></span>
-        <span></span>
-        <span></span>
         <span></span>
         <span></span>
         <span></span>
