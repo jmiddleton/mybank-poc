@@ -18,7 +18,7 @@
           <div class="col px-0">
             <div class="row">
               <div class="col-lg-6">
-                <h3 class="display-3 text-white">
+                <h3 class="text-white">
                   One single and secure place
                   <span>to manage and track your banks accounts</span>
                 </h3>
