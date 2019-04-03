@@ -20,7 +20,11 @@
               </button>
               <h1>
                 {{account.displayName}}
-                <a @click="refresh()" data-widgster="load" class="small text-white la la-refresh"></a>
+                <a
+                  @click="refresh()"
+                  data-widgster="load"
+                  class="small text-white la la-refresh"
+                ></a>
               </h1>
               <h3>{{account.maskedNumber}}</h3>
               <span class="badge badge-success">{{account.openStatus}}</span>&nbsp;
@@ -85,7 +89,7 @@
             </div>
             <div class="row">
               <h4>Transaction History</h4>
-              <transaction-table></transaction-table>
+              <transaction-table ref="txnTable"></transaction-table>
             </div>
           </div>
         </div>
@@ -121,15 +125,20 @@ export default {
   },
   created() {
     this.accountId = this.$route.params.accountId;
-    if (this.accountId !== undefined || this.accountId !== "") {
-      this.$store.dispatch("accounts/getAccountById", this.accountId);
-      this.$store.dispatch("accounts/loadAccountBalances");
-    }
+    this.init();
   },
   methods: {
+    init() {
+      if (this.accountId !== undefined || this.accountId !== "") {
+        this.$store.dispatch("accounts/getAccountById", this.accountId);
+        this.$store.dispatch("accounts/loadAccountBalances");
+      }
+    },
     refresh() {
       axios.post("/accounts/" + this.accountId + "/refresh");
-      window.location = "/app/accounts/" + this.accountId ;
+      this.init();
+      this.$forceUpdate();
+      this.$refs.txnTable.getTransactionsByAccountId(true);
     },
     makeTransfer() {
       this.$router.push({ path: "/app/transfers/" + this.accountId });

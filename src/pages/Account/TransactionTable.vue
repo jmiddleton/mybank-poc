@@ -12,9 +12,7 @@
       <tr :key="props.transactionId" v-for="props in transactions">
         <td class="type-width">
           <span class="notificationIcon thumb-sm">
-            <img
-              :src="require('../../assets/categories/' + props.category + '.png')"
-              alt="...">
+            <img :src="require('../../assets/categories/' + props.category + '.png')" alt="...">
           </span>
         </td>
         <td class="date-width">
@@ -50,7 +48,7 @@
       :disabled="!nextkey || nextkey === ''"
       v-if="nextkey && nextkey.length > 0"
       class="width-250 btn btn-outline-primary"
-      v-on:click="getTransactionsByAccountId()"
+      v-on:click="getTransactionsByAccountId(false)"
       v-cloak
     >Load More...</button>
     <span v-else class="center text-danger">
@@ -72,20 +70,17 @@ export default {
     };
   },
   methods: {
-    getTransactionsByAccountId() {
+    getTransactionsByAccountId(isFirstPage) {
       this.$store.dispatch("transactions/loadTransactionsByAccountId", {
         accountId: this.accountId,
-        firstPage: false
+        firstPage: isFirstPage
       });
     }
   },
   created() {
     this.accountId = this.$route.params.accountId;
     if (this.accountId !== undefined || this.accountId !== "") {
-      this.$store.dispatch("transactions/loadTransactionsByAccountId", {
-        accountId: this.accountId,
-        firstPage: true
-      });
+      this.getTransactionsByAccountId(true);
     }
   },
   computed: mapState("transactions", ["transactions", "message", "nextkey"])
