@@ -8,8 +8,8 @@ import payeesModule from './modules/payees.js';
 import accountsModule from './modules/accounts.js';
 import transactionsModule from './modules/transactions.js';
 
-axios.defaults.baseURL = 'http://localhost:3000/mybank/v1';
-axios.defaults.headers.common['x-api-key'] = 'd41d8cd98f00b204e9800998ecf8427e';
+axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
+axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);

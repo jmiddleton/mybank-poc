@@ -29,16 +29,31 @@ npm install
 ```
 4. Repeat the steps for mybank-serverless
 
-## Quick start
+## Quick start - development mode
 First start mybank-serverless application
 ```shell
 cd mybank-serverless
 serverless offline start
 ```
+Once the server has started an api-key will be generated and displayed in the command line:
+i.e.: Key with token: d41d8cd98f00b204e9800998ecf812345
 
-Then run the web application mybank-poc 
+Copy that value to .env.development file before starting mybank-poc web application.
+
+To test the application locally use the following commands: 
 ```shell
 cd mybank-poc
 npm run serve
 ```
 
+### Production mode
+The easiest way to preview production locally is using a Node.js static file server.
+
+```
+serve -s dist -l 8888
+```
+
+Please make sure you have configured your environment for production. The file .env.production.local on the root folder should contain the following variables:
+
+- VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
+- VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]

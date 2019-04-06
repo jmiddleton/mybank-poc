@@ -17,6 +17,8 @@ export default {
     FadeTransition
   }
 };
+
+console.log(process.env.VUE_APP_BASE_URL);
 </script>
 
 <style src="./styles/theme.scss" lang="scss" />
