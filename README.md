@@ -50,6 +50,7 @@ npm run serve
 The easiest way to preview production locally is using a Node.js static file server.
 
 ```
+npm run build
 serve -s dist -l 8888
 ```
 

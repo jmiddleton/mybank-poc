@@ -7,9 +7,11 @@ class AuthService extends EventEmitter {
     idToken = null;
     profile = null;
     tokenExpiry = null;
+    target = null;
 
     // Starts the user login flow
     login(customState) {
+        this.target = customState;
         window.location = '/callback';
     }
 
@@ -44,7 +46,7 @@ class AuthService extends EventEmitter {
         this.emit(loginEvent, {
             loggedIn: true,
             profile: this.profile,
-            state: {}
+            state: {target : this.target}
         });
     }
 
