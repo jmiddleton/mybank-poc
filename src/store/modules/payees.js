@@ -55,11 +55,11 @@ const actions = {
         commit('SET_PAYEES', payees);
       });
   },
-  createPayee(newPayee) {
+  createPayee({ commit }, newPayee) {
     axios
       .post('/payees', newPayee);
   },
-  deletePayee(payeeId) {
+  deletePayee({ commit }, payeeId) {
     axios
       .delete('/payees/' + payeeId);
       //.then(function (response) {
@@ -67,7 +67,7 @@ const actions = {
         //state.payeesList.data.splice(index, 1);
       //});
   },
-  updatePayee(payee) {
+  updatePayee({ commit }, payee) {
     axios
       .put('/payees/' + payee.payeeId, payee);
   },
