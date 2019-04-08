@@ -69,7 +69,7 @@ export default {
                 label: "Payee Type",
                 model: "type",
                 values: ["DOMESTIC", "INTERNATIONAL", "BILLER"],
-                onChanged: function(model, newVal, oldVal, field) {
+                onChanged: function(model, newVal) {
                   if (newVal) {
                     model.payeeUType = newVal.toLowerCase();
                     if (model.payeeUType === "domestic") {
@@ -214,7 +214,7 @@ export default {
             });
           }
         })
-        .catch(function(error) {
+        .catch(function() {
           this.model = {};
           this.payeeId = "new";
         });

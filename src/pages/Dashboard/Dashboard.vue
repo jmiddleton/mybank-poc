@@ -127,7 +127,8 @@ import Widget from "@/components/Widget/Widget";
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";
 import moment from "moment";
-import { mapState, mapGetters } from "vuex";
+import _ from "lodash";
+import { mapGetters } from "vuex";
 
 Vue.filter("formatDate", function(value) {
   if (value) {

@@ -94,10 +94,8 @@
 </template>
 <script>
 import Widget from "@/components/Widget/Widget";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
-
-const { Messenger } = window;
 
 export default {
   components: {

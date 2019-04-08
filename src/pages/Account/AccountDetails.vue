@@ -100,7 +100,7 @@
 <script>
 import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 import moment from "moment";
 import axios from "axios";
@@ -110,8 +110,6 @@ Vue.filter("formatDate", function(value) {
     return moment(value).format("DD MMM");
   }
 });
-
-const { Messenger } = window;
 
 export default {
   components: {

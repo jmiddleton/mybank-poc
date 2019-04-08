@@ -12,7 +12,6 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 import axios from "axios";
 import moment from "moment";
-import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "AverageSavingsChart",
@@ -25,7 +24,7 @@ export default {
   methods: {
     getSavingsData(savings) {
       if (!savings) {
-        return data;
+        return this.data;
       }
 
       for (let i = 0; i < savings.length; i++) {

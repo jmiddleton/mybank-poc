@@ -73,25 +73,16 @@ const getters = {
 
 const actions = {
   async loadAccountSummary({ commit }) {
-    try {
-      const response = await axios.get('/accounts');
-      commit('SET_ACCOUNTS', response.data);
-    } catch (error) {
-    }
+    const response = await axios.get('/accounts');
+    commit('SET_ACCOUNTS', response.data);
   },
   async getAccountById({ commit }, accountId) {
-    try {
-      const response = await axios.get('/accounts/' + accountId)
-      commit('SET_ACCOUNT', response.data);
-    } catch (error) {
-    }
+    const response = await axios.get('/accounts/' + accountId)
+    commit('SET_ACCOUNT', response.data);
   },
   async loadAccountBalances({ commit }) {
-    try {
-      const response = await axios.get('/accounts/balances')
-      commit('SET_BALANCES', response.data);
-    } catch (error) {
-    }
+    const response = await axios.get('/accounts/balances')
+    commit('SET_BALANCES', response.data);
   }
 };
 

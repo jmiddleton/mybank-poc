@@ -134,7 +134,6 @@ export default {
     },
     deleteRow(data) {
       if (confirm("Are you sure you want to delete the record?")) {
-        console.log("deleted " + data.payeeId);
         this.$store.dispatch("payees/deletePayee", data.payeeId);
 
         let index = this.localData.indexOf(data);
@@ -201,12 +200,12 @@ export default {
           this.localData.push(element);  
         });
       })
-      .catch(function(error) {
-        console.log(error);
+      .catch(function() {
+        
       });
   },
   watch: {
-    localData(newVal, oldVal) {
+    localData() {
       this.$refs.vuetable.refresh();
     }
   },

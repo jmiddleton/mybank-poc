@@ -58,8 +58,7 @@
 </template>
 <script>
 import Widget from "@/components/Widget/Widget";
-import axios from "axios";
-import { mapState, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "TransactionTable",

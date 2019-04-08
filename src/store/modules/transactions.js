@@ -1,5 +1,4 @@
 import axios from 'axios';
-import _ from "lodash";
 
 const state = {
     transactions: [],
@@ -15,7 +14,7 @@ const actions = {
     loadTransactionsByAccountId({ commit }, filter) {
         if (filter.firstPage) {
             state.nextkey = '';
-            state.transactions= [];
+            state.transactions = [];
         }
         axios
             .get("/accounts/" + filter.accountId + "/transactions", {
@@ -30,9 +29,6 @@ const actions = {
             .then(r => r.data)
             .then(txnResult => {
                 commit('SET_TXN', txnResult);
-            })
-            .catch(function (error) {
-                console.log(error);
             });
     }
 };

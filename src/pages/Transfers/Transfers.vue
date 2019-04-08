@@ -103,9 +103,9 @@ import Vue from "vue";
 import VueEvents from "vue-events";
 import vSelect from "vue-select";
 import DatePicker from "vue2-datepicker";
+import _ from "lodash";
 
-import { mapState, mapGetters } from "vuex";
-const { Messenger } = window;
+import { mapGetters } from "vuex";
 
 Vue.use(VueEvents);
 
@@ -140,7 +140,6 @@ export default {
   },
   methods: {
     changedFromAccount(eventData) {
-      var filterAccount = "";
       this.loadToAccountList(eventData.accountId);
     },
     loadToAccountList(fromAccountId) {

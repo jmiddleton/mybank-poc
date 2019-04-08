@@ -54,17 +54,16 @@
 </template>
 
 <script>
-import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
 import $ from "jquery";
 import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.time";
 require("../../core/jquery.flot.orderBars.js");
+import _ from "lodash";
 
 import axios from "axios";
 import moment from "moment";
 
-const { Messenger } = window;
 const mformat = "YYYY-MM";
 
 export default {
@@ -217,7 +216,7 @@ export default {
     }
   },
   watch: {
-    rawSpendings(newVal, oldVal) {
+    rawSpendings() {
       if (this.barchartData && this.barchartData.length === 0) {
         this.createCategoryChart();
       }

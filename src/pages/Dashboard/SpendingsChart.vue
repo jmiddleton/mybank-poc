@@ -16,8 +16,6 @@ import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 import axios from "axios";
 import moment from "moment";
 
-import { mapState, mapGetters } from "vuex";
-
 export default {
   name: "SpendingsChart",
   data() {
