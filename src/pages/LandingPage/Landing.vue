@@ -5,23 +5,31 @@
       <section class="section-shaped my-0">
         <div class="shape shape-style-1 shape-default shape-skew">
           <span></span>
-          <span></span>
-          <span></span>
         </div>
         <div class="container shape-container d-flex">
           <div class="col px-0">
             <div class="row">
+              <div class="col-md-6 order-md-2">
+                <img src="img/main-logo.svg" class="img-fluid floating">
+              </div>
               <div class="col-lg-6">
-                <h1 class="text-white">
-                  <strong>One single and secure place
-                  <span>to manage and track your banks accounts</span></strong>
-                </h1>
+                <h1 class="text-white">MyBank Account Aggregator</h1>
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
+                <h2 class="text-white">
+                  <strong>
+                    One single and secure place
+                    <span>to manage and track your banks accounts</span>
+                  </strong>
+                </h2>
                 <p class="lead text-white">
-                  The design system comes with four pre-built pages to help
-                  you get started faster. You can change the text and images and you're good to
-                  go.
+                  Third Party Provider or TPP allows to securely access customer’s accounts in order to provide consolidated account information.
+                  It aggregates accounts from different banks owned by the customer to manage and control them from one central place.
+                  It also provides analytics to help you stay on track with your spending in just one place.
                 </p>
-                
+                <p
+                  class="lead text-white"
+                >MyBank categories every transaction making it easier to see how your spending affects your planned savings.</p>
               </div>
             </div>
           </div>
@@ -34,30 +42,29 @@
       <div class="container">
         <div class="row row-grid align-items-center">
           <div class="col-md-6 order-md-2">
-            <img src="img/theme/promo-1.png" class="img-fluid floating">
+            <img src="img/dashboard.png" class="img-fluid floating">
           </div>
           <div class="col-md-6 order-md-1">
             <div class="pr-md-5">
-              
-              <h3>Awesome features</h3>
+              <h4 class="display-3 text-black">Account Aggregator</h4>
               <p>
-                The kit comes with three pre-built pages to help you get started faster. You can change
-                the text and images and you're good to go.
+                MyBank aggregates accounts from different banks owned by the customer to manage and control them from one place.
+                  It also provides analytics to help you stay on track with your spending in just one place.
               </p>
               <ul class="list-unstyled mt-5">
                 <li class="py-2">
                   <div class="d-flex align-items-center">
-                    <h6 class="mb-0">Carefully crafted components</h6>
+                    <h6 class="mb-0">Strong Security</h6>
                   </div>
                 </li>
                 <li class="py-2">
                   <div class="d-flex align-items-center">
-                    <h6 class="mb-0">Amazing page examples</h6>
+                    <h6 class="mb-0">Analytics - Spend Tracker</h6>
                   </div>
                 </li>
                 <li class="py-2">
                   <div class="d-flex align-items-center">
-                    <h6 class="mb-0">Super friendly support team</h6>
+                    <h6 class="mb-0">Automatic categorises transactions</h6>
                   </div>
                 </li>
               </ul>
@@ -68,9 +75,6 @@
     </section>
     <section class="section section section-shaped my-0 overflow-hidden">
       <div class="shape shape-style-1 bg-gradient-warning shape-skew">
-        <span></span>
-        <span></span>
-        <span></span>
       </div>
       <div class="container py-0">
         <div class="row row-grid align-items-center">
@@ -81,7 +85,6 @@
           </div>
           <div class="col-lg-6 order-lg-1">
             <div class="d-flex px-3">
-    
               <div class="pl-4">
                 <h4 class="display-3 text-white">Modern Interface</h4>
                 <p class="text-white">
@@ -90,7 +93,6 @@
                 </p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -106,7 +108,7 @@
       <div class="container pt-lg pb-300">
         <div class="row text-center justify-content-center">
           <div class="col-lg-10">
-            <h2 class="display-3 text-white">Build something</h2>
+            <h2 class="display-3 text-white">Get Started</h2>
             <p class="lead text-white">
               According to the National Oceanic and Atmospheric Administration,
               Ted, Scambos, NSIDClead scentist, puts the potentially record low maximum sea ice extent
