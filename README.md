@@ -4,7 +4,7 @@ Third Party Provider or TPP allows to securely access customer’s accounts in o
 
 It also provides analytics to help you stay on track with your spending in just one place. MyBank categories every transaction making it easier to see how your spending affects your planned savings.
 
-Security ...
+Auth0 provides user management and authentication using OpenId Connect Authorization Code Flow. The flow provides information about the end user in the form of an id_token (JSON Web Tokens - JWTs) that verifies the identity of the user and provides basic profile information about the user. 
 
 ![image](mybank.png)
 
@@ -13,6 +13,20 @@ Security ...
 The application is divided into frontend and backend. The frontend is written in Vue.js. Backend is implemented using serverless. Each component of the application is defined as a function and exposed as an API. There are also notification which are consumed by specific functions. The information is stored in AWS DynamoDB.
 
 ![image](mybank-serverless.png)
+
+The application architecture is divided in the following components:
+
+### Static Web Hosting
+Amazon S3 hosts static web resources including HTML, CSS, JavaScript, and image files which are loaded in the user's browser.
+
+### Auth0
+Auth0 provides user management and authentication functions to secure the backend API.
+
+### RESTful API
+The front-end application uses Vue.js to interact with backend API built using Lambda and API Gateway. Asynchronous execution is implemented using Amazon Simple Notification Service.
+
+### Persistent Store
+DynamoDB provides a persistence layer where data is stored and accessible using Lambda function.
 
 ## Instalation 
 
