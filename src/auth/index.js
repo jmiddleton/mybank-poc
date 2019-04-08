@@ -3,7 +3,7 @@ import dummyAuthService from './dummyauthService';
 
 export default {
     install(Vue) {
-        let authRef = process.env.NODE_ENV === 'development' ? dummyAuthService : authService;
+        let authRef = process.env.NODE_ENV === 'developmentc' ? dummyAuthService : authService;
         Vue.prototype.$auth = authRef;
 
 

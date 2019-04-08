@@ -6,33 +6,34 @@ const state = {
     {
       id: "TRANS_AND_SAVINGS_ACCOUNTS",
       name: "Saving Accounts"
-    },{
+    }, {
       id: "TERM_DEPOSITS",
       name: "Term Deposits"
-    },{
+    }, {
       id: "TRAVEL_CARDS",
       name: "Travel Cards"
-    },{
+    }, {
       id: "REGULATED_TRUST_ACCOUNTS",
       name: "Trust Accounts"
-    },{
+    }, {
       id: "RESIDENTIAL_MORTGAGES",
       name: "Mortgages"
-    },{
+    }, {
       id: "CRED_AND_CHRG_CARDS",
       name: "Credit Cards"
-    },{
+    }, {
       id: "PERS_LOANS",
       name: "Personal Loans"
-    },{
+    }, {
       id: "MARGIN_LOANS",
       name: "Margin Loans"
-    },{
+    }, {
       id: "LEASES",
       name: "Leases"
-    },{
+    }, {
       id: "TRADE_FINANCE",
-      name: "Trades"}
+      name: "Trades"
+    }
   ],
   accounts: [],
   balances: [],
@@ -46,8 +47,8 @@ const getters = {
   categories: state => {
     return state.categories;
   },
-  accountsByCategory: state =>{
-    var result= _.reduce(state.accounts, function(result, account) {
+  accountsByCategory: state => {
+    var result = _.reduce(state.accounts, function (result, account) {
       (result[account.productCategory] || (result[account.productCategory] = [])).push(account);
       return result;
     }, {});
@@ -71,31 +72,26 @@ const getters = {
 }
 
 const actions = {
-  loadAccountSummary({ commit }) {
-    axios
-      .get('/accounts')
-      .then(r => r.data)
-      .then(accounts => {
-        commit('SET_ACCOUNTS', accounts);
-      })
+  async loadAccountSummary({ commit }) {
+    try {
+      const response = await axios.get('/accounts');
+      commit('SET_ACCOUNTS', response.data);
+    } catch (error) {
+    }
   },
-  getAccountById({ commit }, accountId) {
-    axios
-      .get('/accounts/' + accountId)
-      .then(r => r.data)
-      .then(account => {
-        commit('SET_ACCOUNT', account);
-      }).catch(function (error) {
-        console.log(error);
-      })
+  async getAccountById({ commit }, accountId) {
+    try {
+      const response = await axios.get('/accounts/' + accountId)
+      commit('SET_ACCOUNT', response.data);
+    } catch (error) {
+    }
   },
-  loadAccountBalances({ commit }) {
-    axios
-      .get('/accounts/balances')
-      .then(r => r.data)
-      .then(balances => {
-        commit('SET_BALANCES', balances);
-      })
+  async loadAccountBalances({ commit }) {
+    try {
+      const response = await axios.get('/accounts/balances')
+      commit('SET_BALANCES', response.data);
+    } catch (error) {
+    }
   }
 };
 

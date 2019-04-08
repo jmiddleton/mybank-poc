@@ -12,8 +12,8 @@
 
     <Widget>
       <div class="widget-top-overflow text-white">
-        <div class="height-250 overflow-hidden">
-          <img class="img-fluid" src="../../assets/profile.jpg" alt="...">
+        <div class="height-150 overflow-hidden">
+          <img class="img-fluid" src="../../assets/profile.png" alt="...">
         </div>
         <a href="#" class="btn btn-outline btn-sm mb-2">
           <i class="fa fa-twitter mr-2"/>

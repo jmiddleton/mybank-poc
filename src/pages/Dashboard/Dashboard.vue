@@ -8,12 +8,16 @@
       </b-breadcrumb>
       <h1 class="page-title">
         My Dashboard
-        <a href="#" class="float-right btn btn-outline-primary">
+        <a
+          v-if="hasAccountsLinked"
+          href="#"
+          class="float-right btn btn-outline-primary"
+        >
           <i class="fa fa-edit mr-2"></i>Link Account
         </a>
-        <a href="" data-widgster="load" class="small text-gray-light la la-refresh"></a>
+        <a href data-widgster="load" class="small text-gray-light la la-refresh"></a>
       </h1>
-      <b-row>
+      <b-row v-if="hasAccountsLinked">
         <b-col xs="4">
           <div class="pb-xlg h-100">
             <Widget class="h-100 mb-0" title="TOTAL BALANCE">
@@ -58,7 +62,7 @@
         </b-col>
       </b-row>
     </div>
-    <div class="col-md-12 col-lg-10">
+    <div v-if="hasAccountsLinked" class="col-md-12 col-lg-10">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
           <h3>{{getCategoryName(category)}}</h3>
@@ -88,11 +92,31 @@
                 <span class="fa fa-external-link"></span>
               </a>
               <p class="deemphasize text-ellipsis m-0">{{ account.maskedNumber }}</p>
-              <p v-if="account.updated" class="text-muted mb-0 mr"><small>Updated: {{ account.updated | formatDate }}</small></p>
+              <p v-if="account.updated" class="text-muted mb-0 mr">
+                <small>Updated: {{ account.updated | formatDate }}</small>
+              </p>
             </b-list-group-item>
           </b-list-group>
         </b-col>
       </b-row>
+    </div>
+    <div v-if="!hasAccountsLinked" class="col-md-12 col-lg-10">
+      <div
+        class="card border-0 mb-xlg background-cover text-white"
+        :style="'background-image: url(' + require('../../assets/links.jpg') + ');'"
+      >
+        <div class="card-body">
+          <h3 class="mt-lg">Link Account</h3>
+          <p class="w-75">
+            To get started click on the button Link Account to add one or more accounts from your bank.
+            After you have chosen the accounts and confirmed consent, your account details will be transfered
+            to MyBank.
+          </p>
+          <button type="button" class="btn btn-rounded-f mt-lg btn-outline">
+            <i class="fa fa-edit mr-2"></i>Link Account
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -105,9 +129,9 @@ import SpendingsChart from "./SpendingsChart";
 import moment from "moment";
 import { mapState, mapGetters } from "vuex";
 
-Vue.filter('formatDate', function(value) {
+Vue.filter("formatDate", function(value) {
   if (value) {
-    return moment(value).format('DD MMM')
+    return moment(value).format("DD MMM");
   }
 });
 
@@ -166,7 +190,15 @@ export default {
       "totalAvailableBalance",
       "accountsByCategory",
       "categories"
-    ])
+    ]),
+    hasAccountsLinked() {
+      for (var key in this.accountsByCategory) {
+        if (this.accountsByCategory.hasOwnProperty(key)) {
+          return true;
+        }
+      }
+      return false;
+    }
   }
 };
 </script>
