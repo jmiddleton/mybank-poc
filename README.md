@@ -12,6 +12,8 @@ Security ...
 
 The application is divided into frontend and backend. The frontend is written in Vue.js. Backend is implemented using serverless. Each component of the application is defined as a function and exposed as an API. There are also notification which are consumed by specific functions. The information is stored in AWS DynamoDB.
 
+![image](mybank-serverless.png)
+
 ## Instalation 
 
 1. Clone repository
