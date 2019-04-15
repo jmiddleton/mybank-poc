@@ -94,7 +94,7 @@
 </template>
 <script>
 import Widget from "@/components/Widget/Widget";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 
 export default {
@@ -115,7 +115,7 @@ export default {
     }
   },
   methods: {},
-  computed: mapGetters("accounts", ["account", "balances"])
+  computed: mapState("accounts", ["account", "balances"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />

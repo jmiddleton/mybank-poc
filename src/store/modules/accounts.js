@@ -40,13 +40,11 @@ const state = {
   totalBalance: 0,
   totalAvailableBalance: 0,
   account: {},
-  balance: 0
+  balance: 0,
+  hasAccounts: false
 }
 
 const getters = {
-  categories: state => {
-    return state.categories;
-  },
   accountsByCategory: state => {
     var result = _.reduce(state.accounts, function (result, account) {
       (result[account.productCategory] || (result[account.productCategory] = [])).push(account);
@@ -56,18 +54,6 @@ const getters = {
   },
   accountsList: state => {
     return state.accounts;
-  },
-  account: state => {
-    return state.account;
-  },
-  balances: state => {
-    return state.balances;
-  },
-  totalBalance: state => {
-    return state.totalBalance;
-  },
-  totalAvailableBalance: state => {
-    return state.totalAvailableBalance;
   }
 }
 
@@ -89,6 +75,11 @@ const actions = {
 const mutations = {
   SET_ACCOUNTS(state, accounts) {
     state.accounts = accounts.data.accounts;
+    if (state.accounts && state.accounts.length > 0) {
+      state.hasAccounts = true;
+    }else{
+      state.hasAccounts = false;
+    }
   },
   SET_ACCOUNT(state, account) {
     state.account = account.data;

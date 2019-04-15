@@ -9,15 +9,16 @@
       <h1 class="page-title">
         My Dashboard
         <a
-          v-if="hasAccountsLinked"
           href="#"
+          v-b-modal.modal-scrollable
+          @click="showModal"
           class="float-right btn btn-outline-primary"
         >
           <i class="fa fa-edit mr-2"></i>Link Account
         </a>
         <a href data-widgster="load" class="small text-gray-light la la-refresh"></a>
       </h1>
-      <b-row v-if="hasAccountsLinked">
+      <b-row v-if="hasAccounts">
         <b-col xs="4">
           <div class="pb-xlg h-100">
             <Widget class="h-100 mb-0" title="TOTAL BALANCE">
@@ -62,7 +63,7 @@
         </b-col>
       </b-row>
     </div>
-    <div v-if="hasAccountsLinked" class="col-md-12 col-lg-10">
+    <div class="col-md-12 col-lg-10">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
           <h3>{{getCategoryName(category)}}</h3>
@@ -100,24 +101,17 @@
         </b-col>
       </b-row>
     </div>
-    <div v-if="!hasAccountsLinked" class="col-md-12 col-lg-10">
-      <div
-        class="card border-0 mb-xlg background-cover text-white"
-        :style="'background-image: url(' + require('../../assets/links.jpg') + ');'"
-      >
-        <div class="card-body">
-          <h3 class="mt-lg">Link Account</h3>
-          <p class="w-75">
-            To get started click on the button Link Account to add one or more accounts from your bank.
-            After you have chosen the accounts and confirmed consent, your account details will be transfered
-            to MyBank.
-          </p>
-          <button type="button" class="btn btn-rounded-f mt-lg btn-outline">
-            <i class="fa fa-edit mr-2"></i>Link Account
-          </button>
-        </div>
+    <div v-if="!hasAccounts" class="col-md-12 col-lg-10">
+      <div class="jumbotron">
+        <h1 class="display-5">Thank you for choosing MyBank!!!</h1>
+        <p class="lead">
+          To get started click on the button Link Account to add one or more accounts from your bank.
+          After you have chosen the accounts and confirmed consent, your accounts including transactions
+          will be loaded into MyBank.
+        </p>
       </div>
     </div>
+    <BanksModal ref="banksModal"/>
   </div>
 </template>
 
@@ -126,9 +120,10 @@ import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";
+import BanksModal from "./BanksModal";
 import moment from "moment";
 import _ from "lodash";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 
 Vue.filter("formatDate", function(value) {
   if (value) {
@@ -138,8 +133,16 @@ Vue.filter("formatDate", function(value) {
 
 export default {
   name: "Dashboard",
-  components: { Widget, AverageSavingsChart, SpendingsChart },
+  components: { Widget, AverageSavingsChart, SpendingsChart, BanksModal },
+  data() {
+    return {
+      
+    };
+  },
   methods: {
+    showModal() {
+      this.$refs.banksModal.show = true;
+    },
     getAccountDetails(account) {
       //TODO: externalise this in a key-value pair map.
       if (account.productCategory === "TRANS_AND_SAVINGS_ACCOUNTS") {
@@ -170,7 +173,6 @@ export default {
       }
       return "";
     },
-
     getCurrentBalance(balance) {
       if (balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
@@ -180,26 +182,19 @@ export default {
       return "";
     }
   },
-  mounted() {
+  created() {
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
   },
   computed: {
-    ...mapGetters("accounts", [
+    ...mapGetters("accounts", ["accountsByCategory"]),
+    ...mapState("accounts", [
+      "hasAccounts",
       "balances",
       "totalBalance",
       "totalAvailableBalance",
-      "accountsByCategory",
       "categories"
-    ]),
-    hasAccountsLinked() {
-      for (var key in this.accountsByCategory) {
-        if (this.accountsByCategory.hasOwnProperty(key)) {
-          return true;
-        }
-      }
-      return false;
-    }
+    ])
   }
 };
 </script>

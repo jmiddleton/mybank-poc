@@ -1,0 +1,71 @@
+
+<template>
+  <!-- Modal Component -->
+  <b-modal id="modal-scrollable" scrollable title="Select a Bank" v-model="show">
+    <div class="widgetBody widget-body p-0">
+      <div class="list-group-item list-group list-group-lg">
+        <a
+          :href="getOIDCAuthorizeUrl(bank)"
+          class="list-group-item"
+          v-for="bank in banks"
+          :key="bank.code"
+        >
+          <span class="thumb-sm mr notificationIcon">
+            <img
+              :src="require('../../assets/banks/' + bank.logo_url)"
+              alt="..."
+              class="rounded-circle"
+            >
+          </span>
+          <div>
+            <h6 class="m-0">{{bank.name}}</h6>
+            <small class="text-muted">{{bank.url}}</small>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div slot="modal-footer" class="w-100">
+      <b-button variant="primary" size="sm" class="float-right" @click="show=false">Close</b-button>
+    </div>
+  </b-modal>
+</template>
+<script>
+import Vue from "vue";
+import axios from "axios";
+
+export default {
+  name: "BanksModal",
+  data() {
+    return {
+      show: false,
+      banks: []
+    };
+  },
+  methods: {
+    getOIDCAuthorizeUrl(bank) {
+      if (bank && bank.oidc_config && bank.oidc_config.metadata) {
+        const meta = bank.oidc_config.metadata;
+        var auth_url =
+          meta.authorization_endpoint +
+          "?response_type=code&scope=" +
+          bank.oidc_config.scope;
+        auth_url = auth_url + "&client_id=" + bank.oidc_config.client_id;
+        auth_url =
+          auth_url + "&state=0&redirect_uri=" + bank.oidc_config.redirect_uri;
+        auth_url = auth_url + "&state=0&nonce=" + "random_value";
+
+        console.log(auth_url);
+        return auth_url;
+      }
+    }
+  },
+  created() {
+    axios
+      .get("/banks")
+      .then(r => r.data)
+      .then(banks => {
+        this.banks = banks;
+      });
+  }
+};
+</script>

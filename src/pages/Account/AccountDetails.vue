@@ -100,7 +100,7 @@
 <script>
 import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 import moment from "moment";
 import axios from "axios";
@@ -142,7 +142,7 @@ export default {
       this.$router.push({ path: "/app/transfers/" + this.accountId });
     }
   },
-  computed: mapGetters("accounts", ["account", "balances"])
+  computed: mapState("accounts", ["account", "balances"])
 };
 </script>
 <style src="./AccountDetails.scss" lang="scss" scoped />

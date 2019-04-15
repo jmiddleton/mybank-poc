@@ -138,6 +138,29 @@
   },
   "transactions": [
     {
+      "accountId": "33333333fffff",
+      "data": {
+        "transactions": [
+          {
+            "accountId": "33333333fffff",
+            "transactionId": "1",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "Nike Shoes",
+            "postingDateTime": "2019-02-12T12:43:00",
+            "valueDateTime": "2019-01-12T15:43:00",
+            "executionDateTime": "2019-01-25T15:43:00",
+            "amount": "120.90",
+            "currency": "AUD",
+            "reference": "FGSFGSFG-44",
+            "merchantName": "Rebel",
+            "merchantCategoryCode": "5139"
+          }
+        ]
+      }
+    },
+    {
       "accountId": "666666666",
       "data": {
         "transactions": [
