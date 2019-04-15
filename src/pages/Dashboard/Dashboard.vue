@@ -136,7 +136,7 @@ export default {
   components: { Widget, AverageSavingsChart, SpendingsChart, BanksModal },
   data() {
     return {
-      
+      // showLinkAccountMessage: false
     };
   },
   methods: {
@@ -153,7 +153,6 @@ export default {
         this.$router.push({ path: "/app/termdeposit/" + account.accountId });
       }
     },
-
     getCategoryName(category) {
       var cat = _.find(this.$store.getters["accounts/categories"], [
         "id",
@@ -164,7 +163,6 @@ export default {
       }
       return "";
     },
-
     getAvailableBalance(balance) {
       if (balance.balanceUType === "deposit") {
         return balance.deposit.availableBalance.amount;
@@ -185,6 +183,13 @@ export default {
   created() {
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
+  },
+  mounted(){
+    // if(this.hasAccounts){
+    //   this.showLinkAccountMessage= this.hasAccounts;
+    // }else{
+    //   this.showLinkAccountMessage= true;
+    // }
   },
   computed: {
     ...mapGetters("accounts", ["accountsByCategory"]),

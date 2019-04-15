@@ -41,7 +41,7 @@ const state = {
   totalAvailableBalance: 0,
   account: {},
   balance: 0,
-  hasAccounts: false
+  hasAccounts: undefined
 }
 
 const getters = {
@@ -59,8 +59,12 @@ const getters = {
 
 const actions = {
   async loadAccountSummary({ commit }) {
-    const response = await axios.get('/accounts');
-    commit('SET_ACCOUNTS', response.data);
+    try {
+      const response = await axios.get('/accounts');
+      commit('SET_ACCOUNTS', response.data);
+    } catch (error) {
+      state.hasAccounts = false;
+    }
   },
   async getAccountById({ commit }, accountId) {
     const response = await axios.get('/accounts/' + accountId)
@@ -73,31 +77,38 @@ const actions = {
 };
 
 const mutations = {
-  SET_ACCOUNTS(state, accounts) {
-    state.accounts = accounts.data.accounts;
-    if (state.accounts && state.accounts.length > 0) {
-      state.hasAccounts = true;
-    }else{
-      state.hasAccounts = false;
+  SET_ACCOUNTS(state, response) {
+    if (response && response.data) {
+      state.accounts = response.data.accounts;
+      if (state.accounts && state.accounts.length > 0) {
+        state.hasAccounts = true;
+      } else {
+        state.hasAccounts = false;
+      }
     }
   },
-  SET_ACCOUNT(state, account) {
-    state.account = account.data;
+  SET_ACCOUNT(state, response) {
+    if (response) {
+      state.account = response.data;
+    }
   },
-  SET_BALANCES(state, balances) {
-    state.balances = balances.data.balances;
+  SET_BALANCES(state, response) {
     state.totalBalance = 0;
     state.totalAvailableBalance = 0;
 
-    state.balances.forEach(balance => {
-      if (balance.balanceUType === 'deposit') {
-        state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);
-        state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
-      } else {
-        state.totalBalance = Math.round(state.totalBalance - parseFloat(balance.lending.accountBalance.amount), 2);
-        state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.lending.availableBalance.amount);
-      }
-    });
+    if (response && response.data) {
+      state.balances = response.data.balances;
+
+      state.balances.forEach(balance => {
+        if (balance.balanceUType === 'deposit') {
+          state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);
+          state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
+        } else {
+          state.totalBalance = Math.round(state.totalBalance - parseFloat(balance.lending.accountBalance.amount), 2);
+          state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.lending.availableBalance.amount);
+        }
+      });
+    }
   }
 }
 
