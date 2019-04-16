@@ -106,7 +106,7 @@ const mutations = {
 
       state.balances.forEach(balance => {
         if (balance.balanceUType === 'deposit') {
-          state.totalBalance = state.totalBalance + parseFloat(balance.deposit.currentBalance.amount);
+          state.totalBalance = Math.round(state.totalBalance + parseFloat(balance.deposit.currentBalance.amount), 2);
           state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
         } else {
           state.totalBalance = Math.round(state.totalBalance - parseFloat(balance.lending.accountBalance.amount), 2);

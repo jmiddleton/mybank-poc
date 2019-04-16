@@ -5,7 +5,8 @@
     <div class="widgetBody widget-body p-0">
       <div v-if="banks && banks.length > 0" class="list-group-item list-group list-group-lg">
         <a
-          :href="getOIDCAuthorizeUrl(bank)"
+          href="#"
+          @click="authorise(bank)"
           class="list-group-item"
           v-for="bank in banks"
           :key="bank.code"
@@ -42,7 +43,7 @@ export default {
     };
   },
   methods: {
-    getOIDCAuthorizeUrl(bank) {
+    authorise(bank) {
       if (bank && bank.oidc_config && bank.oidc_config.metadata) {
         const meta = bank.oidc_config.metadata;
         var auth_url =
@@ -50,11 +51,11 @@ export default {
           "?response_type=code&scope=" +
           bank.oidc_config.scope;
         auth_url = auth_url + "&client_id=" + bank.oidc_config.client_id;
-        auth_url =
-          auth_url + "&state=0&redirect_uri=" + bank.oidc_config.redirect_uri;
+        auth_url = auth_url + "&redirect_uri=" + bank.oidc_config.redirect_uri;
+        auth_url = auth_url + "?bankcode=" + bank.code;
         auth_url = auth_url + "&state=0&nonce=" + "random_value";
 
-        return auth_url;
+        window.location.href = auth_url;
       }
     }
   },

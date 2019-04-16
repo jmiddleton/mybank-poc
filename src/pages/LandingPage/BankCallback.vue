@@ -12,9 +12,10 @@ export default {
     handleAuthentication() {
       const code = this.$route.query.code;
       const state = this.$route.query.state;
+      const bank_code= this.$route.query.bankcode;
 
       const authDetails = {
-        bank_code: "cba",
+        bank_code: bank_code,
         auth_code: code,
         state: state
       };
