@@ -101,16 +101,7 @@
         </b-col>
       </b-row>
     </div>
-    <div v-if="!hasAccounts" class="col-md-12 col-lg-10">
-      <div class="jumbotron">
-        <h1 class="display-5">Thank you for choosing MyBank!!!</h1>
-        <p class="lead">
-          To get started click on the button Link Account to add one or more accounts from your bank.
-          After you have chosen the accounts and confirmed consent, your accounts including transactions
-          will be loaded into MyBank.
-        </p>
-      </div>
-    </div>
+    <div ref="container" class="col-md-12 col-lg-10"></div>
     <BanksModal ref="banksModal"/>
   </div>
 </template>
@@ -121,6 +112,7 @@ import Widget from "@/components/Widget/Widget";
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";
 import BanksModal from "./BanksModal";
+import NoAccountMessage from "./NoAccountMessage";
 import moment from "moment";
 import _ from "lodash";
 import { mapGetters, mapState } from "vuex";
@@ -133,11 +125,15 @@ Vue.filter("formatDate", function(value) {
 
 export default {
   name: "Dashboard",
-  components: { Widget, AverageSavingsChart, SpendingsChart, BanksModal },
+  components: {
+    Widget,
+    AverageSavingsChart,
+    SpendingsChart,
+    BanksModal,
+    NoAccountMessage
+  },
   data() {
-    return {
-      // showLinkAccountMessage: false
-    };
+    return {};
   },
   methods: {
     showModal() {
@@ -178,18 +174,22 @@ export default {
         return balance.lending.accountBalance.amount;
       }
       return "";
+    },
+    showLinkAccountMessage(hasAccounts) {
+      if (!hasAccounts) {
+        var NoAccountMessageClass = Vue.extend(NoAccountMessage);
+        var noAccountMsgInstance = new NoAccountMessageClass();
+        noAccountMsgInstance.$mount();
+        this.$refs.container.appendChild(noAccountMsgInstance.$el);
+      }
     }
   },
   created() {
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
   },
-  mounted(){
-    // if(this.hasAccounts){
-    //   this.showLinkAccountMessage= this.hasAccounts;
-    // }else{
-    //   this.showLinkAccountMessage= true;
-    // }
+  mounted() {
+    this.showLinkAccountMessage(this.hasAccounts);
   },
   computed: {
     ...mapGetters("accounts", ["accountsByCategory"]),
@@ -200,6 +200,11 @@ export default {
       "totalAvailableBalance",
       "categories"
     ])
+  },
+  watch: {
+    hasAccounts(newValue, oldValue) {
+      this.showLinkAccountMessage(newValue);
+    }
   }
 };
 </script>

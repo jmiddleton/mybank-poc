@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 import _ from "lodash";
 
@@ -41,7 +42,7 @@ const state = {
   totalAvailableBalance: 0,
   account: {},
   balance: 0,
-  hasAccounts: undefined
+  hasAccounts: true
 }
 
 const getters = {
@@ -85,6 +86,8 @@ const mutations = {
       } else {
         state.hasAccounts = false;
       }
+    }else{
+      state.hasAccounts = false;
     }
   },
   SET_ACCOUNT(state, response) {

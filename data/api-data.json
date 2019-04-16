@@ -10,8 +10,7 @@
           "openStatus": "OPEN",
           "isOwned": "true",
           "productCategory": "TERM_DEPOSITS",
-          "productName": "High Interest Savings Account",
-          "institution": "rabo"
+          "productName": "High Interest Savings Account"
         },
         {
           "accountId": "666666666",
@@ -21,8 +20,7 @@
           "openStatus": "OPEN",
           "isOwned": "true",
           "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
-          "productName": "Flexible savings account",
-          "institution": "westpac"
+          "productName": "Flexible savings account"
         }
       ]
     },
