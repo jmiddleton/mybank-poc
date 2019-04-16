@@ -150,10 +150,7 @@ export default {
       }
     },
     getCategoryName(category) {
-      var cat = _.find(this.$store.getters["accounts/categories"], [
-        "id",
-        category
-      ]);
+      var cat = _.find(this.categories, ["id", category]);
       if (cat) {
         return cat.name;
       }
