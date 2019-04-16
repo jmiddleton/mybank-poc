@@ -222,8 +222,6 @@ export default {
       }
     }
   },
-  created() {},
-
   mounted() {
     this.currentMonth = moment().format(mformat);
     this.loadSpending(this.currentMonth);

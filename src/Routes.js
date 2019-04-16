@@ -20,6 +20,7 @@ import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
 import SpendingPage from '@/pages/Analytics/Spending';
 import CallbackPage from '@/pages/LandingPage/Callback';
+import BankCallbackPage from '@/pages/LandingPage/BankCallback';
 import ProfilePage from '@/pages/Profile/Profile';
 
 import AppHeader from "@/components/Layout/AppHeader";
@@ -44,6 +45,11 @@ const router = new Router({
       path: '/callback',
       name: 'callback',
       component: CallbackPage
+    },
+    {
+      path: '/bankcallback',
+      name: 'bankcallback',
+      component: BankCallbackPage
     },
     {
       path: '/error',
@@ -115,7 +121,7 @@ router.beforeEach((to, from, next) => {
     return next();
   }
 
-  Vue.prototype.$auth.login({ target: to.path });
+  Vue.prototype.$auth.login({ target: to.path, query: to.query });
 });
 
 export default router;

@@ -42,7 +42,7 @@ const state = {
   totalAvailableBalance: 0,
   account: {},
   balance: 0,
-  hasAccounts: true
+  hasAccounts: undefined
 }
 
 const getters = {
@@ -64,7 +64,9 @@ const actions = {
       const response = await axios.get('/accounts');
       commit('SET_ACCOUNTS', response.data);
     } catch (error) {
-      state.hasAccounts = false;
+      if (error.response && error.response.status === 404) {
+        state.hasAccounts = false;
+      }
     }
   },
   async getAccountById({ commit }, accountId) {
@@ -86,7 +88,7 @@ const mutations = {
       } else {
         state.hasAccounts = false;
       }
-    }else{
+    } else {
       state.hasAccounts = false;
     }
   },

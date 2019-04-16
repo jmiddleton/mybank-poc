@@ -5,13 +5,21 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   methods: {
     handleLoginEvent(data) {
-      this.$router.push(data.state.target || "/app/dashboard");
-      axios.defaults.headers.common['Authorization'] = "Bearer " + this.$auth.idToken;
+      let url = data.state.target;
+      if (data.state.query) {
+        url = url + "?";
+        Object.entries(data.state.query).forEach(([key, value]) => {
+          url = url + `${key}=${value}&`;
+        });
+      }
+      this.$router.push(url || "/app/dashboard");
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + this.$auth.idToken;
     }
   },
   created() {

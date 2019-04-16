@@ -3,7 +3,7 @@
   <!-- Modal Component -->
   <b-modal id="modal-scrollable" scrollable title="Select a Bank" v-model="show">
     <div class="widgetBody widget-body p-0">
-      <div class="list-group-item list-group list-group-lg">
+      <div v-if="banks && banks.length > 0" class="list-group-item list-group list-group-lg">
         <a
           :href="getOIDCAuthorizeUrl(bank)"
           class="list-group-item"
@@ -23,6 +23,7 @@
           </div>
         </a>
       </div>
+      <div v-else>Unable to retrieve list of banks. Please try in few seconds.</div>
     </div>
     <div slot="modal-footer" class="w-100">
       <b-button variant="primary" size="sm" class="float-right" @click="show=false">Close</b-button>
@@ -30,7 +31,6 @@
   </b-modal>
 </template>
 <script>
-import Vue from "vue";
 import axios from "axios";
 
 export default {
@@ -54,18 +54,19 @@ export default {
           auth_url + "&state=0&redirect_uri=" + bank.oidc_config.redirect_uri;
         auth_url = auth_url + "&state=0&nonce=" + "random_value";
 
-        console.log(auth_url);
         return auth_url;
       }
     }
   },
-  created() {
-    axios
-      .get("/banks")
-      .then(r => r.data)
-      .then(banks => {
-        this.banks = banks;
-      });
+  watch: {
+    show() {
+      axios
+        .get("/banks")
+        .then(r => r.data)
+        .then(banks => {
+          this.banks = banks;
+        });
+    }
   }
 };
 </script>

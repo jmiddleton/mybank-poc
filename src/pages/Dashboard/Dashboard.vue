@@ -173,7 +173,7 @@ export default {
       return "";
     },
     showLinkAccountMessage(hasAccounts) {
-      if (!hasAccounts) {
+      if (hasAccounts === false) {
         var NoAccountMessageClass = Vue.extend(NoAccountMessage);
         var noAccountMsgInstance = new NoAccountMessageClass();
         noAccountMsgInstance.$mount();
@@ -182,10 +182,10 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("accounts/loadAccountSummary");
-    this.$store.dispatch("accounts/loadAccountBalances");
   },
   mounted() {
+    this.$store.dispatch("accounts/loadAccountSummary");
+    this.$store.dispatch("accounts/loadAccountBalances");
     this.showLinkAccountMessage(this.hasAccounts);
   },
   computed: {
@@ -199,7 +199,7 @@ export default {
     ])
   },
   watch: {
-    hasAccounts(newValue, oldValue) {
+    hasAccounts(newValue) {
       this.showLinkAccountMessage(newValue);
     }
   }
