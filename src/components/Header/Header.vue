@@ -89,7 +89,7 @@ export default {
       }
     },
     logout() {
-      this.$auth.logOut();
+      this.$auth.logout();
       this.$router.push("/");
     },
     profile(){

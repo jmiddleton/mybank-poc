@@ -3,7 +3,7 @@
     "data": {
       "accounts": [
         {
-          "accountId": "6666666667",
+          "accountId": "666666666",
           "displayName": "Flexible Saving II",
           "nickname": "string",
           "maskedNumber": "53680358603450-3",
@@ -13,7 +13,7 @@
           "productName": "Flexible savings account"
         },
         {
-          "accountId": "4512121117",
+          "accountId": "451212111",
           "displayName": "Term Deposit",
           "nickname": "string",
           "maskedNumber": "TD-3431922",
@@ -38,7 +38,7 @@
   },
   "accountDetails": [
     {
-      "accountId": "6666666667",
+      "accountId": "666666666",
       "displayName": "Flexible Saving II",
       "nickname": "string",
       "maskedNumber": "536803 5860345-0",
@@ -63,7 +63,7 @@
       ]
     },
     {
-      "accountId": "4512121117",
+      "accountId": "451212111",
       "displayName": "Term Deposit",
       "nickname": "string",
       "maskedNumber": "342085 5635658",
@@ -93,7 +93,7 @@
     "data": {
       "balances": [
         {
-          "accountId": "6666666667",
+          "accountId": "666666666",
           "balanceUType": "deposit",
           "deposit": {
             "currentBalance": {
@@ -107,7 +107,7 @@
           }
         },
         {
-          "accountId": "4512121117",
+          "accountId": "451212111",
           "balanceUType": "deposit",
           "deposit": {
             "currentBalance": {

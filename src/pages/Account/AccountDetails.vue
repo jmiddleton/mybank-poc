@@ -133,6 +133,7 @@ export default {
       }
     },
     refresh() {
+      //TODO: if userBankAuth is expired, re-authenticate the user
       axios.post("/accounts/" + this.accountId + "/refresh");
       this.init();
       this.$forceUpdate();

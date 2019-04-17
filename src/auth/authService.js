@@ -73,7 +73,7 @@ class AuthService extends EventEmitter {
         });
     }
 
-    logOut() {
+    logout() {
         localStorage.removeItem(localStorageKey);
 
         this.idToken = null;
