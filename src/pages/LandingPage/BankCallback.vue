@@ -1,6 +1,14 @@
 <template>
-  <div>
-    <p>Linking bank accounts, this might take few seconds please wait...</p>
+  <div class="container">
+    <div class="messageContainer">
+      <h2 class="display-5">Transfering Account Details to myBank</h2>
+
+      <p>
+        We are retrieving bank accounts details such as accounts, transactions, direct debits and balances.
+        <br>This might take few seconds please wait...
+      </p>
+      <img :src="require('../../assets/synching_accounts.gif')" alt="...">
+    </div>
   </div>
 </template>
 
@@ -12,7 +20,7 @@ export default {
     handleAuthentication() {
       const code = this.$route.query.code;
       const state = this.$route.query.state;
-      const bank_code= this.$route.query.bankcode;
+      const bank_code = this.$route.query.bankcode;
 
       const authDetails = {
         bank_code: bank_code,
@@ -20,10 +28,12 @@ export default {
         state: state
       };
 
-      //send to a lambda function bank_code and auth_code.
       let response = axios.post("/link-accounts", authDetails);
       if (response) {
-        this.$router.push("/app/dashboard");
+        var router = this.$router;
+        setTimeout(function() {
+          router.push("/app/dashboard");
+        }, 2500);
       }
     }
   },
@@ -32,3 +42,5 @@ export default {
   }
 };
 </script>
+
+<style src="./Landing.scss" lang="scss" scoped />

@@ -20,6 +20,10 @@
         </div>
         <b-input id="search-input" placeholder="Search Dashboard"/>
       </b-input-group>
+      <b-nav-item @click="openNotifications">
+        <i class="la la-bell la-lg"/>
+        <span class="circle bg-warning text-white fw-bold">4</span>
+      </b-nav-item>
       <b-nav-item-dropdown
         id="basic-nav-dropdown"
         class="notificationsMenu d-sm-down-none mr-2"
@@ -49,11 +53,10 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import $ from "jquery";
-import Notifications from "@/components/Notifications/Notifications";
 
 export default {
   name: "Headed",
-  components: { Notifications },
+  components: {},
   computed: {
     ...mapState("layout", {
       sidebarClose: state => state.sidebarClose,
@@ -92,8 +95,11 @@ export default {
       this.$auth.logout();
       this.$router.push("/");
     },
-    profile(){
+    profile() {
       this.$router.push("/app/profile");
+    },
+    openNotifications() {
+      this.$router.push("/app/notifications");
     }
   },
   created() {

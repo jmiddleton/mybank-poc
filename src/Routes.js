@@ -22,6 +22,7 @@ import SpendingPage from '@/pages/Analytics/Spending';
 import CallbackPage from '@/pages/LandingPage/Callback';
 import BankCallbackPage from '@/pages/LandingPage/BankCallback';
 import ProfilePage from '@/pages/Profile/Profile';
+import NotificationsPage from '@/pages/Notifications/Notifications';
 
 import AppHeader from "@/components/Layout/AppHeader";
 import AppFooter from "@/components/Layout/AppFooter";
@@ -110,6 +111,11 @@ const router = new Router({
           path: 'profile',
           name: 'Profile',
           component: ProfilePage,
+        },
+        {
+          path: 'notifications',
+          name: 'Notifications',
+          component: NotificationsPage,
         },
       ],
     },

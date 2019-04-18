@@ -16,11 +16,11 @@ axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
 axios.interceptors.response.use((response) => {
   return response;
 }, function (error) {
-  if (error.response.status === 401) {
+  if (error.response && error.response.status === 401) {
     Vue.prototype.$auth.logout();
     //router.push("/error");
   }
-  return Promise.reject(error.response);
+  return Promise.reject(error);
 });
 
 Vue.use(Vuex);
