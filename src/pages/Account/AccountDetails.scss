@@ -26,7 +26,11 @@
   position: relative;
   display: inline-block;
   text-align: center;
-  margin-left: 20px;
+  img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+  }
 }
 .thumb-xl {
     width: 80px;
@@ -109,4 +113,14 @@ th {
 .description-left{
   text-align: left;
   margin-left: 30px;
+}
+
+.categoriesDropDown
+{
+   height: 170px;
+   overflow-y: auto;
+}
+.category{
+  width: 29px;
+  height: 29px;
 }

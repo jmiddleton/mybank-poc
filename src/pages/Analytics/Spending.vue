@@ -27,7 +27,7 @@
             >
               <div>
                 <span class="float-right">
-                  <strong>$ -{{category.total}}</strong>
+                  <strong>$ {{-1 * category.total}}</strong>
                 </span>
                 
                 <span class="notificationIcon thumb-sm">

@@ -3,11 +3,8 @@ import axios from 'axios';
 const state = {
     transactions: [],
     nextkey: '',
-    message: 'Load more...'
-}
-
-const getters = {
-
+    message: 'Load more...',
+    categories: []
 }
 
 const actions = {
@@ -30,6 +27,14 @@ const actions = {
             .then(txnResult => {
                 commit('SET_TXN', txnResult);
             });
+    },
+    async getCategories({ commit }) {
+        const response = await axios.get('/categories');
+        commit('SET_CATEGORIES', response.data);
+    },
+    async changeCategory({ commit }, txn){
+        const accountId = txn.accountId.substring(1, txn.accountId.indexOf('#'));
+        await axios.put('/accounts/' + accountId + "/transactions/" + txn.transactionId, txn);
     }
 };
 
@@ -47,13 +52,15 @@ const mutations = {
         if (!state.nextkey) {
             state.message = 'No more transactions';
         }
+    },
+    SET_CATEGORIES(state, categories) {
+        state.categories = categories;
     }
 }
 
 export default {
     namespaced: true,
     state,
-    getters,
     actions,
     mutations
 }
