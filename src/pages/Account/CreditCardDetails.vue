@@ -9,8 +9,8 @@
     <b-row>
       <b-col>
         <div class="pb-xlg h-100">
-          <div class="widgetBody widget-body">
-            <div class="widget-title widget-top widget-padding-md clearfix bg-secondary text-white">
+          <div class="widgetBody widget-body" v-if="account && account.accountId">
+            <div v-cloak class="widget-title widget-top widget-padding-md clearfix bg-secondary text-white">
               <a href="#" class="float-right btn-transfer btn btn-outline btn-sm mb-2">
                 <i class="fa fa-edit mr-2"></i>
                 Make a Payment

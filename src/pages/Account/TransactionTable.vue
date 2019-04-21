@@ -67,7 +67,6 @@
       v-if="nextkey && nextkey.length > 0"
       class="width-250 btn btn-outline-primary"
       v-on:click="getTransactionsByAccountId(false)"
-      v-cloak
     >Load More...</button>
     <span v-else class="center text-danger">
       <h5>{{ message }}</h5>

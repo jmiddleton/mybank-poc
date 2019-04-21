@@ -66,27 +66,20 @@
       "accountId": "451212111",
       "displayName": "Term Deposit",
       "nickname": "string",
-      "maskedNumber": "342085 5635658",
+      "maskedNumber": "TD-3431922",
       "openStatus": "OPEN",
       "isOwned": "true",
       "productCategory": "TERM_DEPOSITS",
       "productName": "Term Deposit",
-      "specificAccountUType": "depositRates",
-      "depositRates": [
-        {
-          "depositRateType": "FIXED",
-          "rate": "1.50",
-          "additionalInfoUri": "https://www.rabodirect.com.au/high-interest-savings-account/"
-        },
-        {
-          "depositRateType": "BONUS",
-          "rate": "3.00"
-        },
-        {
-          "depositRateType": "PROMOTION",
-          "rate": "1.60"
-        }
-      ]
+      "bundleName": "string",
+      "specificAccountUType": "termDeposit",
+      "termDeposit": {
+        "lodgementDate": "2018-02-12T12:00:00",
+        "maturityDate": "2019-07-12T12:00:00",
+        "maturityAmount": "0",
+        "maturityCurrency": "AUD",
+        "maturityInstructions": "ROLLED_OVER"
+      }
     }
   ],
   "balances": {

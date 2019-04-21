@@ -14,6 +14,8 @@ import GoogleMapPage from '@/pages/Maps/Google';
 import Dashboard from '@/pages/Dashboard/Dashboard';
 import AccountDetails from '@/pages/Account/AccountDetails';
 import CreditCardDetails from '@/pages/Account/CreditCardDetails';
+import TermDepositDetails from '@/pages/Account/TermDepositDetails';
+import UnlinkAccountPage from '@/pages/Account/UnlinkAccount';
 
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
@@ -26,7 +28,7 @@ import NotificationsPage from '@/pages/Notifications/Notifications';
 
 import AppHeader from "@/components/Layout/AppHeader";
 import AppFooter from "@/components/Layout/AppFooter";
-import Landing from "@/pages/LandingPage/Landing.vue";
+import Landing from "@/pages/LandingPage/Landing";
 
 Vue.use(Router);
 
@@ -76,6 +78,16 @@ const router = new Router({
           path: 'creditcards/:accountId',
           name: 'CreditCardDetails',
           component: CreditCardDetails,
+        },
+        {
+          path: 'termdeposit/:accountId',
+          name: 'TermDepositDetails',
+          component: TermDepositDetails,
+        },
+        {
+          path: 'unlink/:accountId',
+          name: 'UnlinkAccount',
+          component: UnlinkAccountPage
         },
         {
           path: 'transfers/:accountId',

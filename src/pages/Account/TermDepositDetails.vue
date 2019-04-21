@@ -4,22 +4,19 @@
       <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
       </b-breadcrumb-item>
-      <b-breadcrumb-item active>Account Details</b-breadcrumb-item>
+      <b-breadcrumb-item active>Term Deposit Details</b-breadcrumb-item>
     </b-breadcrumb>
     <b-row>
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-title widget-top widget-padding-md clearfix bg-primary text-white">
+            <div
+              v-cloak
+              class="widget-title widget-top widget-padding-md clearfix bg-danger text-white"
+            >
               <button @click="unlinkAccount()" class="float-right btn btn-outline btn-sm mb-2">
                 <i class="fa fa-unlink mr-2"></i>
                 Unlink
-              </button>
-              <button
-                @click="makeTransfer()"
-                class="float-right btn-transfer btn btn-outline btn-sm mb-2">
-                <i class="fa fa-edit mr-2"></i>
-                Make a Transfer
               </button>
               <h1>
                 {{account.displayName}}
@@ -68,23 +65,18 @@
                     >
                   </span>
 
-                  <div v-if="account.depositRates" class="stats-row col-md-12" xs="12">
-                    <div
-                      v-for="rate in account.depositRates"
-                      :key="rate.depositRateType"
-                      class="profileStat stat-item"
-                    >
-                      <p class="profileStatValue value text-right">{{rate.rate}}%</p>
-                      <h6 class="name text-right">
-                        {{rate.depositRateType}} &nbsp;
-                        <a
-                          v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
-                          target="new"
-                          :href="rate.additionalInfoUri"
-                        >
-                          <span class="fa fa-external-link"></span>
-                        </a>
-                      </h6>
+                  <div v-if="account.termDeposit" class="stats-row col-md-12" xs="12">
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >{{account.termDeposit.lodgementDate | formatLongDate}}</p>
+                      <h6 class="name text-right">Lodgement</h6>
+                    </div>
+                    <div class="profileStat stat-item">
+                      <p
+                        class="profileStatValue value text-right"
+                      >{{account.termDeposit.maturityDate | formatLongDate}}</p>
+                      <h6 class="name text-right">Maturity</h6>
                     </div>
                   </div>
                 </div>
@@ -111,6 +103,11 @@ import axios from "axios";
 Vue.filter("formatDate", function(value) {
   if (value) {
     return moment(value).format("DD MMM");
+  }
+});
+Vue.filter("formatLongDate", function(value) {
+  if (value) {
+    return moment(value).format("DD MMM YYYY");
   }
 });
 
@@ -141,9 +138,6 @@ export default {
       this.init();
       this.$forceUpdate();
       this.$refs.txnTable.getTransactionsByAccountId(true);
-    },
-    makeTransfer() {
-      this.$router.push({ path: "/app/transfers/" + this.accountId });
     },
     unlinkAccount() {
       this.$router.push({ path: "/app/unlink/" + this.accountId });
