@@ -6,17 +6,20 @@
       </b-breadcrumb-item>
       <b-breadcrumb-item active>My Spending</b-breadcrumb-item>
     </b-breadcrumb>
-    <h1 class="page-title">My Spending</h1>
+    <h1 class="page-title">My Spending - {{currentMonth}}</h1>
+    <b-row>
+      <b-col xs="12">
+        <div role="group" class="btn-group float-right">
+          <button class="btn btn-outline-info btn-sm" @click="changeMonth(-1)">Previous</button>
+          <button class="btn btn-outline-info btn-sm" @click="changeMonth(0)">Current</button>
+          <button class="btn btn-outline-info btn-sm" @click="changeMonth(1)">Next</button>
+        </div>
+      </b-col>
+    </b-row>
     <b-row>
       <b-col xs="6">
         <Widget title="Monthly Spending" refresh settings>
-          <span class="text-muted float-right">{{currentMonth}}</span>
-          <div role="group" class="btn-group">
-            <button class="btn btn-outline-info btn-sm" @click="changeMonth(-1)">Previous</button>
-            <button class="btn btn-outline-info btn-sm" @click="changeMonth(0)">Current</button>
-            <button class="btn btn-outline-info btn-sm" @click="changeMonth(1)">Next</button>
-          </div>
-          <div class="sidebarAlerts">
+          <div class="sidebarAlerts categoriesList">
             <label ref="spendingSidebar"/>
             <b-alert
               v-for="category in slidebarData"
@@ -27,14 +30,12 @@
             >
               <div>
                 <span class="float-right">
-                  <strong>$ {{-1 * category.total}}</strong>
+                  <strong>$ {{category.total}}</strong>
                 </span>
-                
                 <span class="notificationIcon thumb-sm">
                   <img :src="require('../../assets/categories/' + category.title + '.png')">
                 </span>
-                <h6>{{category.title}}</h6>
-
+                <small>{{category.title}}</small>
                 <div class="sidebarProgress progress-md">
                   <b-progress :variant="category.color" :value="category.total" :max="maxvalue"/>
                   <small class="float-right">{{category.footer}}</small>
@@ -47,6 +48,7 @@
       <b-col xs="6">
         <Widget title="Category Spending" refresh settings>
           <div ref="categoryChart" :style="{ height: '325px' }"/>
+          <div ref="categoryLegends" style="categoryLegends"></div>
         </Widget>
       </b-col>
     </b-row>
@@ -81,7 +83,7 @@ export default {
     };
   },
   methods: {
-    generateslidebarData() {
+    generateSlidebarData() {
       this.slidebarData = [];
       this.$refs.spendingSidebar.innerText = "";
 
@@ -106,7 +108,7 @@ export default {
         };
 
         if (this.maxvalue < value) {
-          this.maxvalue = value + (value * 0.8);
+          this.maxvalue = value + value * 0.8;
         }
 
         this.slidebarData.push(serie);
@@ -114,27 +116,43 @@ export default {
 
       if (this.slidebarData.length === 0) {
         this.$refs.spendingSidebar.innerText = "No data found";
+      }else{
+        this.$refs.spendingSidebar.innerText = "";
       }
     },
     changeMonth(month) {
+      const today = moment().month();
+      let current;
+
       if (month === 0) {
-        this.currentMonth = moment().format(mformat);
+        current = moment().format(mformat);
       } else {
-        this.currentMonth = moment(this.currentMonth, mformat)
+        current = moment(this.currentMonth, mformat)
           .add(month, "months")
           .format(mformat);
       }
 
-      if (this.isLocalAvailable(this.currentMonth)) {
-        this.generateslidebarData();
+      const mcurrent = moment(current, mformat);
+      if (
+        mcurrent.month() > moment().month() &&
+        mcurrent.year() > moment().year()
+      ) {
+        return;
+      }
+
+      this.currentMonth = current;
+      if (this.isCached(this.currentMonth)) {
+        this.generateSlidebarData();
       } else {
         this.loadSpending(this.currentMonth);
       }
     },
-    isLocalAvailable(currentMonth) {
+    isCached(currentMonth) {
       const current = moment(currentMonth, mformat).month();
-      const today = moment().month();
-      return today - current > 0;
+
+      return _.find(this.rawSpendings, function(item) {
+        return moment(item.month, mformat).month() === current;
+      });
     },
     loadSpending(month) {
       //TODO: restrict how far it can search, only 2 or 3 months
@@ -146,7 +164,7 @@ export default {
         .then(spendings => {
           if (spendings && spendings.data) {
             this.rawSpendings = spendings.data.spendings;
-            this.generateslidebarData();
+            this.generateSlidebarData();
           }
         });
     },
@@ -189,6 +207,8 @@ export default {
 
       if (this.barchartData.length === 0) {
         return (this.$refs.categoryChart.innerText = "No data found");
+      }else{
+        this.$refs.categoryChart.innerText = "";
       }
     },
     createCategoryChart() {
@@ -210,14 +230,16 @@ export default {
         },
         legend: {
           backgroundColor: "transparent",
-          labelBoxBorderColor: "none"
+          labelBoxBorderColor: "none",
+          container: this.$refs.categoryLegends,
+          noColumns: 4
         }
       });
     }
   },
   watch: {
     rawSpendings() {
-      if (this.barchartData && this.barchartData.length === 0) {
+      if (this.barchartData) {
         this.createCategoryChart();
       }
     }

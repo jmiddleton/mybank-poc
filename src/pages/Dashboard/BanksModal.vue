@@ -11,7 +11,7 @@
           v-for="bank in banks"
           :key="bank.code"
         >
-          <span class="thumb-sm mr notificationIcon">
+          <span class="notificationIcon thumb-sm">
             <img
               :src="require('../../assets/banks/' + bank.logo_url)"
               alt="..."
@@ -71,3 +71,5 @@ export default {
   }
 };
 </script>
+
+<style src="./Dashboard.scss" lang="scss" scoped />

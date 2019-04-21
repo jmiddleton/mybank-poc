@@ -12,7 +12,7 @@ Auth0 provides user management and authentication using OpenId Connect Authoriza
 
 The application is divided into frontend and backend. The frontend is written in Vue.js. Backend is implemented using serverless. Each component of the application is defined as a function and exposed as an API. There are also notification which are consumed by specific functions. The information is stored in AWS DynamoDB.
 
-![image](mybank-serverless1.png)
+![image](mybank-serverless.png)
 
 The application architecture is divided in the following components:
 
