@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from "lodash";
 
 const state = {
     transactions: [],
@@ -32,9 +33,12 @@ const actions = {
         const response = await axios.get('/categories');
         commit('SET_CATEGORIES', response.data);
     },
-    async changeCategory({ commit }, txn){
-        const accountId = txn.accountId.substring(1, txn.accountId.indexOf('#'));
-        await axios.put('/accounts/' + accountId + "/transactions/" + txn.transactionId, txn);
+    async changeCategory({ commit }, txn) {
+        if (txn && txn.accountId) {
+            const accountId = txn.accountId.substring(1, txn.accountId.indexOf('#'));
+            await axios.put('/accounts/' + accountId + "/transactions/" + txn.transactionId, txn);
+            commit('SET_CATEGORY', txn);
+        }
     }
 };
 
@@ -55,6 +59,10 @@ const mutations = {
     },
     SET_CATEGORIES(state, categories) {
         state.categories = categories;
+    },
+    SET_CATEGORY(state, txn) {
+        transaction = _.find(state.transactions, { 'transactionId': txn.transactionId });
+        transaction.category = txn.code;
     }
 }
 

@@ -90,8 +90,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <h4>Transaction History</h4>
+            <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
           </div>

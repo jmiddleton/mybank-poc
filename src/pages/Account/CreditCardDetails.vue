@@ -10,14 +10,32 @@
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-title widget-top widget-padding-md clearfix bg-secondary text-white">
-              <a href="#" class="float-right btn-transfer btn btn-outline btn-sm mb-2">
+            <div class="widget-title widget-top widget-padding-md clearfix bg-secondary text-white">
+              <button @click="unlinkAccount()" class="float-right btn btn-outline btn-sm mb-2">
+                <i class="fa fa-unlink mr-2"></i>
+                Unlink
+              </button>
+              <button
+                @click="makePayment()"
+                class="float-right btn-transfer btn btn-outline btn-sm mb-2"
+              >
                 <i class="fa fa-edit mr-2"></i>
                 Make a Payment
-              </a>
-              <h1>{{account.displayName}} <span class="badge badge-success badge-pill">{{account.openStatus}}</span></h1>
+              </button>
+              <h1>
+                {{account.displayName}}
+                <a
+                  @click="refresh()"
+                  data-widgster="load"
+                  class="small text-white la la-refresh"
+                ></a>
+              </h1>
               <h3>{{account.maskedNumber}}</h3>
-              <span v-if="account.updated" class=" btn btn-outline btn-xs">Updated {{account.updated | formatDate}}</span>
+              <span class="badge badge-success">{{account.openStatus}}</span>&nbsp;
+              <span
+                v-if="account.updated"
+                class="btn btn-outline btn-xs"
+              >Updated {{account.updated | formatDate}}</span>
               <h5>
                 <div v-for="balance in balances" :key="balance.accountId">
                   <div
@@ -82,8 +100,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <h4>Transaction History</h4>
+            <div>
               <transaction-table></transaction-table>
             </div>
           </div>
@@ -114,7 +131,12 @@ export default {
       this.$store.dispatch("accounts/loadAccountBalances");
     }
   },
-  methods: {},
+  methods: {
+    unlinkAccount() {
+      this.$router.push({ path: "/app/unlink/" + this.accountId });
+    },
+    makePayment() {}
+  },
   computed: mapState("accounts", ["account", "balances"])
 };
 </script>

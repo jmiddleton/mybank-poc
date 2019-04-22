@@ -1,6 +1,8 @@
 <template>
   <div class="table-responsive">
-    <table v-if="transactions && transactions.length > 0" class="table table-hover center">
+    <h4>Transaction History</h4>
+    <table v-if="transactions && transactions.length > 0" 
+      class="table table-striped table-lg mt-lg mb-0">
       <thead>
         <tr>
           <td>category</td>

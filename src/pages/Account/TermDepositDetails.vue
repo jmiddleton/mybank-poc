@@ -82,8 +82,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <h4>Transaction History</h4>
+            <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
           </div>
@@ -107,7 +106,7 @@ Vue.filter("formatDate", function(value) {
 });
 Vue.filter("formatLongDate", function(value) {
   if (value) {
-    return moment(value).format("DD MMM YYYY");
+    return moment(value).format("MMM YYYY");
   }
 });
 

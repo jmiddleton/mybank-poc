@@ -56,20 +56,17 @@ const actions = {
       });
   },
   createPayee({ commit }, newPayee) {
-    axios
-      .post('/payees', newPayee);
+    axios.post('/payees', newPayee);
   },
   deletePayee({ commit }, payeeId) {
-    axios
-      .delete('/payees/' + payeeId);
-      //.then(function (response) {
-        //let index = state.payeesList.data.indexOf(response);
-        //state.payeesList.data.splice(index, 1);
-      //});
+    axios.delete('/payees/' + payeeId);
+    //.then(function (response) {
+    //let index = state.payeesList.data.indexOf(response);
+    //state.payeesList.data.splice(index, 1);
+    //});
   },
   updatePayee({ commit }, payee) {
-    axios
-      .put('/payees/' + payee.payeeId, payee);
+    axios.put('/payees/' + payee.payeeId, payee);
   },
 }
 
