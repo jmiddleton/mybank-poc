@@ -63,7 +63,7 @@
         </b-col>
       </b-row>
     </div>
-    <div class="col-md-12 col-lg-10">
+    <div class="col-md-12 col-lg-10" v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
           <h3>{{getCategoryName(category)}}</h3>

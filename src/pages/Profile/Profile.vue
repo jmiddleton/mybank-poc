@@ -30,7 +30,7 @@
               <span class="fw-semi-bold">{{this.$auth.profile.nickname}}</span>
             </h5>
             <p>{{this.$auth.profile.email}}</p>
-            
+
             <div>
               <ul class="profileContacts mt-sm">
                 <li>
@@ -50,12 +50,7 @@
           </div>
         </b-col>
         <b-col md="7" xs="12">
-          <p class="lead mt-xlg">My name is {{this.$auth.profile.nickname}} and here is my profile page.</p>
-          <p class="text-muted">
-            I love reading people&apos;s summaries page especially
-            those who are in the same industry as me.
-            Sometimes it&apos;s much easier to find your concentration during the night.
-          </p>
+          <UserBankAuthPage/>
         </b-col>
       </b-row>
     </Widget>
@@ -64,10 +59,11 @@
 
 <script>
 import Widget from "@/components/Widget/Widget";
+import UserBankAuthPage from "./UserBankAuth";
 
 export default {
   name: "Profile",
-  components: { Widget }
+  components: { Widget, UserBankAuthPage }
 };
 </script>
 

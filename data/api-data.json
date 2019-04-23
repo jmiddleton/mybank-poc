@@ -90,11 +90,11 @@
           "balanceUType": "deposit",
           "deposit": {
             "currentBalance": {
-              "amount": "3444.90",
+              "amount": "3444.93",
               "currency": "AUD"
             },
             "availableBalance": {
-              "amount": "1111",
+              "amount": "1234",
               "currency": "AUD"
             }
           }
@@ -104,7 +104,7 @@
           "balanceUType": "deposit",
           "deposit": {
             "currentBalance": {
-              "amount": "135000",
+              "amount": "135002",
               "currency": "AUD"
             },
             "availableBalance": {

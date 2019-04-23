@@ -28,6 +28,7 @@
 <script>
 import Widget from "@/components/Widget/Widget";
 import axios from "axios";
+import "imports-loader?$=jquery,this=>window!messenger/build/js/messenger"; // eslint-disable-line
 
 const { Messenger } = window;
 

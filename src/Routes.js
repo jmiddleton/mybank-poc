@@ -50,11 +50,6 @@ const router = new Router({
       component: CallbackPage
     },
     {
-      path: '/bankcallback',
-      name: 'bankcallback',
-      component: BankCallbackPage
-    },
-    {
       path: '/error',
       name: 'Error',
       component: ErrorPage,
@@ -64,6 +59,11 @@ const router = new Router({
       name: 'Layout',
       component: Layout,
       children: [
+        {
+          path: 'bankcallback',
+          name: 'bankcallback',
+          component: BankCallbackPage
+        },
         {
           path: 'dashboard',
           name: 'Dashboard',

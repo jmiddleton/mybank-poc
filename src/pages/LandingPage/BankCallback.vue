@@ -18,25 +18,33 @@ import axios from "axios";
 export default {
   methods: {
     handleAuthentication() {
-      const code = this.$route.query.code;
-      const state = this.$route.query.state;
-      const bank_code = this.$route.query.bankcode;
+      if (localStorage.getItem("auth_state")) {
+        const auth_state = JSON.parse(localStorage.getItem("auth_state"));
+        const authDetails = {
+          bank_code: auth_state.bankcode,
+          auth_code: this.$route.query.code
+        };
 
-      const authDetails = {
-        bank_code: bank_code,
-        auth_code: code,
-        state: state
-      };
+        const me = this;
+        if (auth_state.accountId) {
+          me.refreshAccount(auth_state.accountId, authDetails);
+        } else {
+          me.linkAccount(authDetails);
+        }
 
-      let response = axios.post("/link-accounts", authDetails);
-      if (response) {
-        var router = this.$router;
         setTimeout(function() {
-          router.push("/app/dashboard");
+          me.$router.push(auth_state.redirectTo);
         }, 2500);
       }
+    },
+    linkAccount(authDetails) {
+      axios.post("/link-accounts/", authDetails);
+    },
+    refreshAccount(accountId, authDetails) {
+      axios.post("/accounts/" + accountId + "/refresh", authDetails);
     }
   },
+  mounted() {},
   created() {
     this.handleAuthentication();
   }

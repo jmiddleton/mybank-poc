@@ -10,14 +10,18 @@
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-title widget-top widget-padding-md clearfix bg-primary text-white">
+            <div
+              v-cloak
+              class="widget-title widget-top widget-padding-md clearfix bg-primary text-white"
+            >
               <button @click="unlinkAccount()" class="float-right btn btn-outline btn-sm mb-2">
                 <i class="fa fa-unlink mr-2"></i>
                 Unlink
               </button>
               <button
                 @click="makeTransfer()"
-                class="float-right btn-transfer btn btn-outline btn-sm mb-2">
+                class="float-right btn-transfer btn btn-outline btn-sm mb-2"
+              >
                 <i class="fa fa-edit mr-2"></i>
                 Make a Transfer
               </button>
@@ -120,7 +124,8 @@ export default {
   },
   data() {
     return {
-      accountId: ""
+      accountId: "",
+      auth: {}
     };
   },
   created() {
@@ -134,12 +139,39 @@ export default {
         this.$store.dispatch("accounts/loadAccountBalances");
       }
     },
-    refresh() {
+    async refresh() {
       //TODO: if userBankAuth is expired, re-authenticate the user
-      axios.post("/accounts/" + this.accountId + "/refresh");
-      this.init();
-      this.$forceUpdate();
-      this.$refs.txnTable.getTransactionsByAccountId(true);
+      try {
+        await axios
+          .get("/bankauths/" + this.account.institution)
+          .then(r => r.data)
+          .then(auth => {
+            this.refreshAccount(this.accountId, auth.bank);
+          });
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          axios
+            .get("/banks/" + this.account.institution)
+            .then(r => r.data)
+            .then(bank => {
+              Vue.prototype.$auth.authorise(
+                "/app/accounts/" + this.accountId,
+                bank,
+                this.accountId
+              );
+            });
+        }
+      }
+    },
+    refreshAccount(accountId, bankcode) {
+      const authState = {
+        nonce: "stateKey-fadfadfadf3413",
+        redirectTo: "/app/accounts/" + accountId,
+        bankcode: bankcode,
+        accountId: accountId
+      };
+      localStorage.setItem("auth_state", JSON.stringify(authState));
+      this.$router.push({ path: "/app/bankcallback/" });
     },
     makeTransfer() {
       this.$router.push({ path: "/app/transfers/" + this.accountId });

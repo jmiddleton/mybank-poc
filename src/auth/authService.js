@@ -93,6 +93,34 @@ class AuthService extends EventEmitter {
             localStorage.getItem(localStorageKey) === 'true'
         );
     }
+
+    authorise(redirectTo, bank, accountId) {
+        if (bank && bank.oidc_config && bank.oidc_config.metadata) {
+            const meta = bank.oidc_config.metadata;
+            const stateKey = this.getUUID();
+
+            const authState = {
+                nonce: stateKey,
+                redirectTo: redirectTo,
+                bankcode: bank.code,
+                accountId: accountId
+            };
+            localStorage.setItem('auth_state', JSON.stringify(authState));
+
+            var auth_url = meta.authorization_endpoint;
+            auth_url = auth_url + "?response_type=code&scope=" + bank.oidc_config.scope;
+            auth_url = auth_url + "&client_id=" + bank.oidc_config.client_id;
+            auth_url = auth_url + "&redirect_uri=" + bank.oidc_config.redirect_uri;
+            auth_url = auth_url + "&state=" + stateKey;
+
+            window.location.href = auth_url;
+        }
+    }
+
+    getUUID() {
+        return Math.random().toString(36).substring(2)
+            + (new Date()).getTime().toString(36);
+    }
 }
 
 export default new AuthService();
