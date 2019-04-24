@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     authorise(bank) {
-      Vue.prototype.$auth.authorise("/app/dashboard", bank);
+      Vue.prototype.$auth.authorise("/app/dashboard", "/link-accounts", bank);
     }
   },
   watch: {

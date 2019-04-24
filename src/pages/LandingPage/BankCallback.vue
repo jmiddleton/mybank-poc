@@ -20,28 +20,18 @@ export default {
     handleAuthentication() {
       if (localStorage.getItem("auth_state")) {
         const auth_state = JSON.parse(localStorage.getItem("auth_state"));
-        const authDetails = {
+        const auth_details = {
           bank_code: auth_state.bankcode,
           auth_code: this.$route.query.code
         };
 
+        //create/update userBankAuth AND update bank data
+        axios.post(auth_state.postAuthCodeTo, auth_details);
         const me = this;
-        if (auth_state.accountId) {
-          me.refreshAccount(auth_state.accountId, authDetails);
-        } else {
-          me.linkAccount(authDetails);
-        }
-
         setTimeout(function() {
           me.$router.push(auth_state.redirectTo);
         }, 2500);
       }
-    },
-    linkAccount(authDetails) {
-      axios.post("/link-accounts/", authDetails);
-    },
-    refreshAccount(accountId, authDetails) {
-      axios.post("/accounts/" + accountId + "/refresh", authDetails);
     }
   },
   mounted() {},

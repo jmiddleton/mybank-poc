@@ -14,11 +14,22 @@
         </span>
 
         <div>
-          <button @click="unlinkBankAuth(auth.bank)" class="float-right btn btn-outline-danger btn-xs mb-2">
+          <button
+            @click="unlinkBankAuth(auth.bank)"
+            class="float-right btn btn-outline-danger btn-xs mb-2"
+          >
             <i class="fa fa-unlink mr-2"></i>
             Unlink
           </button>
-          <h6>Created: {{auth.created | formatDate}} -- Expire In: {{auth.expires_in}} seconds</h6>
+          <button
+            @click="refreshBankAuth(auth.bank)"
+            class="float-right btn btn-outline-danger btn-xs mb-2"
+          >
+            <i class="fa fa-refresh mr-2"></i>
+            Refresh
+          </button>
+          <h6>Last Updated: {{auth.last_updated | formatDate}}</h6>
+          <h6>Expire In: {{auth.expires_in}} seconds</h6>
         </div>
       </div>
     </div>
@@ -32,7 +43,7 @@ import moment from "moment";
 
 Vue.filter("formatDate", function(value) {
   if (value) {
-    return moment(value).format("DD MMMM YYYY");
+    return moment(value).format('lll');
   }
 });
 export default {
@@ -52,6 +63,18 @@ export default {
           this.auths = auths;
         });
     },
+    refreshBankAuth(code) {
+      axios
+        .get("/banks/" + code)
+        .then(r => r.data)
+        .then(bank => {
+          Vue.prototype.$auth.authorise(
+            "/app/profile",
+            "/bankauths/" + code,
+            bank
+          );
+        });
+    },
     unlinkBankAuth(code) {
       try {
         axios.delete("/bankauths/" + code);
@@ -60,7 +83,7 @@ export default {
           el.loadBankAuthorizations();
         }, 500);
       } catch (error) {
-        console.log(error);
+        //console.error(error);
       }
     }
   },

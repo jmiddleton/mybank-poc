@@ -94,7 +94,7 @@ class AuthService extends EventEmitter {
         );
     }
 
-    authorise(redirectTo, bank, accountId) {
+    authorise(redirectTo, postTo, bank, accountId) {
         if (bank && bank.oidc_config && bank.oidc_config.metadata) {
             const meta = bank.oidc_config.metadata;
             const stateKey = this.getUUID();
@@ -103,7 +103,8 @@ class AuthService extends EventEmitter {
                 nonce: stateKey,
                 redirectTo: redirectTo,
                 bankcode: bank.code,
-                accountId: accountId
+                accountId: accountId,
+                postAuthCodeTo: postTo
             };
             localStorage.setItem('auth_state', JSON.stringify(authState));
 

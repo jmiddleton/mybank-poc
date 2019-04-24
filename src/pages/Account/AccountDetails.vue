@@ -146,7 +146,9 @@ export default {
           .get("/bankauths/" + this.account.institution)
           .then(r => r.data)
           .then(auth => {
-            this.refreshAccount(this.accountId, auth.bank);
+            if (auth) {
+              this.refreshAccount(this.accountId, this.account.institution);
+            }
           });
       } catch (error) {
         if (error.response && error.response.status === 404) {
@@ -156,6 +158,7 @@ export default {
             .then(bank => {
               Vue.prototype.$auth.authorise(
                 "/app/accounts/" + this.accountId,
+                "/accounts/" + this.accountId + "/refresh",
                 bank,
                 this.accountId
               );
@@ -168,7 +171,8 @@ export default {
         nonce: "stateKey-fadfadfadf3413",
         redirectTo: "/app/accounts/" + accountId,
         bankcode: bankcode,
-        accountId: accountId
+        accountId: accountId,
+        postAuthCodeTo: "/accounts/" + accountId + "/refresh"
       };
       localStorage.setItem("auth_state", JSON.stringify(authState));
       this.$router.push({ path: "/app/bankcallback/" });
