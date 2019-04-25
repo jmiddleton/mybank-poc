@@ -116,7 +116,7 @@ export default {
 
       if (this.slidebarData.length === 0) {
         this.$refs.spendingSidebar.innerText = "No data found";
-      }else{
+      } else {
         this.$refs.spendingSidebar.innerText = "";
       }
     },
@@ -158,7 +158,7 @@ export default {
       //TODO: restrict how far it can search, only 2 or 3 months
       axios
         .get("/analytics/spendings/" + month, {
-          params: { "page-size": 50 }
+          params: { monthsToPrefetch: 2, "page-size": 50 }
         })
         .then(r => r.data)
         .then(spendings => {
@@ -207,7 +207,7 @@ export default {
 
       if (this.barchartData.length === 0) {
         return (this.$refs.categoryChart.innerText = "No data found");
-      }else{
+      } else {
         this.$refs.categoryChart.innerText = "";
       }
     },

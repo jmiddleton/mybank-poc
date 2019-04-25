@@ -29,7 +29,7 @@ export default {
       var router = this.$router;
       setTimeout(function() {
         router.push("/app/dashboard");
-      }, 3500);
+      }, 3800);
     }
   },
   created() {

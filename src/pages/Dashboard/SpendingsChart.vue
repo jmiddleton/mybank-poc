@@ -1,26 +1,22 @@
 <template>
-  <b-row>
-    <b-col xs="6">
-      <div ref="spendingsChart" :style="{ height: '100px' }"/>
-    </b-col>
-    <b-col xs="6">
-      <div ref="spendingsLegend" :style="{ height: '100px' }"/>
-    </b-col>
-  </b-row>
+  <div ref="spendingsChart" :style="{ height: '150px' }"/>
 </template>
 
 <script>
 import $ from "jquery";
-import "imports-loader?jQuery=jquery,this=>window!flot";
-import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
+/* eslint-disable */
+import "imports-loader?jQuery=jquery,this=>window!webpack-raphael/raphael";
+import "imports-loader?jQuery=jquery,this=>window!govpredict-morris/morris";
+/* eslint-enable */
+
+const { Morris } = window;
 import axios from "axios";
 import moment from "moment";
 
 export default {
   name: "SpendingsChart",
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     getSpendingsData(spendings) {
@@ -33,29 +29,22 @@ export default {
       for (let i = 0; i < spendings.length; i++) {
         data.push({
           label: spendings[i].category,
-          data: spendings[i].totalSpent
+          value: spendings[i].totalSpent
         });
       }
       return data;
     },
     createChart(data) {
-      if(data.length == 0){
-        return this.$refs.spendingsChart.innerText= "No data found";
+      if (data.length == 0) {
+        return (this.$refs.spendingsChart.innerText = "No data found");
       }
 
-      return $.plot(this.$refs.spendingsChart, data, {
-        series: {
-          pie: {
-            innerRadius: 0.6,
-            show: true,
-            fill: 0.2
-          }
-        },
-        colors: ["#ffc247", "#f55d5d", "#9964e3", "#78c448"],
-        legend: {
-          container: this.$refs.spendingsLegend,
-          labelBoxBorderColor: "#ffffff"
-        }
+      $(this.$refs.spendingsChart).html("");
+      Morris.Donut({
+        element: this.$refs.spendingsChart,
+        resize: true,
+        data: data,
+        colors: ["#ffc247", "#f55d5d", "#9964e3", "#78c448"]
       });
     }
   },

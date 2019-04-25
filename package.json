@@ -24,7 +24,7 @@
     "flot": "^0.8.0-alpha",
     "font-awesome": "4.7.0",
     "glyphicons-halflings": "1.9.1",
-    "govpredict-morris": "0.5.1",
+    "govpredict-morris": "^0.5.1",
     "jquery": "^3.3.1",
     "jquery-sparkline": "2.4.0",
     "jquery-ui": "^1.12.1",

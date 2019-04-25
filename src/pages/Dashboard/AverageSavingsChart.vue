@@ -1,9 +1,5 @@
 <template>
-  <b-row>
-    <b-col xs="12">
-      <div ref="savingsChart" :style="{ height: '100px' }"/>
-    </b-col>
-  </b-row>
+  <div ref="savingsChart" :style="{ height: '150px' }"/>
 </template>
 
 <script>
@@ -28,14 +24,14 @@ export default {
       }
 
       for (let i = 0; i < savings.length; i++) {
-        var serie= [i, savings[i].totalSavings];
+        var serie = [i, savings[i].totalSavings];
         this.data.push([serie]);
-        this.ticks.push([i, savings[i].monthName.substring(0, 3)] );
+        this.ticks.push([i, savings[i].monthName.substring(0, 3)]);
       }
     },
     createChart() {
-      if(this.data.length == 0){
-        return this.$refs.savingsChart.innerText= "No data found";
+      if (this.data.length == 0) {
+        return (this.$refs.savingsChart.innerText = "No data found");
       }
 
       return $.plot($(this.$refs.savingsChart), this.data, {
@@ -69,13 +65,19 @@ export default {
   },
   mounted() {
     axios
-      .get("/analytics/savings/" + moment().subtract(3, 'months').format("YYYY-MM"), {
-        "page-size": 4
-      })
+      .get(
+        "/analytics/savings/" +
+          moment()
+            .subtract(3, "months")
+            .format("YYYY-MM"),
+        {
+          "page-size": 4
+        }
+      )
       .then(r => r.data)
       .then(savings => {
         if (savings && savings.data) {
-          this.getSavingsData(savings.data.savings)
+          this.getSavingsData(savings.data.savings);
           this.createChart();
         }
       });

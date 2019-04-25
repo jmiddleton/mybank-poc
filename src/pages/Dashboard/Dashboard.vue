@@ -20,49 +20,40 @@
       </h1>
       <b-row v-if="hasAccounts">
         <b-col xs="4">
-          <div class="pb-xlg h-100">
-            <Widget class="h-100 mb-0" title="TOTAL BALANCE">
-              <div class="row flex-nowrap">
-                <div xs="3">
-                  <span class="widget-icon">
-                    <i class="glyphicon glyphicon-usd text-success"></i>
-                  </span>
-                </div>
-                <div xs="9" class="col">
-                  <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
-                </div>
+          <Widget class="h-100 mb-0" title="TOTAL BALANCE">
+            <div class="row flex-nowrap">
+              <div xs="3">
+                <span class="widget-icon">
+                  <i class="glyphicon glyphicon-usd text-success"></i>
+                </span>
               </div>
-              <div class="d-flex flex-wrap justify-content-between">
-                <div class="mt">
-                  <h5>$ {{totalAvailableBalance}}</h5>
-                  <p class="text-muted mb-0 mr">
-                    <small>Available Balance</small>
-                  </p>
-                </div>
+              <div xs="9" class="col">
+                <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
               </div>
-            </Widget>
-          </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between">
+              <div class="mt">
+                <h5>$ {{totalAvailableBalance}}</h5>
+                <p class="text-muted mb-0 mr">
+                  <small>Available Balance</small>
+                </p>
+              </div>
+            </div>
+          </Widget>
         </b-col>
         <b-col xs="4">
-          <div class="pb-xlg">
-            <Widget class="h-100 mb-0" title="SPENDING">
-              <div class="mt mb">
-                <SpendingsChart/>
-              </div>
-            </Widget>
-          </div>
+          <Widget class="h-100 mb-0" title="SPENDING">
+            <SpendingsChart/>
+          </Widget>
         </b-col>
         <b-col xs="4">
-          <div class="pb-xlg">
-            <Widget class="mb-0" title="AVERAGE SAVINGS">
-              <div class="mt mb">
-                <AverageSavingsChart/>
-              </div>
-            </Widget>
-          </div>
+          <Widget class="h-100 mb-0" title="AVERAGE SAVINGS">
+            <AverageSavingsChart/>
+          </Widget>
         </b-col>
       </b-row>
     </div>
+    <span>&nbsp;</span>
     <div class="col-md-12 col-lg-10" v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
@@ -181,8 +172,7 @@ export default {
       }
     }
   },
-  created() {
-  },
+  created() {},
   mounted() {
     this.$store.dispatch("accounts/loadAccountSummary");
     this.$store.dispatch("accounts/loadAccountBalances");
