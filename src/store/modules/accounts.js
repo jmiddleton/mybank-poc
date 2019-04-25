@@ -51,6 +51,11 @@ const getters = {
       (result[account.productCategory] || (result[account.productCategory] = [])).push(account);
       return result;
     }, {});
+
+    // result = _.sortBy(result, function(a, b){
+    //   state.categories.indexOf(a.key) - state.categories.indexOf(b.key);
+    // });
+
     return result;
   },
   accountsList: state => {

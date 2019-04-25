@@ -121,7 +121,6 @@ export default {
       }
     },
     changeMonth(month) {
-      const today = moment().month();
       let current;
 
       if (month === 0) {
@@ -175,16 +174,13 @@ export default {
         return this.barchartData;
       }
 
-      var index = 0;
       var order = 1;
       for (let i = 0; i < this.rawSpendings.length; i++) {
         const spend = this.rawSpendings[i];
         const month = spend.month.substring(0, 7);
 
         var serie = _.find(this.barchartData, { label: spend.category });
-        if (serie) {
-          index = serie.data.length;
-        } else {
+        if (!serie) {
           serie = {
             data: [],
             label: spend.category,
@@ -196,7 +192,6 @@ export default {
               order: order++
             }
           };
-          index = 0;
           this.barchartData.push(serie);
         }
         serie.data.push([

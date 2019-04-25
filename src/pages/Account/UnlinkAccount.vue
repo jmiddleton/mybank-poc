@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import Widget from "@/components/Widget/Widget";
-import Vue from "vue";
 import axios from "axios";
 
 export default {
@@ -22,10 +20,8 @@ export default {
     unlinkAccount() {
       const accountId = this.$route.params.accountId;
 
-      let response = axios.delete("/accounts/" + accountId);
-      if (response) {
-      }
-
+      axios.delete("/accounts/" + accountId);
+      
       var router = this.$router;
       setTimeout(function() {
         router.push("/app/dashboard");
