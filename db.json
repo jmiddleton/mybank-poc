@@ -11,25 +11,10 @@
           "isOwned": "true",
           "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
           "productName": "Flexible savings account"
-        },
-        {
-          "accountId": "451212111",
-          "displayName": "Term Deposit",
-          "nickname": "s",
-          "maskedNumber": "TD-3431922",
-          "openStatus": "OPEN",
-          "isOwned": "true",
-          "productCategory": "TERM_DEPOSITS",
-          "productName": "High Interest Savings Account"
         }
       ]
     },
     "links": {
-      "self": "s",
-      "first": "s",
-      "prev": "s",
-      "next": "s",
-      "last": "s"
     },
     "meta": {
       "totalRecords": 0,
@@ -62,26 +47,6 @@
           "rate": "2.80"
         }
       ]
-    },
-    {
-      "id": "451212111",
-      "accountId": "451212111",
-      "displayName": "Term Deposit",
-      "nickname": "s",
-      "maskedNumber": "TD-3431922",
-      "openStatus": "OPEN",
-      "isOwned": "true",
-      "productCategory": "TERM_DEPOSITS",
-      "productName": "Term Deposit",
-      "bundleName": "s",
-      "specificAccountUType": "termDeposit",
-      "termDeposit": {
-        "lodgementDate": "2018-02-12T12:00:00",
-        "maturityDate": "2019-07-12T12:00:00",
-        "maturityAmount": "0",
-        "maturityCurrency": "AUD",
-        "maturityInstructions": "ROLLED_OVER"
-      }
     }
   ],
   "balances": {
@@ -100,29 +65,10 @@
               "currency": "AUD"
             }
           }
-        },
-        {
-          "accountId": "451212111",
-          "balanceUType": "deposit",
-          "deposit": {
-            "currentBalance": {
-              "amount": "135002",
-              "currency": "AUD"
-            },
-            "availableBalance": {
-              "amount": "135000",
-              "currency": "AUD"
-            }
-          }
         }
       ]
     },
     "links": {
-      "self": "s",
-      "first": "s",
-      "prev": "s",
-      "next": "s",
-      "last": "s"
     },
     "meta": {
       "totalRecords": 0,
@@ -143,7 +89,7 @@
             "description": "Nike Shoes",
             "postingDateTime": "2019-02-12T12:43:00",
             "valueDateTime": "2019-02-12T15:43:00",
-            "executionDateTime": "2019-02-25T15:43:00",
+            "executionDateTime": "d",
             "amount": "-12.90",
             "currency": "AUD",
             "reference": "FGSFGSFG-44",
@@ -159,7 +105,7 @@
             "description": "international transfer",
             "postingDateTime": "2019-02-12T15:43:00",
             "valueDateTime": "2019-02-10T15:43:00",
-            "executionDateTime": "2019-02-12T15:43:00",
+            "executionDateTime": "d",
             "amount": "2500.00",
             "currency": "AUD",
             "reference": "ZCVADFADF-34",
@@ -175,7 +121,7 @@
             "description": "TRAVEL SYD SYDNEY AUS",
             "postingDateTime": "2019-02-16T15:43:00",
             "valueDateTime": "2019-02-10T15:43:00",
-            "executionDateTime": "2019-02-16T15:43:00",
+            "executionDateTime": "d",
             "amount": "-250.00",
             "currency": "AUD",
             "reference": "VZVZCVZ-34",
@@ -191,7 +137,7 @@
             "description": "1252 ROCKDALE NS AUS",
             "postingDateTime": "2019-02-16T15:43:00",
             "valueDateTime": "2019-02-10T15:43:00",
-            "executionDateTime": "2019-02-16T15:43:00",
+            "executionDateTime": "d",
             "amount": "-55.00",
             "currency": "AUD",
             "reference": "EERQERQ-34",
@@ -207,7 +153,7 @@
             "description": "ex velit excepteur",
             "postingDateTime": "2019-04-25T22:29:32.279Z",
             "valueDateTime": "2019-04-25T22:29:32.279Z",
-            "executionDateTime": "2019-04-25T22:29:32.279Z",
+            "executionDateTime": "d",
             "amount": "-141.40",
             "currency": "AUD",
             "reference": "5c82eccc924e3f4d520c6a23",
@@ -223,7 +169,7 @@
             "description": "do minim in",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-133.56",
             "currency": "AUD",
             "reference": "5c82eccc08a660cc7b9681a5",
@@ -239,7 +185,7 @@
             "description": "do mollit nulla",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-59.62",
             "currency": "AUD",
             "reference": "5c82eccc4d0dcdd706b72bc6",
@@ -255,7 +201,7 @@
             "description": "do mollit nulla",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-15.62",
             "currency": "AUD",
             "reference": "5c82eccc4d0dcdd706b72bc61",
@@ -271,7 +217,7 @@
             "description": "do mollit nulla 3",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-18.62",
             "currency": "AUD",
             "reference": "5c82eccc4d0dcdd706b72bc62",
@@ -287,7 +233,7 @@
             "description": "do mollit nulla 4",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-12.62",
             "currency": "AUD",
             "reference": "5c82eccc4d0dcdd706b72bc63",
@@ -303,7 +249,7 @@
             "description": "do mollit nulla 5",
             "postingDateTime": "2019-04-25T22:29:32.282Z",
             "valueDateTime": "2019-04-25T22:29:32.282Z",
-            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "d",
             "amount": "-19.62",
             "currency": "AUD",
             "reference": "5c82eccc4d0dcdd706b72bc64",
