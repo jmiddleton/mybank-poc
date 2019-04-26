@@ -38,6 +38,7 @@
   },
   "accountDetails": [
     {
+      "id": "666666666",
       "accountId": "666666666",
       "displayName": "Flexible Saving II",
       "nickname": "string",
@@ -63,6 +64,7 @@
       ]
     },
     {
+      "id": "451212111",
       "accountId": "451212111",
       "displayName": "Term Deposit",
       "nickname": "string",

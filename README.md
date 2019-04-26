@@ -74,3 +74,9 @@ Please make sure you have configured your environment for production. Create a f
 
 - VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
 - VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]
+
+### Test data
+
+change db.json and push it to your git repo. Check https://my-json-server.typicode.com howto to get the data accessible on internet.
+
+Example URL: https://my-json-server.typicode.com/jmiddleton/mybank-poc
