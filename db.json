@@ -1,0 +1,285 @@
+{
+  "accounts": {
+    "data": {
+      "accounts": [
+        {
+          "accountId": "666666666",
+          "displayName": "Flexible Saving II",
+          "nickname": "string",
+          "maskedNumber": "53680358603450-3",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
+          "productName": "Flexible savings account"
+        },
+        {
+          "accountId": "451212111",
+          "displayName": "Term Deposit",
+          "nickname": "string",
+          "maskedNumber": "TD-3431922",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "TERM_DEPOSITS",
+          "productName": "High Interest Savings Account"
+        }
+      ]
+    },
+    "links": {
+      "self": "string",
+      "first": "string",
+      "prev": "string",
+      "next": "string",
+      "last": "string"
+    },
+    "meta": {
+      "totalRecords": 0,
+      "totalPages": 0
+    }
+  },
+  "accountDetails": [
+    {
+      "accountId": "666666666",
+      "displayName": "Flexible Saving II",
+      "nickname": "string",
+      "maskedNumber": "536803 5860345-0",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
+      "productName": "Flexible Saving II",
+      "bsb": "string",
+      "accountNumber": "string",
+      "bundleName": "string",
+      "specificAccountUType": "depositRates",
+      "depositRates": [
+        {
+          "depositRateType": "FIXED",
+          "rate": "2.50",
+          "additionalInfoUri": "https://www.westpac.com.au/personal-banking/bank-accounts/savings-accounts/life/?layout=full&cid=wc:dp:LifeSEM_1811:sem::life&utm_source=&utm_medium=sem&utm_campaign=LifeSEM_1811&param=saving%20account&param=e&gclid=EAIaIQobChMIi7mbu-eX4QIVDRSPCh39dAeoEAAYASAAEgJkwfD_BwE&gclsrc=aw.ds"
+        },
+        {
+          "depositRateType": "BONUS",
+          "rate": "2.80"
+        }
+      ]
+    },
+    {
+      "accountId": "451212111",
+      "displayName": "Term Deposit",
+      "nickname": "string",
+      "maskedNumber": "TD-3431922",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "TERM_DEPOSITS",
+      "productName": "Term Deposit",
+      "bundleName": "string",
+      "specificAccountUType": "termDeposit",
+      "termDeposit": {
+        "lodgementDate": "2018-02-12T12:00:00",
+        "maturityDate": "2019-07-12T12:00:00",
+        "maturityAmount": "0",
+        "maturityCurrency": "AUD",
+        "maturityInstructions": "ROLLED_OVER"
+      }
+    }
+  ],
+  "balances": {
+    "data": {
+      "balances": [
+        {
+          "accountId": "666666666",
+          "balanceUType": "deposit",
+          "deposit": {
+            "currentBalance": {
+              "amount": "3444.93",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "1234",
+              "currency": "AUD"
+            }
+          }
+        },
+        {
+          "accountId": "451212111",
+          "balanceUType": "deposit",
+          "deposit": {
+            "currentBalance": {
+              "amount": "135002",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "135000",
+              "currency": "AUD"
+            }
+          }
+        }
+      ]
+    },
+    "links": {
+      "self": "string",
+      "first": "string",
+      "prev": "string",
+      "next": "string",
+      "last": "string"
+    },
+    "meta": {
+      "totalRecords": 0,
+      "totalPages": 0
+    }
+  },
+  "transactions": [
+    {
+      "accountId": "33333333fffff",
+      "data": {
+        "transactions": [
+          {
+            "accountId": "33333333fffff",
+            "transactionId": "1",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "Nike Shoes",
+            "postingDateTime": "2019-02-12T12:43:00",
+            "valueDateTime": "2019-01-12T15:43:00",
+            "executionDateTime": "2019-01-25T15:43:00",
+            "amount": "-120.90",
+            "currency": "AUD",
+            "reference": "FGSFGSFG-44",
+            "merchantName": "Rebel",
+            "merchantCategoryCode": "5139"
+          }
+        ]
+      }
+    },
+    {
+      "accountId": "666666666",
+      "data": {
+        "transactions": [
+          {
+            "accountId": "666666666",
+            "transactionId": "1",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "Nike Shoes",
+            "postingDateTime": "2019-02-12T12:43:00",
+            "valueDateTime": "2019-02-12T15:43:00",
+            "executionDateTime": "2019-02-25T15:43:00",
+            "amount": "-12.90",
+            "currency": "AUD",
+            "reference": "FGSFGSFG-44",
+            "merchantName": "Rebel",
+            "merchantCategoryCode": "5139"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "2",
+            "isDetailAvailable": false,
+            "type": "FEE",
+            "status": "POSTED",
+            "description": "international transfer",
+            "postingDateTime": "2019-02-12T15:43:00",
+            "valueDateTime": "2019-02-10T15:43:00",
+            "executionDateTime": "2019-02-12T15:43:00",
+            "amount": "2500.00",
+            "currency": "AUD",
+            "reference": "ZCVADFADF-34",
+            "merchantName": "OFX S.A.",
+            "merchantCategoryCode": "5462"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "3",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "TRAVEL SYD SYDNEY AUS",
+            "postingDateTime": "2019-02-16T15:43:00",
+            "valueDateTime": "2019-02-10T15:43:00",
+            "executionDateTime": "2019-02-16T15:43:00",
+            "amount": "-250.00",
+            "currency": "AUD",
+            "reference": "VZVZCVZ-34",
+            "merchantName": "TRANSPORT NSW",
+            "merchantCategoryCode": "4111"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "4",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "1252 ROCKDALE NS AUS",
+            "postingDateTime": "2019-02-16T15:43:00",
+            "valueDateTime": "2019-02-10T15:43:00",
+            "executionDateTime": "2019-02-16T15:43:00",
+            "amount": "-55.00",
+            "currency": "AUD",
+            "reference": "EERQERQ-34",
+            "merchantName": "WOOLWORTHS",
+            "merchantCategoryCode": "5411"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "2c381a5a-23ba-4b6c-a135-da43367e032c",
+            "isDetailAvailable": false,
+            "type": "INTEREST_CHARGED",
+            "status": "PENDING",
+            "description": "ex velit excepteur",
+            "postingDateTime": "2019-04-25T22:29:32.279Z",
+            "valueDateTime": "2019-04-25T22:29:32.279Z",
+            "executionDateTime": "2019-04-25T22:29:32.279Z",
+            "amount": "-141.40",
+            "currency": "AUD",
+            "reference": "5c82eccc924e3f4d520c6a23",
+            "merchantName": "COMTEST",
+            "merchantCategoryCode": "5411"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "07714882-6556-443d-9ac2-c723222b3b7a",
+            "isDetailAvailable": false,
+            "type": "FEE",
+            "status": "POSTED",
+            "description": "do minim in",
+            "postingDateTime": "2019-04-25T22:29:32.282Z",
+            "valueDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "amount": "-133.56",
+            "currency": "AUD",
+            "reference": "5c82eccc08a660cc7b9681a5",
+            "merchantName": "CORMORAN",
+            "merchantCategoryCode": "null"
+          },
+          {
+            "accountId": "666666666",
+            "transactionId": "127326e1-3576-4da8-8e96-57882247192b",
+            "isDetailAvailable": false,
+            "type": "TRANSFER_INCOMING",
+            "status": "POSTED",
+            "description": "do mollit nulla",
+            "postingDateTime": "2019-04-25T22:29:32.282Z",
+            "valueDateTime": "2019-04-25T22:29:32.282Z",
+            "executionDateTime": "2019-04-25T22:29:32.282Z",
+            "amount": "-59.62",
+            "currency": "AUD",
+            "reference": "5c82eccc4d0dcdd706b72bc6",
+            "merchantName": "MACRONAUT",
+            "merchantCategoryCode": "5139"
+          }
+        ]
+      },
+      "links": {
+        "self": "string",
+        "first": "string",
+        "prev": "string",
+        "next": "string",
+        "last": "string"
+      },
+      "meta": {
+        "totalRecords": 55,
+        "totalPages": 3
+      }
+    }
+  ]
+}
