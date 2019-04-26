@@ -109,8 +109,8 @@
             "amount": "2500.00",
             "currency": "AUD",
             "reference": "ZCVADFADF-34",
-            "merchantName": "OFX S.A.",
-            "merchantCategoryCode": "5462"
+            "merchantName": "Peoplebank Week1 Salary",
+            "merchantCategoryCode": "0732"
           },
           {
             "accountId": "666666666",
