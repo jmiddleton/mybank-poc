@@ -5,7 +5,7 @@
         {
           "accountId": "666666666",
           "displayName": "Flexible Saving II",
-          "nickname": "string",
+          "nickname": "s",
           "maskedNumber": "53680358603450-3",
           "openStatus": "OPEN",
           "isOwned": "true",
@@ -15,7 +15,7 @@
         {
           "accountId": "451212111",
           "displayName": "Term Deposit",
-          "nickname": "string",
+          "nickname": "s",
           "maskedNumber": "TD-3431922",
           "openStatus": "OPEN",
           "isOwned": "true",
@@ -25,11 +25,11 @@
       ]
     },
     "links": {
-      "self": "string",
-      "first": "string",
-      "prev": "string",
-      "next": "string",
-      "last": "string"
+      "self": "s",
+      "first": "s",
+      "prev": "s",
+      "next": "s",
+      "last": "s"
     },
     "meta": {
       "totalRecords": 0,
@@ -41,15 +41,15 @@
       "id": "666666666",
       "accountId": "666666666",
       "displayName": "Flexible Saving II",
-      "nickname": "string",
+      "nickname": "s",
       "maskedNumber": "536803 5860345-0",
       "openStatus": "OPEN",
       "isOwned": "true",
       "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
       "productName": "Flexible Saving II",
-      "bsb": "string",
-      "accountNumber": "string",
-      "bundleName": "string",
+      "bsb": "s",
+      "accountNumber": "s",
+      "bundleName": "s",
       "specificAccountUType": "depositRates",
       "depositRates": [
         {
@@ -67,13 +67,13 @@
       "id": "451212111",
       "accountId": "451212111",
       "displayName": "Term Deposit",
-      "nickname": "string",
+      "nickname": "s",
       "maskedNumber": "TD-3431922",
       "openStatus": "OPEN",
       "isOwned": "true",
       "productCategory": "TERM_DEPOSITS",
       "productName": "Term Deposit",
-      "bundleName": "string",
+      "bundleName": "s",
       "specificAccountUType": "termDeposit",
       "termDeposit": {
         "lodgementDate": "2018-02-12T12:00:00",
@@ -118,11 +118,11 @@
       ]
     },
     "links": {
-      "self": "string",
-      "first": "string",
-      "prev": "string",
-      "next": "string",
-      "last": "string"
+      "self": "s",
+      "first": "s",
+      "prev": "s",
+      "next": "s",
+      "last": "s"
     },
     "meta": {
       "totalRecords": 0,
@@ -130,29 +130,6 @@
     }
   },
   "transactions": [
-    {
-      "id": "33333333fffff",
-      "data": {
-        "transactions": [
-          {
-            "accountId": "33333333fffff",
-            "transactionId": "1",
-            "isDetailAvailable": false,
-            "type": "PAYMENT",
-            "status": "POSTED",
-            "description": "Nike Shoes",
-            "postingDateTime": "2019-02-12T12:43:00",
-            "valueDateTime": "2019-01-12T15:43:00",
-            "executionDateTime": "2019-01-25T15:43:00",
-            "amount": "-120.90",
-            "currency": "AUD",
-            "reference": "FGSFGSFG-44",
-            "merchantName": "Rebel",
-            "merchantCategoryCode": "5139"
-          }
-        ]
-      }
-    },
     {
       "id": "666666666",
       "data": {
@@ -223,7 +200,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "2c381a5a-23ba-4b6c-a135-da43367e032c",
+            "transactionId": "5",
             "isDetailAvailable": false,
             "type": "INTEREST_CHARGED",
             "status": "PENDING",
@@ -239,7 +216,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "07714882-6556-443d-9ac2-c723222b3b7a",
+            "transactionId": "06",
             "isDetailAvailable": false,
             "type": "FEE",
             "status": "POSTED",
@@ -255,7 +232,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "127326e1-3576-4da8-8e96-57882247192b",
+            "transactionId": "07",
             "isDetailAvailable": false,
             "type": "TRANSFER_INCOMING",
             "status": "POSTED",
@@ -271,7 +248,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "127326e1-3576-4da8-8e96-578822",
+            "transactionId": "08",
             "isDetailAvailable": false,
             "type": "TRANSFER_INCOMING",
             "status": "POSTED",
@@ -287,7 +264,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "127326e1-3576-4da8-8e96-57882247192b2",
+            "transactionId": "09",
             "isDetailAvailable": false,
             "type": "TRANSFER_INCOMING",
             "status": "POSTED",
@@ -303,7 +280,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "127326e1-3576-4da8-8e96-57882247192b3",
+            "transactionId": "10",
             "isDetailAvailable": false,
             "type": "TRANSFER_INCOMING",
             "status": "POSTED",
@@ -319,7 +296,7 @@
           },
           {
             "accountId": "666666666",
-            "transactionId": "127326e1-3576-4da8-8e96-57882247192b4",
+            "transactionId": "11",
             "isDetailAvailable": false,
             "type": "TRANSFER_INCOMING",
             "status": "POSTED",
@@ -336,14 +313,14 @@
         ]
       },
       "links": {
-        "self": "string",
-        "first": "string",
-        "prev": "string",
-        "next": "string",
-        "last": "string"
+        "self": "s",
+        "first": "s",
+        "prev": "s",
+        "next": "s",
+        "last": "s"
       },
       "meta": {
-        "totalRecords": 55,
+        "totalRecords": 12,
         "totalPages": 3
       }
     }
