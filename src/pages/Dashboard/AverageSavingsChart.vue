@@ -1,5 +1,13 @@
 <template>
-  <div ref="savingsChart" :style="{ height: '150px' }"/>
+  <section class="h-100 mb-0 widget">
+    AVERAGE SAVINGS
+    <span class="float-right" v-if="isLoading">
+      <i class="la la-refresh la-spin"/> Loading...
+    </span>
+    <div>
+      <div class="widgetBody widget-body" ref="savingsChart" :style="{ height: '150px' }"/>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -14,7 +22,8 @@ export default {
   data() {
     return {
       ticks: [],
-      data: []
+      data: [],
+      isLoading: true
     };
   },
   methods: {
@@ -61,26 +70,33 @@ export default {
         },
         colors: ["#78c448"]
       });
+    },
+    loadSavings() {
+      const me = this;
+      me.isLoading = true;
+      axios
+        .get(
+          "/analytics/savings/" +
+            moment()
+              .subtract(3, "months")
+              .format("YYYY-MM"),
+          { "page-size": 4 }
+        )
+        .then(r => r.data)
+        .then(savings => {
+          if (savings && savings.data) {
+            me.getSavingsData(savings.data.savings);
+            me.createChart();
+          }
+          me.isLoading = false;
+        });
     }
   },
   mounted() {
-    axios
-      .get(
-        "/analytics/savings/" +
-          moment()
-            .subtract(3, "months")
-            .format("YYYY-MM"),
-        {
-          "page-size": 4
-        }
-      )
-      .then(r => r.data)
-      .then(savings => {
-        if (savings && savings.data) {
-          this.getSavingsData(savings.data.savings);
-          this.createChart();
-        }
-      });
+    const me = this;
+
+    setInterval(() => me.loadSavings(), 30000);
+    me.loadSavings();
   }
 };
 </script>

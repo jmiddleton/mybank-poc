@@ -42,14 +42,10 @@
           </Widget>
         </b-col>
         <b-col xs="4">
-          <Widget class="h-100 mb-0" title="SPENDING">
-            <SpendingsChart/>
-          </Widget>
+          <SpendingsChart/>
         </b-col>
         <b-col xs="4">
-          <Widget class="h-100 mb-0" title="AVERAGE SAVINGS">
-            <AverageSavingsChart/>
-          </Widget>
+          <AverageSavingsChart/>
         </b-col>
       </b-row>
     </div>
@@ -124,7 +120,9 @@ export default {
     NoAccountMessage
   },
   data() {
-    return {};
+    return {
+      isLoading: false
+    };
   },
   methods: {
     showModal() {
