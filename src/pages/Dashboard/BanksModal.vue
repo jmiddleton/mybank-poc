@@ -24,7 +24,11 @@
           </div>
         </a>
       </div>
-      <div v-else>Unable to retrieve list of banks. Please try in few seconds.</div>
+      <div v-else>
+        <span>
+          <i class="la la-refresh la-spin"/> Loading list of banks...
+        </span>
+      </div>
     </div>
     <div slot="modal-footer" class="w-100">
       <b-button variant="primary" size="sm" class="float-right" @click="show=false">Close</b-button>
@@ -50,6 +54,7 @@ export default {
   },
   watch: {
     show() {
+      //TODO: move to a state
       axios
         .get("/banks")
         .then(r => r.data)

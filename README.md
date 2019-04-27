@@ -75,6 +75,18 @@ Please make sure you have configured your environment for production. Create a f
 - VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
 - VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]
 
+### Deploy static website
+To deploy the static website in AWS S3, just run the following commands:
+
+```
+npm run build
+npm deploy
+```
+
+To configure a AWS S3 Bucket as static website, check the following blog:
+
+https://medium.com/@serverlessguru/deploy-reactjs-app-with-s3-static-hosting-f640cb49d7e6
+
 ### Test data
 
 change db.json and push it to your git repo. Check https://my-json-server.typicode.com howto to get the data accessible on internet.
