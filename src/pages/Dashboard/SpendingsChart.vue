@@ -44,7 +44,7 @@ export default {
         element: this.$refs.spendingsChart,
         resize: true,
         data: data,
-        colors: ["#ffc247", "#f55d5d", "#9964e3", "#78c448"]
+        colors: ["#ffc247", "#f55d5d", "#9964e3", "#78c448", "#547fff", "#17a2b8", "#E4A537", "#B62070", "#A7B620", "#20B6B6"]
       });
     }
   },
