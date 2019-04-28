@@ -30,7 +30,7 @@ export default {
         const me = this;
         setTimeout(function() {
           me.$router.push(auth_state.redirectTo);
-        }, 2500);
+        }, 1000);
       }
     }
   },

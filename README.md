@@ -6,6 +6,8 @@ It also provides analytics to help you stay on track with your spending in just 
 
 Auth0 provides user management and authentication using OpenId Connect Authorization Code Flow. The flow provides information about the end user in the form of an id_token (JSON Web Tokens - JWTs) that verifies the identity of the user and provides basic profile information about the user. 
 
+Preview: http://www.mybank.com.ar.s3-website-ap-southeast-2.amazonaws.com
+
 ![image](mybank.png)
 
 ## Application architecture
@@ -75,15 +77,15 @@ Please make sure you have configured your environment for production. Create a f
 - VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
 - VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]
 
-### Deploy static website
-To deploy the static website in AWS S3, just run the following commands:
+### Deploy static website to AWS S3
+To deploy the static website to AWS S3, just execute:
 
 ```
 npm run build
-npm deploy
+npm run deploy
 ```
 
-To configure a AWS S3 Bucket as static website, check the following blog:
+To configure a AWS S3 Bucket as static website, check the following blog for more details:
 
 https://medium.com/@serverlessguru/deploy-reactjs-app-with-s3-static-hosting-f640cb49d7e6
 
