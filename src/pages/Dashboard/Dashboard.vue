@@ -1,30 +1,22 @@
 <template>
   <div>
-    <div class="col-md-12 col-lg-10">
+    <div class="dashboard-page">
       <b-breadcrumb>
         <b-breadcrumb-item>
           <span class="fi flaticon-home"></span>
         </b-breadcrumb-item>
       </b-breadcrumb>
       <div>
-        <h1 class="page-title">My Dashboard</h1>
-        <b-row>
-          <b-col lg="4" xs="12"></b-col>
-          <b-col lg="4" xs="12"></b-col>
-          <b-col>
-            <!-- a href data-widgster="load" class="float-right btn btn-outline-primary">
-              <i class="la la-refresh mr-2"></i>Refresh
-            </a-->
-            <a
-              href="#"
-              v-b-modal.modal-scrollable
-              @click="showModal"
-              class="float-right btn btn-outline-primary"
-            >
-              <i class="fa fa-plus mr-2"></i>Link Account
-            </a>
-          </b-col>
-        </b-row>
+        <h1 class="page-title">
+          My Dashboard
+          <a
+            href="#"
+            @click="showModal"
+            class="float-right btn-md btn btn-outline-primary"
+          >
+            <i class="fa fa-plus mr-2"></i>Add
+          </a>
+        </h1>
       </div>
       <b-row v-if="hasAccounts">
         <b-col lg="4" xs="12">
@@ -39,12 +31,9 @@
                 <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
               </div>
             </div>
-            <div class="d-flex flex-wrap justify-content-between">
+            <div class="text-right">
               <div class="mt">
-                <h5>$ {{totalAvailableBalance}}</h5>
-                <p class="text-muted mb-0 mr">
-                  <small>Available Balance</small>
-                </p>
+                <small>Available</small><h5>$ {{totalAvailableBalance}}</h5>
               </div>
             </div>
           </Widget>
@@ -58,7 +47,7 @@
       </b-row>
     </div>
     <span>&nbsp;</span>
-    <div class="col-md-12 col-lg-10" v-if="hasAccounts">
+    <div v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
           <h3>{{getCategoryName(category)}}</h3>

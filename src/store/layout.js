@@ -4,26 +4,11 @@ import isScreen from '@/core/screenHelper';
 export default {
   namespaced: true,
   state: {
-    sidebarClose: false,
+    sidebarClose: true,
     sidebarStatic: false,
-    sidebarActiveElement: null,
-    chatOpen: false,
+    sidebarActiveElement: null
   },
   mutations: {
-    toggleChat(state) {
-      state.chatOpen = !state.chatOpen;
-      $('.chat-notification-sing').remove();
-
-      setTimeout(() => {
-      // demo: add class & badge to indicate incoming messages from contact
-      // .js-notification-added ensures notification added only once
-        $('#chat-sidebar-user-group').find('.list-group-item:first-child:not(.js-notification-added)')
-          .addClass('active js-notification-added')
-          .find('.fa-circle')
-          .after('<span class="badge badge-danger badge-pill '
-          + 'float-right animated bounceInDown">3</span>');
-      }, 1000);
-    },
     toggleSidebar(state) {
       const nextState = !state.sidebarStatic;
 
@@ -31,7 +16,7 @@ export default {
       state.sidebarStatic = nextState;
 
       if (!nextState && (isScreen('lg') || isScreen('xl'))) {
-        state.sidebarClose = false;
+        state.sidebarClose = true;
       }
     },
     switchSidebar(state, value) {
@@ -45,7 +30,7 @@ export default {
       state.sedebarClose = value;
     },
     handleSwipe(state, e) {
-      if (e.direction === 4 && !state.chatOpen) {
+      if (e.direction === 4) {
         state.sidebarClose = false;
       }
 
@@ -53,17 +38,12 @@ export default {
         state.sidebarClose = true;
         return;
       }
-
-      state.chatOpen = e.direction === 2;
     },
     changeSidebarActive(state, index) {
       state.sidebarActiveElement = index;
     },
   },
   actions: {
-    toggleChat({ commit }) {
-      commit('toggleChat');
-    },
     toggleSidebar({ commit }) {
       commit('toggleSidebar');
     },

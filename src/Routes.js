@@ -136,8 +136,11 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  if (to.name) {
+    // Start the route progress bar.
+    NProgress.start();
+  }
   if (to.path === "/" || to.path === "/callback" || Vue.prototype.$auth.isAuthenticated()) {
-    NProgress.start()
     return next();
   }
 
@@ -146,7 +149,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   // Complete the animation of the route progress bar.
-  NProgress.done()
+  NProgress.done();
 })
 
 export default router;

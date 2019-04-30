@@ -97,31 +97,6 @@ export default {
     }
   },
   created() {
-    if (window.innerWidth > 576) {
-      setTimeout(() => {
-        const $chatNotification = $("#chat-notification");
-        $chatNotification
-          .removeClass("hide")
-          .addClass("animated fadeIn")
-          .one(
-            "webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend",
-            () => {
-              $chatNotification.removeClass("animated fadeIn");
-              setTimeout(() => {
-                $chatNotification
-                  .addClass("animated fadeOut")
-                  .one(
-                    "webkitAnimationEnd mozAnimationEnd MSAnimationEnd" +
-                      " oanimationend animationend",
-                    () => {
-                      $chatNotification.addClass("hide");
-                    }
-                  );
-              }, 1000);
-            }
-          );
-      }, 1000);
-    }
   }
 };
 </script>

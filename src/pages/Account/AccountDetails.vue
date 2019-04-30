@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-lg-10">
+  <div class="dashboard-page">
     <b-breadcrumb>
       <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
@@ -11,7 +11,7 @@
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
             <div v-cloak class="widget-padding-md clearfix bg-primary text-white">
-              <h2>{{account.displayName}}</h2>
+              <h3>{{account.displayName}}</h3>
               <div class="widgetControls widget-controls">
                 <a @click="refresh()">
                   <i class="la la-refresh"></i>
@@ -24,10 +24,10 @@
                   <b-tooltip :placement="{default: 'top'}" :target="aunlink">Unlink</b-tooltip>
                 </a>
               </div>
-              <h4>
+              <h5>
                 {{account.maskedNumber}}
                 <span class="badge badge-success">{{account.openStatus}}</span>
-              </h4>
+              </h5>
               <span
                 v-if="account.updated"
                 class="btn btn-outline btn-xs"
@@ -67,7 +67,7 @@
                 class="profileStat stat-item"
               >
                 <p class="profileStatValue value text-left">{{rate.rate}}%</p>
-                <h6 class="name text-left text-nowrap">
+                <h6 class="text-left text-nowrap">
                   {{rate.depositRateType}} &nbsp;
                   <a
                     v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
@@ -79,6 +79,7 @@
                 </h6>
               </b-col>
             </b-row>
+            &nbsp;
             <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
@@ -95,6 +96,7 @@ import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 import moment from "moment";
 import axios from "axios";
+import _ from "lodash";
 
 Vue.filter("formatDate", function(value) {
   if (value) {

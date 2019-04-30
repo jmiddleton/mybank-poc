@@ -1,23 +1,21 @@
 <template>
-  <div class="tables-basic col-md-12 col-lg-10">
+  <div class="dashboard-page">
     <b-breadcrumb>
       <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
       </b-breadcrumb-item>
       <b-breadcrumb-item active>My Spending</b-breadcrumb-item>
     </b-breadcrumb>
-    <h1 class="page-title">My Spending - {{currentMonth}}</h1>
+    <h1 class="page-title">
+      My Spending <small>[{{currentMonth}}]</small>
+      <div role="group" class="btn-group float-right">
+        <button class="btn btn-outline-info btn-sm" @click="changeMonth(-1)">Previous</button>
+        <button class="btn btn-outline-info btn-sm" @click="changeMonth(0)">Current</button>
+        <button class="btn btn-outline-info btn-sm" @click="changeMonth(1)">Next</button>
+      </div>
+    </h1>
     <b-row>
-      <b-col xs="12">
-        <div role="group" class="btn-group float-right">
-          <button class="btn btn-outline-info btn-sm" @click="changeMonth(-1)">Previous</button>
-          <button class="btn btn-outline-info btn-sm" @click="changeMonth(0)">Current</button>
-          <button class="btn btn-outline-info btn-sm" @click="changeMonth(1)">Next</button>
-        </div>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col xs="6">
+      <b-col lg="6">
         <Widget title="Monthly Spending" refresh settings>
           <div class="sidebarAlerts categoriesList">
             <label ref="spendingSidebar"/>
@@ -45,7 +43,7 @@
           </div>
         </Widget>
       </b-col>
-      <b-col xs="6">
+      <b-col lg="6">
         <Widget title="Category Spending" refresh settings>
           <div ref="categoryChart" :style="{ height: '325px' }"/>
           <div ref="categoryLegends" style="categoryLegends"></div>
@@ -154,7 +152,7 @@ export default {
       });
     },
     loadSpending() {
-      const month=this.currentMonth;
+      const month = this.currentMonth;
       //TODO: restrict how far it can search, only 2 or 3 months
       axios
         .get("/analytics/spendings/" + month, {
@@ -249,7 +247,7 @@ export default {
   unmounted() {
     window.removeEventListener("resize", this.loadSpending);
   }
-}
+};
 </script>
 
 <style src="./Spending.scss" lang="scss" scoped/>

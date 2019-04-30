@@ -86,7 +86,7 @@ $body-bg-light: lighten($body-bg, 3%);
 //== Components
 //
 
-$content-padding: 10px;
+$content-padding: 30px;
 
 $nav-link-padding: 10px;
 
@@ -109,8 +109,6 @@ $sidebar-item-border-color: transparent !default;
 $sidebar-item-active-color: $yellow !default;
 $sidebar-item-hover-bg-color: $sidebar-action-bg;
 $sidebar-scrollbar-bg: $gray-200;
-
-$chat-sidebar-bg-color: $sidebar-bg-color !default;
 
 $breadcrumb-divider: '>';
 $breadcrumb-padding-y: 0;

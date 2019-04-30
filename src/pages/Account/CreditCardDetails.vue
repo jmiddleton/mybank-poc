@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-lg-10">
+  <div class="dashboard-page">
     <b-breadcrumb>
       <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
@@ -64,23 +64,24 @@
               </b-col>
               <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
                 <p
-                  class="profileStatValue value text-right"
+                  class="profileStatValue value text-left"
                 >${{account.creditCard.minPaymentAmount}}</p>
-                <h6 class="name text-right">MIN PAYMENT</h6>
+                <h6 class="text-left">MIN PAYMENT</h6>
               </b-col>
               <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
                 <p
-                  class="profileStatValue value text-right"
+                  class="profileStatValue value text-left"
                 >${{account.creditCard.paymentDueAmount}}</p>
-                <h6 class="name text-right">DUE AMOUNT</h6>
+                <h6 class="text-left">DUE AMOUNT</h6>
               </b-col>
               <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
                 <p
-                  class="profileStatValue value text-right text-nowrap"
+                  class="profileStatValue value text-left text-nowrap"
                 >{{account.creditCard.paymentDueDate | date('DD MMMM')}}</p>
-                <h6 class="name text-right text-nowrap">DUE DATE</h6>
+                <h6 class="text-left">DUE DATE</h6>
               </b-col>
             </b-row>
+            &nbsp;
             <div>
               <transaction-table></transaction-table>
             </div>
@@ -94,6 +95,7 @@
 import Widget from "@/components/Widget/Widget";
 import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
+import _ from "lodash";
 
 export default {
   components: {

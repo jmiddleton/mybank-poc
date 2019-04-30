@@ -1,5 +1,5 @@
 <template>
-  <div class="col-md-12 col-lg-10">
+  <div class="dashboard-page">
     <b-breadcrumb>
       <b-breadcrumb-item to="/app/dashboard">
         <span class="fi flaticon-home"></span>
@@ -67,7 +67,7 @@
                 class="profileStat stat-item"
               >
                 <p class="profileStatValue value text-left">{{rate.rate}}%</p>
-                <h6 class="name text-left text-nowrap">
+                <h6 class="text-left text-nowrap">
                   {{rate.depositRateType}} &nbsp;
                   <a
                     v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
@@ -95,6 +95,7 @@ import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
 import moment from "moment";
 import axios from "axios";
+import _ from "lodash";
 
 Vue.filter("formatDate", function(value) {
   if (value) {
