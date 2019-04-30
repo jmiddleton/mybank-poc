@@ -10,78 +10,75 @@
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div
-              v-cloak
-              class="widget-title widget-top widget-padding-md clearfix bg-danger text-white"
-            >
-              <button @click="unlinkAccount()" class="float-right btn btn-outline btn-sm mb-2">
-                <i class="fa fa-unlink mr-2"></i>
-                Unlink
-              </button>
-              <h1>
-                {{account.displayName}}
-                <a
-                  @click="refresh()"
-                  data-widgster="load"
-                  class="small text-white la la-refresh"
-                ></a>
-              </h1>
-              <h3>{{account.maskedNumber}}</h3>
-              <span class="badge badge-success">{{account.openStatus}}</span>&nbsp;
+            <div v-cloak class="widget-padding-md clearfix bg-danger text-white">
+              <h2>{{account.displayName}}</h2>
+              <div class="widgetControls widget-controls">
+                <a @click="refresh()">
+                  <i class="la la-refresh"></i>
+                </a>
+                <a @click="makeTransfer()">
+                  <i class="la la-edit"></i>
+                </a>
+                <a @click="unlinkAccount()" :id="aunlink">
+                  <i class="la la-unlink"/>
+                  <b-tooltip :placement="{default: 'top'}" :target="aunlink">Unlink</b-tooltip>
+                </a>
+              </div>
+              <h4>
+                {{account.maskedNumber}}
+                <span class="badge badge-success">{{account.openStatus}}</span>
+              </h4>
               <span
                 v-if="account.updated"
                 class="btn btn-outline btn-xs"
               >Updated {{account.updated | formatDate}}</span>
               <h5>
-                <div v-for="balance in balances" :key="balance.accountId">
-                  <div
-                    v-if="account.accountId === balance.accountId"
-                    class="profileStat stat-item float-right stats-row mt-3"
-                  >
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >$ {{ balance.deposit.availableBalance.amount }}</p>
-                      <h6 class="name text-right">Available Balance</h6>
-                    </div>
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >$ {{ balance.deposit.currentBalance.amount }}</p>
-                      <h6 class="name text-right">Balance</h6>
-                    </div>
-                  </div>
-                </div>
+                <b-row>
+                  <b-col lg="8"></b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h6 m-0 fw-normal text-right"
+                    >${{ getAvailableBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">AVAILABLE</h6>
+                  </b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h5 m-0 fw-normal text-right"
+                    >${{ getCurrentBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">BALANCE</h6>
+                  </b-col>
+                </b-row>
               </h5>
             </div>
-            <div class="row">
-              <div xs="12">
-                <div class="profileContactContainer">
-                  <span class="thumb-xl mb-3" v-if="account !== undefined">
-                    <img
-                      :src="require('../../assets/banks/' + account.institution + '.png')"
-                      alt="..."
-                      class="profileAvatar rounded-circle"
-                    >
-                  </span>
-
-                  <div v-if="account.termDeposit" class="stats-row col-md-12" xs="12">
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >{{account.termDeposit.lodgementDate | formatLongDate}}</p>
-                      <h6 class="name text-right">Lodgement</h6>
-                    </div>
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >{{account.termDeposit.maturityDate | formatLongDate}}</p>
-                      <h6 class="name text-right">Maturity</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <b-row>
+              <b-col lg="1" class="profileContactContainer">
+                <span class="thumb-xl mb-3" v-if="account !== undefined">
+                  <img
+                    :src="require('../../assets/banks/' + account.institution + '.png')"
+                    alt="..."
+                    class="profileAvatar rounded-circle"
+                  >
+                </span>
+              </b-col>
+              <b-col
+                lg="1"
+                v-for="rate in account.depositRates"
+                :key="rate.depositRateType"
+                class="profileStat stat-item"
+              >
+                <p class="profileStatValue value text-left">{{rate.rate}}%</p>
+                <h6 class="name text-left text-nowrap">
+                  {{rate.depositRateType}} &nbsp;
+                  <a
+                    v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
+                    target="new"
+                    :href="rate.additionalInfoUri"
+                  >
+                    <span class="fa fa-external-link"></span>
+                  </a>
+                </h6>
+              </b-col>
+            </b-row>
             <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
@@ -104,11 +101,6 @@ Vue.filter("formatDate", function(value) {
     return moment(value).format("DD MMM");
   }
 });
-Vue.filter("formatLongDate", function(value) {
-  if (value) {
-    return moment(value).format("MMM YYYY");
-  }
-});
 
 export default {
   components: {
@@ -117,7 +109,8 @@ export default {
   },
   data() {
     return {
-      accountId: ""
+      accountId: "",
+      auth: {}
     };
   },
   created() {
@@ -131,15 +124,67 @@ export default {
         this.$store.dispatch("accounts/loadAccountBalances");
       }
     },
-    refresh() {
+    async refresh() {
       //TODO: if userBankAuth is expired, re-authenticate the user
-      axios.post("/accounts/" + this.accountId + "/refresh");
-      this.init();
-      this.$forceUpdate();
-      this.$refs.txnTable.getTransactionsByAccountId(true);
+      try {
+        await axios
+          .get("/bankauths/" + this.account.institution)
+          .then(r => r.data)
+          .then(auth => {
+            if (auth) {
+              this.refreshAccount(this.accountId, this.account.institution);
+            }
+          });
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          axios
+            .get("/banks/" + this.account.institution)
+            .then(r => r.data)
+            .then(bank => {
+              Vue.prototype.$auth.authorise(
+                "/app/accounts/" + this.accountId,
+                "/accounts/" + this.accountId + "/refresh",
+                bank,
+                this.accountId
+              );
+            });
+        }
+      }
+    },
+    refreshAccount(accountId, bankcode) {
+      const authState = {
+        nonce: "stateKey-fadfadfadf3413",
+        redirectTo: "/app/accounts/" + accountId,
+        bankcode: bankcode,
+        accountId: accountId,
+        postAuthCodeTo: "/accounts/" + accountId + "/refresh"
+      };
+      localStorage.setItem("auth_state", JSON.stringify(authState));
+      this.$router.push({ path: "/app/bankcallback/" });
+    },
+    makeTransfer() {
+      this.$router.push({ path: "/app/transfers/" + this.accountId });
     },
     unlinkAccount() {
       this.$router.push({ path: "/app/unlink/" + this.accountId });
+    },
+    getAvailableBalance(accountId) {
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance.balanceUType === "deposit") {
+        return balance.deposit.availableBalance.amount;
+      } else if (balance.balanceUType === "lending") {
+        return balance.lending.availableBalance.amount;
+      }
+      return "";
+    },
+    getCurrentBalance(accountId) {
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance.balanceUType === "deposit") {
+        return balance.deposit.currentBalance.amount;
+      } else if (balance.balanceUType === "lending") {
+        return balance.lending.accountBalance.amount;
+      }
+      return "";
     }
   },
   computed: mapState("accounts", ["account", "balances"])

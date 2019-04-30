@@ -6,20 +6,28 @@
           <span class="fi flaticon-home"></span>
         </b-breadcrumb-item>
       </b-breadcrumb>
-      <h1 class="page-title">
-        My Dashboard
-        <a
-          href="#"
-          v-b-modal.modal-scrollable
-          @click="showModal"
-          class="float-right btn btn-outline-primary"
-        >
-          <i class="fa fa-edit mr-2"></i>Link Account
-        </a>
-        <a href data-widgster="load" class="small text-gray-light la la-refresh"></a>
-      </h1>
+      <div>
+        <h1 class="page-title">My Dashboard</h1>
+        <b-row>
+          <b-col lg="4" xs="12"></b-col>
+          <b-col lg="4" xs="12"></b-col>
+          <b-col>
+            <!-- a href data-widgster="load" class="float-right btn btn-outline-primary">
+              <i class="la la-refresh mr-2"></i>Refresh
+            </a-->
+            <a
+              href="#"
+              v-b-modal.modal-scrollable
+              @click="showModal"
+              class="float-right btn btn-outline-primary"
+            >
+              <i class="fa fa-plus mr-2"></i>Link Account
+            </a>
+          </b-col>
+        </b-row>
+      </div>
       <b-row v-if="hasAccounts">
-        <b-col xs="4">
+        <b-col lg="4" xs="12">
           <Widget class="h-100 mb-0" title="TOTAL BALANCE">
             <div class="row flex-nowrap">
               <div xs="3">
@@ -41,10 +49,10 @@
             </div>
           </Widget>
         </b-col>
-        <b-col xs="4">
+        <b-col lg="4" xs="12">
           <SpendingsChart/>
         </b-col>
-        <b-col xs="4">
+        <b-col lg="4" xs="12">
           <AverageSavingsChart/>
         </b-col>
       </b-row>
@@ -54,37 +62,40 @@
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
           <h3>{{getCategoryName(category)}}</h3>
-          <b-list-group class="widgetBody widget-body">
-            <b-list-group-item
-              v-for="account in accounts"
-              :key="account.accountId"
-              class="list-group list-group-lg"
-            >
-              <span class="notificationIcon thumb-sm">
-                <img :src="require('../../assets/banks/' + account.institution + '.png')" alt="...">
-              </span>
-              <div v-for="balance in balances" :key="balance.accountId">
-                <div v-if="account.accountId === balance.accountId" class="stat-item float-right">
-                  <div class="stat-item">
-                    <h6 class="name fs-sm text-right">Available Balance</h6>
-                    <p class="value text-right">$ {{ getAvailableBalance(balance) }}</p>
-                  </div>
-                  <div class="stat-item float-right">
-                    <h6 class="name fs-sm text-right">Balance</h6>
-                    <p class="value text-right">$ {{ getCurrentBalance(balance) }}</p>
-                  </div>
-                </div>
-              </div>
+          <Widget v-for="account in accounts" :key="account.accountId">
+            <div class="clearfix">
               <a @click="getAccountDetails(account)">
-                <span class="fw-semi-bold">{{ account.displayName }}</span>&nbsp;&nbsp;
-                <span class="fa fa-external-link"></span>
+                <b-row class="flex-nowrap justify-content-between">
+                  <b-col lg="2">
+                    <span class="thumb my-widget-icon">
+                      <img
+                        :src="require('../../assets/banks/' + account.institution + '.png')"
+                        alt="..."
+                      >
+                    </span>
+                  </b-col>
+                  <b-col lg="6"></b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h6 m-0 fw-normal text-right"
+                    >${{ getAvailableBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">AVAILABLE</h6>
+                  </b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h5 m-0 fw-normal text-right"
+                    >${{ getCurrentBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">BALANCE</h6>
+                  </b-col>
+                </b-row>
+                <b-row class="flex-nowrap">
+                  <b-col lg="10"></b-col>
+                </b-row>
+                <h6 class="m-0">{{ account.displayName }}</h6>
+                <p class="value6">{{ account.maskedNumber }}</p>
               </a>
-              <p class="deemphasize text-ellipsis m-0">{{ account.maskedNumber }}</p>
-              <p v-if="account.updated" class="text-muted mb-0 mr">
-                <small>Updated: {{ account.updated | formatDate }}</small>
-              </p>
-            </b-list-group-item>
-          </b-list-group>
+            </div>
+          </Widget>
         </b-col>
       </b-row>
     </div>
@@ -145,18 +156,28 @@ export default {
       }
       return "";
     },
-    getAvailableBalance(balance) {
-      if (balance.balanceUType === "deposit") {
+    getAvailableBalance(accountId) {
+      if (!this.balances) {
+        return "";
+      }
+
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.availableBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.availableBalance.amount;
       }
       return "";
     },
-    getCurrentBalance(balance) {
-      if (balance.balanceUType === "deposit") {
+    getCurrentBalance(accountId) {
+      if (!this.balances) {
+        return "";
+      }
+
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.accountBalance.amount;
       }
       return "";

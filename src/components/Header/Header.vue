@@ -14,19 +14,13 @@
       </b-nav-item>
     </b-nav>
     <b-nav class="ml-auto">
-      <b-input-group class="input-group-no-border">
-        <div class="input-group-addon d-flex align-items-center">
-          <i class="la la-search px-3"/>
-        </div>
-        <b-input id="search-input" placeholder="Search Dashboard"/>
-      </b-input-group>
       <b-nav-item @click="openNotifications">
         <i class="la la-bell la-lg"/>
         <span class="circle bg-warning text-white fw-bold">4</span>
       </b-nav-item>
       <b-nav-item-dropdown
         id="basic-nav-dropdown"
-        class="notificationsMenu d-sm-down-none mr-2"
+        class="notificationsMenu mr-2"
         extra-menu-classes="notificationsWrapper py-0 animated animated-fast fadeInUp"
         right
       >
@@ -123,10 +117,10 @@ export default {
                       $chatNotification.addClass("hide");
                     }
                   );
-              }, 6000);
+              }, 1000);
             }
           );
-      }, 4000);
+      }, 1000);
     }
   }
 };

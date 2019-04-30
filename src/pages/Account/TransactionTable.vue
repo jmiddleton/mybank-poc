@@ -1,8 +1,10 @@
 <template>
   <div class="table-responsive">
     <h4>Transaction History</h4>
-    <table v-if="transactions && transactions.length > 0" 
-      class="table table-striped table-lg mt-lg mb-0">
+    <table
+      v-if="transactions && transactions.length > 0"
+      class="table table-striped table-lg mt-lg mb-0"
+    >
       <thead>
         <tr>
           <td>category</td>
@@ -42,21 +44,24 @@
         </td>
         <td class="description-left">
           <p class="mb-0">
-            <span v-if="txn.status === 'PENDING'" class="badge badge-warning badge-pill">Pending</span>&nbsp;
-            <span>{{txn.description}} - {{txn.merchantName}}</span>
+            <span v-if="txn.status === 'PENDING'" class="badge badge-warning badge-pill">Pending</span>
+            <span> {{txn.description}} - {{txn.merchantName}}</span>
           </p>
-          <p>
+          <div>
             <small>
               <span class="fw-semi-bold">Ref:</span>
-              <span>&nbsp; {{txn.reference}}</span>
-              <span
-                v-if="txn.postingDateTime"
-              >&nbsp;|&nbsp;Date: {{txn.postingDateTime | date('DD/MM/YYYY')}}</span>
+              {{txn.reference | truncate(15, '...')}}
             </small>
-          </p>
+            </div>
+            <div v-if="txn.postingDateTime">
+            <small>
+              <span class="fw-semi-bold">Posted:</span>
+              <span> {{txn.postingDateTime | date('DD/MM/YYYY')}}</span>
+            </small>
+          </div>
         </td>
         <td>
-          <span class="float-right">$ {{txn.amount}}</span>
+          <span>${{txn.amount}}</span>
         </td>
       </tr>
     </table>
@@ -111,7 +116,12 @@ export default {
     "message",
     "nextkey",
     "categories"
-  ])
+  ]),
+  filters: {
+    truncate: function(text, length, suffix) {
+      return text.substring(0, length) + suffix;
+    }
+  }
 };
 </script>
 

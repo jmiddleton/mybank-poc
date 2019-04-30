@@ -7,7 +7,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "deploy": "aws s3 sync dist/ s3://www.mybank.com.ar"
+    "deploy": "aws s3 sync dist/ s3://www.mybank.com.ar",
+    "cloudfront": "aws cloudfront create-distribution --origin-domain-name www.mybank.com.ar.s3.amazonaws.com --default-root-object index.html"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.7.2",
@@ -32,6 +33,7 @@
     "line-awesome": "icons8/line-awesome",
     "messenger": "git+https://github.com/HubSpot/messenger.git#v1.4.2",
     "moment": "^2.24.0",
+    "nprogress": "^0.2.0",
     "vue": "^2.5.17",
     "vue-axios": "^2.1.4",
     "vue-date-fns": "^1.0.0",

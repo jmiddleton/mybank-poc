@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import NProgress from 'nprogress';
 //import auth from "./auth/authService";
 
 import Layout from '@/components/Layout/Layout';
@@ -136,10 +137,16 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.path === "/" || to.path === "/callback" || Vue.prototype.$auth.isAuthenticated()) {
+    NProgress.start()
     return next();
   }
 
   Vue.prototype.$auth.login({ target: to.path, query: to.query });
 });
+
+router.afterEach((to, from) => {
+  // Complete the animation of the route progress bar.
+  NProgress.done()
+})
 
 export default router;

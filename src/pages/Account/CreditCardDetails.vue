@@ -10,26 +10,20 @@
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div class="widget-title widget-top widget-padding-md clearfix bg-secondary text-white">
-              <button @click="unlinkAccount()" class="float-right btn btn-outline btn-sm mb-2">
-                <i class="fa fa-unlink mr-2"></i>
-                Unlink
-              </button>
-              <button
-                @click="makePayment()"
-                class="float-right btn-transfer btn btn-outline btn-sm mb-2"
-              >
-                <i class="fa fa-edit mr-2"></i>
-                Make a Payment
-              </button>
-              <h1>
-                {{account.displayName}}
-                <a
-                  @click="refresh()"
-                  data-widgster="load"
-                  class="small text-white la la-refresh"
-                ></a>
-              </h1>
+            <div v-cloak class="widget-padding-md clearfix bg-secondary text-white">
+              <h2>{{account.displayName}}</h2>
+              <div class="widgetControls widget-controls">
+                <a @click="refresh()">
+                  <i class="la la-refresh"></i>
+                </a>
+                <a @click="makePayment()">
+                  <i class="la la-edit"></i>
+                </a>
+                <a @click="unlinkAccount()" :id="aunlink">
+                  <i class="la la-unlink"/>
+                  <b-tooltip :placement="{default: 'top'}" :target="aunlink">Unlink</b-tooltip>
+                </a>
+              </div>
               <h3>{{account.maskedNumber}}</h3>
               <span class="badge badge-success">{{account.openStatus}}</span>&nbsp;
               <span
@@ -37,69 +31,56 @@
                 class="btn btn-outline btn-xs"
               >Updated {{account.updated | formatDate}}</span>
               <h5>
-                <div v-for="balance in balances" :key="balance.accountId">
-                  <div
-                    v-if="account.accountId === balance.accountId"
-                    class="stats-item float-right"
-                  >
-                    <div class="profileStat stat-item float-right stats-row mt-3">
-                      <div class="profileStat stat-item">
-                        <p
-                          class="profileStatValue value text-right"
-                        >$ {{ balance.lending.creditLimit.amount }}</p>
-                        <h6 class="name text-right">Limit</h6>
-                      </div>
-                      <div class="profileStat stat-item">
-                        <p
-                          class="profileStatValue value text-right"
-                        >$ {{ balance.lending.availableBalance.amount }}</p>
-                        <h6 class="name text-right">Available Balance</h6>
-                      </div>
-                      <div class="profileStat stat-item">
-                        <p
-                          class="profileStatValue value text-right"
-                        >$ {{ balance.lending.accountBalance.amount }}</p>
-                        <h6 class="name text-right">Balance</h6>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <b-row>
+                  <b-col lg="6"></b-col>
+                  <b-col lg="2">
+                    <p class="h6 m-0 fw-normal text-right">${{ getLimit(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">LIMIT</h6>
+                  </b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h6 m-0 fw-normal text-right"
+                    >${{ getAvailableBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">AVAILABLE</h6>
+                  </b-col>
+                  <b-col lg="2">
+                    <p
+                      class="h5 m-0 fw-normal text-right"
+                    >${{ getCurrentBalance(account.accountId) }}</p>
+                    <h6 class="m-0 text-right">BALANCE</h6>
+                  </b-col>
+                </b-row>
               </h5>
             </div>
-            <div class="row">
-              <div xs="12">
-                <div class="profileContactContainer">
-                  <span class="thumb-xl mb-3" v-if="account !== undefined">
-                    <img
-                      :src="require('../../assets/banks/' + account.institution + '.png')"
-                      alt="..."
-                      class="profileAvatar rounded-circle"
-                    >
-                  </span>
-
-                  <div v-if="account.creditCard" class="stats-row col-md-12" xs="12">
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >${{account.creditCard.minPaymentAmount}}</p>
-                      <h6 class="name text-right">Min Payment</h6>
-                    </div>
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >${{account.creditCard.paymentDueAmount}}</p>
-                      <h6 class="name text-right">Due Amount</h6>
-                    </div>
-                    <div class="profileStat stat-item">
-                      <p
-                        class="profileStatValue value text-right"
-                      >{{account.creditCard.paymentDueDate | date('DD MMMM')}}</p>
-                      <h6 class="name text-right">Due Date</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <b-row>
+              <b-col lg="1" class="profileContactContainer">
+                <span class="thumb-xl mb-3" v-if="account !== undefined">
+                  <img
+                    :src="require('../../assets/banks/' + account.institution + '.png')"
+                    alt="..."
+                    class="profileAvatar rounded-circle"
+                  >
+                </span>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
+                <p
+                  class="profileStatValue value text-right"
+                >${{account.creditCard.minPaymentAmount}}</p>
+                <h6 class="name text-right">MIN PAYMENT</h6>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
+                <p
+                  class="profileStatValue value text-right"
+                >${{account.creditCard.paymentDueAmount}}</p>
+                <h6 class="name text-right">DUE AMOUNT</h6>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
+                <p
+                  class="profileStatValue value text-right text-nowrap"
+                >{{account.creditCard.paymentDueDate | date('DD MMMM')}}</p>
+                <h6 class="name text-right text-nowrap">DUE DATE</h6>
+              </b-col>
+            </b-row>
             <div>
               <transaction-table></transaction-table>
             </div>
@@ -135,7 +116,34 @@ export default {
     unlinkAccount() {
       this.$router.push({ path: "/app/unlink/" + this.accountId });
     },
-    makePayment() {}
+    makePayment() {},
+    getAvailableBalance(accountId) {
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance.balanceUType === "deposit") {
+        return balance.deposit.availableBalance.amount;
+      } else if (balance.balanceUType === "lending") {
+        return balance.lending.availableBalance.amount;
+      }
+      return "";
+    },
+    getCurrentBalance(accountId) {
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance.balanceUType === "deposit") {
+        return balance.deposit.currentBalance.amount;
+      } else if (balance.balanceUType === "lending") {
+        return balance.lending.accountBalance.amount;
+      }
+      return "";
+    },
+    getLimit(accountId) {
+      const balance = _.find(this.balances, ["accountId", accountId]);
+      if (balance.balanceUType === "deposit") {
+        return balance.deposit.currentBalance.amount;
+      } else if (balance.balanceUType === "lending") {
+        return balance.lending.accountBalance.amount;
+      }
+      return "";
+    }
   },
   computed: mapState("accounts", ["account", "balances"])
 };

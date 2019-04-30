@@ -5,8 +5,11 @@
 
       <div class="row" slot="content-header">
         <div class="col-6 collapse-brand">
-          <a href="https://demos.creative-tim.com/vue-argon-design-system/documentation/">
-            <img src="img/brand/blue.png">
+          <a href="#" @click.prevent="login" class="btn btn-neutral btn-icon">
+            <span class="btn-inner--icon">
+              <i class="fa fa-cloud-download mr-2"></i>
+            </span>
+            <span class="nav-link-inner--text">Login</span>
           </a>
         </div>
       </div>

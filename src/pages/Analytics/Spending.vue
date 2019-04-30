@@ -143,7 +143,7 @@ export default {
       if (this.isCached(this.currentMonth)) {
         this.generateSlidebarData();
       } else {
-        this.loadSpending(this.currentMonth);
+        this.loadSpending();
       }
     },
     isCached(currentMonth) {
@@ -153,7 +153,8 @@ export default {
         return moment(item.month, mformat).month() === current;
       });
     },
-    loadSpending(month) {
+    loadSpending() {
+      const month=this.currentMonth;
       //TODO: restrict how far it can search, only 2 or 3 months
       axios
         .get("/analytics/spendings/" + month, {
@@ -241,9 +242,14 @@ export default {
   },
   mounted() {
     this.currentMonth = moment().format(mformat);
-    this.loadSpending(this.currentMonth);
+    this.loadSpending();
+
+    window.addEventListener("resize", this.loadSpending);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.loadSpending);
   }
-};
+}
 </script>
 
 <style src="./Spending.scss" lang="scss" scoped/>
