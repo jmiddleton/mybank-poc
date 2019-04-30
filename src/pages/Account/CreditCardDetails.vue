@@ -1,11 +1,5 @@
 <template>
   <div class="dashboard-page">
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>Credit Card Details</b-breadcrumb-item>
-    </b-breadcrumb>
     <b-row>
       <b-col>
         <div class="pb-xlg h-100">

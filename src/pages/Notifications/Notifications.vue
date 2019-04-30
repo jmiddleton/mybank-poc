@@ -1,11 +1,5 @@
 <template>
   <div class="email-page">
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>Notifications</b-breadcrumb-item>
-    </b-breadcrumb>
     <h1 class="page-title">Notifications</h1>
     <div class="view">
       <b-row>

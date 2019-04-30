@@ -1,11 +1,5 @@
 <template>
   <div class="tables-basic col-md-12 col-lg-10">
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>Manage Payess</b-breadcrumb-item>
-    </b-breadcrumb>
     <h1 class="page-title">Manage Payees</h1>
     <b-row>
       <b-col>

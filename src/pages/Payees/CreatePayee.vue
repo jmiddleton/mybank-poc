@@ -1,13 +1,5 @@
 <template>
   <div>
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item to="/app/payees">Manage Payess</b-breadcrumb-item>
-      <b-breadcrumb-item active v-if="payeeId === 'new'">Create Payes</b-breadcrumb-item>
-      <b-breadcrumb-item active v-else>Update Payes</b-breadcrumb-item>
-    </b-breadcrumb>
     <h1 v-if="payeeId === 'new'" class="page-title">Create Payee</h1>
     <h1 v-else class="page-title">Update Payee</h1>
     <b-row>

@@ -1,14 +1,6 @@
 <template>
   <div v-if="this.$auth.profile">
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>Profile</b-breadcrumb-item>
-    </b-breadcrumb>
-    <h1 class="page-title">
-      <span class="fw-semi-bold">Profile</span>
-    </h1>
+    <h1 class="page-title">Profile</h1>
 
     <Widget>
       <div class="widget-top-overflow text-white">

@@ -1,11 +1,5 @@
 <template>
   <div>
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>Transfer and Payments</b-breadcrumb-item>
-    </b-breadcrumb>
     <h1 class="page-title">Transfer and Payments</h1>
     <b-row>
       <b-col xs="12" md="6">

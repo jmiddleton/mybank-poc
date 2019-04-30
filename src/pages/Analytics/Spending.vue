@@ -1,13 +1,8 @@
 <template>
   <div class="dashboard-page">
-    <b-breadcrumb>
-      <b-breadcrumb-item to="/app/dashboard">
-        <span class="fi flaticon-home"></span>
-      </b-breadcrumb-item>
-      <b-breadcrumb-item active>My Spending</b-breadcrumb-item>
-    </b-breadcrumb>
     <h1 class="page-title">
-      My Spending <small>[{{currentMonth}}]</small>
+      My Spending
+      <small>[{{currentMonth}}]</small>
       <div role="group" class="btn-group float-right">
         <button class="btn btn-outline-info btn-sm" @click="changeMonth(-1)">Previous</button>
         <button class="btn btn-outline-info btn-sm" @click="changeMonth(0)">Current</button>
@@ -17,7 +12,7 @@
     <b-row>
       <b-col lg="6">
         <Widget title="Monthly Spending" refresh settings>
-          <div class="sidebarAlerts categoriesList">
+          <div>
             <label ref="spendingSidebar"/>
             <b-alert
               v-for="category in slidebarData"
@@ -44,9 +39,16 @@
         </Widget>
       </b-col>
       <b-col lg="6">
-        <Widget title="Category Spending" refresh settings>
+        <Widget title="Spending by Category" refresh settings>
           <div ref="categoryChart" :style="{ height: '325px' }"/>
           <div ref="categoryLegends" style="categoryLegends"></div>
+        </Widget>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col lg="6">
+        <Widget title="Monthly Savings" refresh settings>
+        <AverageSavingsChart/>
         </Widget>
       </b-col>
     </b-row>
@@ -60,6 +62,7 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.time";
 require("../../core/jquery.flot.orderBars.js");
 import _ from "lodash";
+import AverageSavingsChart from "../Dashboard/AverageSavingsChart";
 
 import axios from "axios";
 import moment from "moment";
@@ -69,7 +72,8 @@ const mformat = "YYYY-MM";
 export default {
   name: "Spending",
   components: {
-    Widget
+    Widget,
+    AverageSavingsChart
   },
   data() {
     return {

@@ -1,50 +1,44 @@
 <template>
   <div>
     <div class="dashboard-page">
-      <b-breadcrumb>
-        <b-breadcrumb-item>
-          <span class="fi flaticon-home"></span>
-        </b-breadcrumb-item>
-      </b-breadcrumb>
       <div>
         <h1 class="page-title">
           My Dashboard
-          <a
-            href="#"
-            @click="showModal"
-            class="float-right btn-md btn btn-outline-primary"
-          >
-            <i class="fa fa-plus mr-2"></i>Add
+          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
+            <i class="fa fa-plus mr-2"/>Add
           </a>
         </h1>
       </div>
-      <b-row v-if="hasAccounts">
-        <b-col lg="4" xs="12">
-          <Widget class="h-100 mb-0" title="TOTAL BALANCE">
-            <div class="row flex-nowrap">
-              <div xs="3">
-                <span class="widget-icon">
-                  <i class="glyphicon glyphicon-usd text-success"></i>
-                </span>
+      <div v-if="hasAccounts" class="d-none d-md-block">
+        <b-row>
+          <b-col lg="4" xs="12">
+            <Widget class="h-100 mb-0" title="TOTAL BALANCE">
+              <div class="row flex-nowrap">
+                <div xs="3">
+                  <span class="widget-icon">
+                    <i class="glyphicon glyphicon-usd text-success"></i>
+                  </span>
+                </div>
+                <div xs="9" class="col">
+                  <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
+                </div>
               </div>
-              <div xs="9" class="col">
-                <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
+              <div class="text-right">
+                <div class="mt">
+                  <small>Available</small>
+                  <h5>$ {{totalAvailableBalance}}</h5>
+                </div>
               </div>
-            </div>
-            <div class="text-right">
-              <div class="mt">
-                <small>Available</small><h5>$ {{totalAvailableBalance}}</h5>
-              </div>
-            </div>
-          </Widget>
-        </b-col>
-        <b-col lg="4" xs="12">
-          <SpendingsChart/>
-        </b-col>
-        <b-col lg="4" xs="12">
-          <AverageSavingsChart/>
-        </b-col>
-      </b-row>
+            </Widget>
+          </b-col>
+          <b-col lg="4" xs="12">
+            <SpendingsChart/>
+          </b-col>
+          <b-col lg="4" xs="12">
+            <AverageSavingsChart/>
+          </b-col>
+        </b-row>
+      </div>
     </div>
     <span>&nbsp;</span>
     <div v-if="hasAccounts">
