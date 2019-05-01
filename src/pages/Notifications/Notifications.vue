@@ -1,8 +1,6 @@
 <template>
-  <div class="email-page">
+  <div>
     <h1 class="page-title">Notifications</h1>
-    <div class="view">
-      <b-row>
         <!-- <Filters :filter="filter" :openMessage="openMessage" :compose="changeCompose"/> -->
         <MessageTable
           :filter="filterValue"
@@ -10,10 +8,7 @@
           :openMessage="openMessage"
           :compose="compose"
           :changeCompose="changeCompose"
-          :composeData="composeData"
         />
-      </b-row>
-    </div>
   </div>
 </template>
 

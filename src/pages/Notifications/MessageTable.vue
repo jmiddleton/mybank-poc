@@ -1,5 +1,5 @@
 <template>
-  <div class="col-lg-9 col-xl-10 col-xs-12">
+  <div>
     <!-- <Pagination v-if="openedMessage === null && !compose" /> -->
     <b-button v-if="openedMessage != null" variant="default" class="mb" @click="openMessage(null)">
       <i class="fa fa-angle-left fa-lg"/>
@@ -15,59 +15,49 @@
           :markUnread="markUnread"
           :deleteMsg="deleteMsg"
       />-->
-      <div class="table-responsive">
-        <table class="table table-striped table-hover mb-0">
-          <thead>
-            <tr>
-              <th>
-                <div class="abc-checkbox">
-                  <input
-                    type="checkbox"
-                    id="checkbox"
-                    @click="isMainChecked ? chooseNone() : chooseAll()"
-                    :checked="isMainChecked"
-                  >
-                  <label for="checkbox"/>
-                </div>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="message in dataToDisplay"
-              v-show="_searchable(message)"
-              :key="message.id"
-              :class="{ unreadedMessage: message.unreaded }"
-            >
-              <td class="messageCheckbox">
-                <div class="abc-checkbox">
-                  <input
-                    type="checkbox"
-                    :id="`checkbox${message.id}`"
-                    :checked="checkedIds.indexOf(message.id) !== -1"
-                    @change="changeChoosed(message.id)"
-                  >
-                  <label :for="`checkbox${message.id}`"/>
-                </div>
-              </td>
-              <td class="messageStar" @click="starItem(message.id)">
-                <span v-if="message.starred" class="messageStarred">
-                  <i class="fa fa-star"/>
-                </span>
-                <span v-else>
-                  <i class="fa fa-star-o"/>
-                </span>
-              </td>
-              <td class="messageFrom" @click="handleOpenMessage(message.id)">{{message.from}}</td>
-              <td @click="handleOpenMessage(message.id)">{{message.theme}}</td>
-              <td class="messageClip">
-                <i v-show="message.attachments" class="fa fa-paperclip"/>
-              </td>
-              <td class="text-right">{{message.date}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              <div class="abc-checkbox">
+                <input
+                  type="checkbox"
+                  id="checkbox"
+                  @click="isMainChecked ? chooseNone() : chooseAll()"
+                  :checked="isMainChecked"
+                >
+                <label for="checkbox"/>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="message in dataToDisplay"
+            v-show="_searchable(message)"
+            :key="message.id"
+            :class="{ unreadedMessage: message.unreaded }"
+          >
+            <td>
+              <div class="abc-checkbox">
+                <input
+                  type="checkbox"
+                  :id="`checkbox${message.id}`"
+                  :checked="checkedIds.indexOf(message.id) !== -1"
+                  @change="changeChoosed(message.id)"
+                >
+                <label :for="`checkbox${message.id}`"/>
+              </div>
+            </td>
+            <td class="messageFrom" @click="handleOpenMessage(message.id)">
+              {{message.from}}
+              <i v-show="message.attachments" class="fa fa-paperclip"/>
+            </td>
+            <td @click="handleOpenMessage(message.id)">{{message.theme}}</td>
+            <td class="text-right text-nowrap">{{message.date}}</td>
+          </tr>
+        </tbody>
+      </table>
     </Widget>
     <Message v-else :changeCompose="changeCompose" :message="messages[openedMessage]"/>
   </div>

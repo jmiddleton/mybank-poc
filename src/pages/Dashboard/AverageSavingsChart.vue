@@ -18,14 +18,15 @@ import axios from "axios";
 import moment from "moment";
 import { clearInterval } from "timers";
 
+let refreshInterval = null;
+
 export default {
   name: "AverageSavingsChart",
   data() {
     return {
       ticks: [],
       data: [],
-      isLoading: true,
-      refreshTimer: null
+      isLoading: true
     };
   },
   methods: {
@@ -86,7 +87,7 @@ export default {
         )
         .then(r => r.data)
         .then(savings => {
-          if (savings && savings.data) {
+          if (savings && savings.data && me.data != undefined) {
             me.getSavingsData(savings.data.savings);
             me.createChart();
           }
@@ -97,14 +98,15 @@ export default {
   mounted() {
     const me = this;
 
-    me.refreshInterval = setInterval(() => me.loadSavings(), 10000);
+    refreshInterval = setInterval(() => me.loadSavings(), 10000);
+    //clearInterval(refreshInterval);
     me.loadSavings();
 
     window.addEventListener("resize", me.loadSavings);
+    window.addEventListener("beforeunload", this.leaving);
   },
   unmounted() {
     window.removeEventListener("resize", this.loadSavings);
-    //clearInterval(this.refreshInterval);
   }
 };
 </script>

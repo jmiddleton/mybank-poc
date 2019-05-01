@@ -46,7 +46,7 @@
             </div>
             <b-row>
               <b-col lg="1" class="profileContactContainer">
-                <span class="thumb-xl mb-3" v-if="account !== undefined">
+                <span class="thumb-lg mb-3" v-if="account !== undefined">
                   <img
                     :src="require('../../assets/banks/' + account.institution + '.png')"
                     alt="..."

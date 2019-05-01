@@ -7,13 +7,9 @@
           type="text"
           v-model="filterText"
           @keyup.enter="doFilter"
-          placeholder="name or description"
-        >
+          placeholder="name or description">
         <b-button variant="success" class="mr-xs" size="sm" @click="doFilter">Go</b-button>
-
-        <div class="float-right">
-          <b-button variant="danger" class="mr-xs" size="sm" @click="createPayee()">Create</b-button>
-        </div>
+        <b-button variant="danger" class="mr-xs" size="sm" @click="createPayee()">Create</b-button>
       </div>
     </div>
   </div>

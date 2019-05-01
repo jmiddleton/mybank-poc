@@ -1,44 +1,41 @@
 <template>
-  <div class="tables-basic col-md-12 col-lg-10">
+  <div>
     <h1 class="page-title">Manage Payees</h1>
-    <b-row>
-      <b-col>
-        <Widget title customHeader refresh settings>
-          <payee-filter-bar></payee-filter-bar>
-          <vuetable
-            ref="vuetable"
-            :fields="fields"
-            :api-mode="false"
-            :data-manager="dataManager"
-            track-by="payeeId"
-            :sort-order="sortOrder"
-            pagination-path="pagination"
-            :css="css.table"
-            @vuetable:pagination-data="onPaginationData"
-          >
-            <template slot="actions" slot-scope="props">
-              <div class="table-button-container">
-                <button class="btn btn-warning" @click="editRow(props.rowData)">
-                  <span class="fa fa-edit"></span>
-                </button>
-                <button class="btn btn-danger" @click="deleteRow(props.rowData)">
-                  <span class="fa fa-trash"></span>
-                </button>
-              </div>
-            </template>
-          </vuetable>
-          <div class="ui basic segment grid">
-            <vuetable-pagination-info ref="paginationInfo" :css="css.paginationInfo"></vuetable-pagination-info>
-
-            <vuetable-pagination
-              ref="pagination"
-              :css="css.pagination"
-              @vuetable-pagination:change-page="onChangePage"
-            ></vuetable-pagination>
+    <Widget title customHeader refresh settings>
+      <payee-filter-bar></payee-filter-bar>
+      <vuetable
+        ref="vuetable"
+        :fields="fields"
+        :api-mode="false"
+        :data-manager="dataManager"
+        track-by="payeeId"
+        :sort-order="sortOrder"
+        pagination-path="pagination"
+        :css="css.table"
+        @vuetable:pagination-data="onPaginationData"
+      >
+        <template slot="actions" slot-scope="props">
+          <div class="table-button-container">
+            <button class="btn btn-xs btn-outline-success" @click="editRow(props.rowData)">
+              <span class="fa fa-edit"></span>
+            </button>
+            &nbsp;
+            <button class="btn btn-xs btn-outline-danger" @click="deleteRow(props.rowData)">
+              <span class="fa fa-trash"></span>
+            </button>
           </div>
-        </Widget>
-      </b-col>
-    </b-row>
+        </template>
+      </vuetable>
+      <div class="ui basic segment grid">
+        <vuetable-pagination-info ref="paginationInfo" :css="css.paginationInfo"></vuetable-pagination-info>
+
+        <vuetable-pagination
+          ref="pagination"
+          :css="css.pagination"
+          @vuetable-pagination:change-page="onChangePage"
+        ></vuetable-pagination>
+      </div>
+    </Widget>
   </div>
 </template>
 
@@ -77,7 +74,8 @@ export default {
       localData: [],
       fields: [
         {
-          name: "payeeId"
+          name: "payeeId",
+          visible: false
         },
         {
           name: "nickname",
@@ -89,8 +87,7 @@ export default {
           title: "Description",
           sortField: "description"
         },
-        { name: "created", title: "Created"},
-        { name: "type", title: "Payee Type" },
+        { name: "created", title: "Created" },
         {
           name: "actions",
           title: "Actions"
@@ -191,12 +188,10 @@ export default {
       .then(payees => {
         payees.forEach(element => {
           element.created = this.formatDate(element.created);
-          this.localData.push(element);  
+          this.localData.push(element);
         });
       })
-      .catch(function() {
-        
-      });
+      .catch(function() {});
   },
   watch: {
     localData() {

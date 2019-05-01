@@ -25,26 +25,25 @@ let refreshInterval;
 export default {
   name: "SpendingsChart",
   data() {
-    return { isLoading: false };
+    return { data: [], isLoading: false };
   },
   methods: {
     getSpendingsData(spendings) {
-      const data = [];
+      this.data = [];
 
       if (!spendings) {
-        return data;
+        return this.data;
       }
 
       for (let i = 0; i < spendings.length; i++) {
-        data.push({
+        this.data.push({
           label: spendings[i].category,
           value: spendings[i].totalSpent
         });
       }
-      return data;
     },
-    createChart(data) {
-      if (data.length == 0) {
+    createChart() {
+      if (this.data.length == 0) {
         return (this.$refs.spendingsChart.innerText = "No data found");
       }
 
@@ -52,7 +51,7 @@ export default {
       Morris.Donut({
         element: this.$refs.spendingsChart,
         resize: true,
-        data: data,
+        data: this.data,
         colors: [
           "#ffc247",
           "#f55d5d",
@@ -74,8 +73,9 @@ export default {
         .get("/analytics/spendings/" + moment().format("YYYY-MM"))
         .then(r => r.data)
         .then(spendings => {
-          if (spendings && spendings.data) {
-            me.createChart(me.getSpendingsData(spendings.data.spendings));
+          if (spendings && spendings.data && me.data != undefined) {
+            me.getSpendingsData(spendings.data.spendings)
+            me.createChart();
           }
           me.isLoading = false;
         });
@@ -84,7 +84,7 @@ export default {
   mounted() {
     const me = this;
 
-    //refreshInterval = setInterval(() => me.loadSpendings(), 10000);
+    refreshInterval = setInterval(() => me.loadSpendings(), 10000);
     me.loadSpendings();
   }
 };

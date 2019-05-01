@@ -7,15 +7,11 @@
         <div class="height-150 overflow-hidden">
           <img class="img-fluid" src="../../assets/profile.png" alt="...">
         </div>
-        <a href="#" class="btn btn-outline btn-sm mb-2">
-          <i class="fa fa-twitter mr-2"/>
-          Follow
-        </a>
       </div>
       <b-row>
         <b-col md="5" xs="12" class="text-center">
           <div class="profileContactContainer">
-            <span class="thumb-xl mb-3">
+            <span class="thumb-lg mb-3">
               <img class="profileAvatar rounded-circle" :src="this.$auth.profile.picture" alt="...">
             </span>
             <h5 class="fw-normal">

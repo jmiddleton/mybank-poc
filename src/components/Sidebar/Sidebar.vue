@@ -9,17 +9,10 @@
     </header>
     <ul class="nav">
       <NavLink
-        header="My Dashboard"
+        header="Dashboard"
         link="/app/dashboard"
         iconName="flaticon-home"
         index="dashboard"
-        isHeader
-      />
-      <NavLink
-        header="Transfers"
-        link="/app/transfers"
-        iconName="flaticon-list"
-        index="transfers"
         isHeader
       />
       <NavLink
@@ -27,6 +20,13 @@
         link="/app/spending"
         iconName="fi flaticon-controls"
         index="spending"
+        isHeader
+      />
+      <NavLink
+        header="Transfers"
+        link="/app/transfers"
+        iconName="flaticon-list"
+        index="transfers"
         isHeader
       />
       <NavLink
@@ -41,13 +41,6 @@
         link="/app/notifications"
         iconName="flaticon-star"
         index="notifications"
-        isHeader
-      />
-      <NavLink
-        header="Branches"
-        link="/app/branches"
-        iconName="fi flaticon-map-location"
-        index="branches"
         isHeader
       />
     </ul>

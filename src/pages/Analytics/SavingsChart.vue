@@ -1,8 +1,5 @@
 <template>
   <section class="h-100 mb-0">
-    <span class="float-right" v-if="isLoading">
-      <i class="la la-refresh la-spin"/> Loading...
-    </span>
     <div>
       <div ref="savingsChart" :style="{ height: '150px' }"/>
     </div>
@@ -26,8 +23,7 @@ export default {
   props: ["currentMonth"],
   data() {
     return {
-      data: [],
-      isLoading: true
+      data: []
     };
   },
   methods: {
@@ -57,7 +53,6 @@ export default {
     },
     loadSavings() {
       const me = this;
-      me.isLoading = true;
       axios
         .get(
           "/analytics/savings/" +
@@ -72,7 +67,6 @@ export default {
             me.data = savings.data.savings;
             me.createChart();
           }
-          me.isLoading = false;
         });
     }
   },

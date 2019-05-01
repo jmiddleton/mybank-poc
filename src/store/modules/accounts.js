@@ -69,18 +69,26 @@ const actions = {
       const response = await axios.get('/accounts');
       commit('SET_ACCOUNTS', response.data);
     } catch (error) {
-      if (error.response && error.response.status === 404) {
+      if (error && error.response && error.response.status === 404) {
         state.hasAccounts = false;
       }
     }
   },
   async getAccountById({ commit }, accountId) {
-    const response = await axios.get('/accounts/' + accountId)
-    commit('SET_ACCOUNT', response.data);
+    try {
+      const response = await axios.get('/accounts/' + accountId)
+      commit('SET_ACCOUNT', response.data);
+    } catch (error) {
+      commit('SET_ACCOUNT');
+    }
   },
   async loadAccountBalances({ commit }) {
-    const response = await axios.get('/accounts/balances')
-    commit('SET_BALANCES', response.data);
+    try {
+      const response = await axios.get('/accounts/balances')
+      commit('SET_BALANCES', response.data);
+    } catch (error) {
+      commit('SET_BALANCES');
+    }
   }
 };
 
