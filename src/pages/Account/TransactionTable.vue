@@ -19,7 +19,7 @@
             <b-nav-item-dropdown extra-menu-classes="fadeInUp" right>
               <template slot="button-content">
                 <span class="category thumb-sm">
-                  <img :src="require('../../assets/categories/' + txn.category + '.png')" alt="...">
+                  <img :src="'/img/categories/' + txn.category + '.png'" alt="...">
                 </span>
               </template>
               <div class="categoriesDropDown">

@@ -84,7 +84,7 @@ export default {
   mounted() {
     const me = this;
 
-    refreshInterval = setInterval(() => me.loadSpendings(), 10000);
+    //refreshInterval = setInterval(() => me.loadSpendings(), 10000);
     me.loadSpendings();
   }
 };

@@ -5,7 +5,7 @@
       <i class="la la-refresh la-spin"/> Loading...
     </span>
     <div>
-      <div class="widgetBody widget-body" ref="savingsChart" :style="{ height: '150px' }"/>
+      <div ref="savingsChart" :style="{ height: '150px' }"/>
     </div>
   </section>
 </template>

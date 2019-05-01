@@ -12,7 +12,8 @@
       <div v-if="hasAccounts" class="d-none d-md-block">
         <b-row>
           <b-col lg="4" xs="12">
-            <Widget class="h-100 mb-0" title="TOTAL BALANCE">
+            <Widget class="h-100 mb-0">
+              TOTAL BALANCE
               <div class="row flex-nowrap">
                 <div xs="3">
                   <span class="widget-icon">

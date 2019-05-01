@@ -10,45 +10,45 @@
       </div>
     </h1>
     <b-row>
-      <b-col lg="6">
+      <b-col lg="4">
+        <Widget title="Monthly Savings" refresh settings>
+          <p class="fs-mini text-muted">This chart shows the savings for the last 4 months.</p>
+          <SavingsChart :currentMonth="currentMonth"/>
+        </Widget>
+      </b-col>
+      <b-col lg="4">
         <Widget title="Monthly Spending" refresh settings>
-          <div>
+          <p class="fs-mini text-muted">
+            Visualizes spendings by category on the current month.
+            You can also see previous month spendings when you navigate with the buttons
+          </p>
+          <div class="categoriesList">
             <label ref="spendingSidebar"/>
-            <b-alert
+            <div
               v-for="category in slidebarData"
               :key="category.id"
-              class="sidebarAlert"
-              variant="transparent"
-              show
+              class="categoryItem sidebarAlert"
             >
-              <div>
-                <span class="float-right">
-                  <strong>$ {{category.total}}</strong>
-                </span>
-                <span class="notificationIcon thumb-sm">
-                  <img :src="require('../../assets/categories/' + category.title + '.png')">
-                </span>
-                <small>{{category.title}}</small>
-                <div class="sidebarProgress progress-md">
-                  <b-progress :variant="category.color" :value="category.total" :max="maxvalue"/>
-                  <small class="float-right">{{category.footer}}</small>
-                </div>
+              <span class="float-right">
+                <strong>$ {{category.total}}</strong>
+              </span>
+              <span class="notificationIcon thumb-sm">
+                <img :src="'/img/categories/' + category.title + '.png'">
+              </span>
+              <small>{{category.title}}</small>
+              <div class="sidebarProgress progress-md">
+                <b-progress :variant="category.color" :value="category.total" :max="maxvalue"/>
+                <small class="float-right">{{category.footer}}</small>
               </div>
-            </b-alert>
+            </div>
           </div>
         </Widget>
       </b-col>
-      <b-col lg="6">
+      <b-col lg="4">
         <Widget title="Spending by Category" refresh settings>
+          <p class="fs-mini text-muted">Tracks spendings divided by category for the last 3 months.</p>
           <div ref="categoryChart" :style="{ height: '325px' }"/>
           <div ref="categoryLegends" style="categoryLegends"></div>
-        </Widget>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col lg="6">
-        <Widget title="Monthly Savings" refresh settings>
-        <AverageSavingsChart/>
         </Widget>
       </b-col>
     </b-row>
@@ -62,7 +62,7 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.time";
 require("../../core/jquery.flot.orderBars.js");
 import _ from "lodash";
-import AverageSavingsChart from "../Dashboard/AverageSavingsChart";
+import SavingsChart from "./SavingsChart";
 
 import axios from "axios";
 import moment from "moment";
@@ -73,7 +73,7 @@ export default {
   name: "Spending",
   components: {
     Widget,
-    AverageSavingsChart
+    SavingsChart
   },
   data() {
     return {
@@ -242,7 +242,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.currentMonth = moment().format(mformat);
     this.loadSpending();
 
