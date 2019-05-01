@@ -20,7 +20,6 @@ import axios from "axios";
 import moment from "moment";
 
 const { Morris } = window;
-let refreshInterval;
 
 export default {
   name: "SpendingsChart",
@@ -84,7 +83,7 @@ export default {
   mounted() {
     const me = this;
 
-    refreshInterval = setInterval(() => me.loadSpendings(), 10000);
+    setInterval(() => me.loadSpendings(), 10000);
     me.loadSpendings();
   }
 };

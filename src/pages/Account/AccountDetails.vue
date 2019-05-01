@@ -132,7 +132,7 @@ export default {
             }
           });
       } catch (error) {
-        if (error.response && error.response.status === 404) {
+        if (error && error.response && error.response.status === 404) {
           axios
             .get("/banks/" + this.account.institution)
             .then(r => r.data)

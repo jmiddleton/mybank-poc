@@ -104,6 +104,7 @@ export default {
   },
   data() {
     return {
+      aunlink:"",
       accountId: "",
       auth: {}
     };

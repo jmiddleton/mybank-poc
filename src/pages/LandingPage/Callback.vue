@@ -17,7 +17,7 @@ export default {
           url = url + `${key}=${value}&`;
         });
       }
-      this.$router.push(url || "/app/dashboard");
+      this.$router.push(url || "/app/accounts");
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + this.$auth.idToken;
     }

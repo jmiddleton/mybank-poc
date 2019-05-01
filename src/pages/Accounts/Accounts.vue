@@ -3,7 +3,7 @@
     <div class="dashboard-page">
       <div>
         <h1 class="page-title">
-          My Dashboard
+          My Accounts
           <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
             <i class="fa fa-plus mr-2"/>Add
           </a>
@@ -106,7 +106,7 @@ Vue.filter("formatDate", function(value) {
 });
 
 export default {
-  name: "Dashboard",
+  name: "Accounts",
   components: {
     Widget,
     AverageSavingsChart,
@@ -199,4 +199,4 @@ export default {
 };
 </script>
 
-<style src="./Dashboard.scss" lang="scss" scoped />
+<style src="./Accounts.scss" lang="scss" scoped />

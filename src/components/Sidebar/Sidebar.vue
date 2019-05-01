@@ -5,14 +5,14 @@
     @mouseleave="sidebarMouseLeave"
   >
     <header class="logo">
-      <router-link to="/app/dashboard"><span class="text-warning">My</span> Bank</router-link>
+      <router-link to="/app/accounts"><span class="text-warning">My</span> Bank</router-link>
     </header>
     <ul class="nav">
       <NavLink
-        header="Dashboard"
-        link="/app/dashboard"
+        header="Accounts"
+        link="/app/accounts"
         iconName="flaticon-home"
-        index="dashboard"
+        index="accounts"
         isHeader
       />
       <NavLink

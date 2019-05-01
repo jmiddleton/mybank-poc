@@ -24,7 +24,7 @@ export default {
       
       var router = this.$router;
       setTimeout(function() {
-        router.push("/app/dashboard");
+        router.push("/app/accounts");
       }, 2000);
     }
   },

@@ -16,9 +16,6 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 import axios from "axios";
 import moment from "moment";
-import { clearInterval } from "timers";
-
-let refreshInterval = null;
 
 export default {
   name: "AverageSavingsChart",
@@ -98,8 +95,7 @@ export default {
   mounted() {
     const me = this;
 
-    refreshInterval = setInterval(() => me.loadSavings(), 10000);
-    //clearInterval(refreshInterval);
+    setInterval(() => me.loadSavings(), 10000);
     me.loadSavings();
 
     window.addEventListener("resize", me.loadSavings);

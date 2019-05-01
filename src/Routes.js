@@ -12,7 +12,7 @@ import TransfersPage from '@/pages/Transfers/Transfers';
 import GoogleMapPage from '@/pages/Maps/Google';
 
 // Main
-import Dashboard from '@/pages/Dashboard/Dashboard';
+import Accounts from '@/pages/Accounts/Accounts';
 import AccountDetails from '@/pages/Account/AccountDetails';
 import CreditCardDetails from '@/pages/Account/CreditCardDetails';
 import TermDepositDetails from '@/pages/Account/TermDepositDetails';
@@ -66,9 +66,9 @@ const router = new Router({
           component: BankCallbackPage
         },
         {
-          path: 'dashboard',
-          name: 'Dashboard',
-          component: Dashboard,
+          path: 'accounts',
+          name: 'Accounts',
+          component: Accounts,
         },
         {
           path: 'accounts/:accountId',

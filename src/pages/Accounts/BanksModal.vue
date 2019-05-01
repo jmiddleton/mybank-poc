@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     authorise(bank) {
-      Vue.prototype.$auth.authorise("/app/dashboard", "/link-accounts", bank);
+      Vue.prototype.$auth.authorise("/app/accounts", "/link-accounts", bank);
     }
   },
   watch: {
@@ -66,4 +66,4 @@ export default {
 };
 </script>
 
-<style src="./Dashboard.scss" lang="scss" scoped />
+<style src="./Accounts.scss" lang="scss" scoped />
