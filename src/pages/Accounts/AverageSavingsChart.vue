@@ -39,6 +39,10 @@ export default {
       }
     },
     createChart() {
+      if(!this.$refs.savingsChart){
+        return;
+      }
+      
       if (this.data.length == 0) {
         return (this.$refs.savingsChart.innerText = "No data found");
       }

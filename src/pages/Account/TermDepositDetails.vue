@@ -13,9 +13,8 @@
                 <a @click="makeTransfer()">
                   <i class="la la-edit"></i>
                 </a>
-                <a @click="unlinkAccount()" :id="aunlink">
+                <a @click="unlinkAccount()">
                   <i class="la la-unlink"/>
-                  <b-tooltip :placement="{default: 'top'}" :target="aunlink">Unlink</b-tooltip>
                 </a>
               </div>
               <h4>
@@ -166,18 +165,18 @@ export default {
     },
     getAvailableBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance.balanceUType === "deposit") {
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.availableBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.availableBalance.amount;
       }
       return "";
     },
     getCurrentBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance.balanceUType === "deposit") {
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.accountBalance.amount;
       }
       return "";

@@ -13,9 +13,8 @@
                 <a @click="makePayment()">
                   <i class="la la-edit"></i>
                 </a>
-                <a @click="unlinkAccount()" :id="aunlink">
+                <a @click="unlinkAccount()">
                   <i class="la la-unlink"/>
-                  <b-tooltip :placement="{default: 'top'}" :target="aunlink">Unlink</b-tooltip>
                 </a>
               </div>
               <h3>{{account.maskedNumber}}</h3>
@@ -115,9 +114,9 @@ export default {
     makePayment() {},
     getAvailableBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance.balanceUType === "deposit") {
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.availableBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.availableBalance.amount;
       }
       return "";
@@ -133,9 +132,9 @@ export default {
     },
     getLimit(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance.balanceUType === "deposit") {
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.accountBalance.amount;
       }
       return "";

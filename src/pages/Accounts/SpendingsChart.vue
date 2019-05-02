@@ -42,6 +42,10 @@ export default {
       }
     },
     createChart() {
+      if(!this.$refs.spendingsChart){
+        return;
+      }
+      
       if (this.data.length == 0) {
         return (this.$refs.spendingsChart.innerText = "No data found");
       }

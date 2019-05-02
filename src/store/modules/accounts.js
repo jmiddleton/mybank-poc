@@ -2,40 +2,20 @@
 import axios from 'axios';
 import _ from "lodash";
 
+const categoriesMap = new Map();
+categoriesMap.set("TRANS_AND_SAVINGS_ACCOUNTS", "Saving Accounts");
+categoriesMap.set("CRED_AND_CHRG_CARDS", "Credit Cards");
+categoriesMap.set("TERM_DEPOSITS", "Term Deposits");
+categoriesMap.set("PERS_LOANS", "Personal Loans");
+categoriesMap.set("MARGIN_LOANS", "Margin Loans");
+categoriesMap.set("TRAVEL_CARDS", "Travel Cards");
+categoriesMap.set("REGULATED_TRUST_ACCOUNTS", "Trust Accounts");
+categoriesMap.set("RESIDENTIAL_MORTGAGES", "Mortgages");
+categoriesMap.set("LEASES", "Leases");
+categoriesMap.set("TRADE_FINANCE", "Trades");
+
 const state = {
-  categories: [
-    {
-      id: "TRANS_AND_SAVINGS_ACCOUNTS",
-      name: "Saving Accounts"
-    }, {
-      id: "TERM_DEPOSITS",
-      name: "Term Deposits"
-    }, {
-      id: "TRAVEL_CARDS",
-      name: "Travel Cards"
-    }, {
-      id: "REGULATED_TRUST_ACCOUNTS",
-      name: "Trust Accounts"
-    }, {
-      id: "RESIDENTIAL_MORTGAGES",
-      name: "Mortgages"
-    }, {
-      id: "CRED_AND_CHRG_CARDS",
-      name: "Credit Cards"
-    }, {
-      id: "PERS_LOANS",
-      name: "Personal Loans"
-    }, {
-      id: "MARGIN_LOANS",
-      name: "Margin Loans"
-    }, {
-      id: "LEASES",
-      name: "Leases"
-    }, {
-      id: "TRADE_FINANCE",
-      name: "Trades"
-    }
-  ],
+  categories: categoriesMap,
   accounts: [],
   balances: [],
   totalBalance: 0,
@@ -48,7 +28,8 @@ const state = {
 const getters = {
   accountsByCategory: state => {
     var result = _.reduce(state.accounts, function (result, account) {
-      (result[account.productCategory] || (result[account.productCategory] = [])).push(account);
+      const category = state.categories.get(account.productCategory);
+      (result[category] || (result[category] = [])).push(account);
       return result;
     }, {});
 

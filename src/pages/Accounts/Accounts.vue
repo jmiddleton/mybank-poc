@@ -45,7 +45,7 @@
     <div v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
-          <h3>{{getCategoryName(category)}}</h3>
+          <h3>{{category}}</h3>
           <Widget v-for="account in accounts" :key="account.accountId">
             <div class="clearfix">
               <a @click="getAccountDetails(account)">
@@ -132,13 +132,6 @@ export default {
       } else {
         this.$router.push({ path: "/app/termdeposit/" + account.accountId });
       }
-    },
-    getCategoryName(category) {
-      var cat = _.find(this.categories, ["id", category]);
-      if (cat) {
-        return cat.name;
-      }
-      return "";
     },
     getAvailableBalance(accountId) {
       if (!this.balances) {

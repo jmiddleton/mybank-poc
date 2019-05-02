@@ -1,6 +1,6 @@
 <template>
   <div class="jumbotron">
-    <h1 class="display-5">Thank you for choosing MyBank!!!</h1>
+    <h3 class="display-5">Thank you for choosing MyBank!!!</h3>
 
     <div>
       <p class="lead">

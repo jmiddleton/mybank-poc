@@ -47,7 +47,7 @@
       <b-col lg="4">
         <Widget title="Spending by Category" refresh settings>
           <p class="fs-mini text-muted">Tracks spendings divided by category for the last 3 months.</p>
-          <div ref="categoryChart" :style="{ height: '325px' }"/>
+          <div ref="categoryChart" :style="{ height: '345px' }"/>
           <div ref="categoryLegends" style="categoryLegends"></div>
         </Widget>
       </b-col>
