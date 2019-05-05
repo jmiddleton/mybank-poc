@@ -39,7 +39,8 @@
         </td>
         <td class="date-width">
           <p>
-            <span class>{{txn.valueDateTime | date('DD MMM YYYY')}}</span>
+            <span v-if="txn.status === 'PENDING'">{{txn.valueDateTime | date('DD MMM YYYY')}}</span>
+            <span v-if="txn.status === 'POSTED'">{{txn.postingDateTime | date('DD MMM YYYY')}}</span>
           </p>
         </td>
         <td class="description-left">
@@ -53,10 +54,10 @@
               {{txn.reference | truncate(15, '...')}}
             </small>
             </div>
-            <div v-if="txn.postingDateTime">
+            <div v-if="txn.valueDateTime">
             <small>
-              <span class="fw-semi-bold">Posted:</span>
-              <span> {{txn.postingDateTime | date('DD/MM/YYYY')}}</span>
+              <span class="fw-semi-bold">Value date:</span>
+              <span> {{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </div>
         </td>
