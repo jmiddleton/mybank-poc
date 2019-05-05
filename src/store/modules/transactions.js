@@ -61,8 +61,10 @@ const mutations = {
         state.categories = categories;
     },
     SET_CATEGORY(state, txn) {
-        transaction = _.find(state.transactions, { 'transactionId': txn.transactionId });
-        transaction.category = txn.code;
+        const transaction = _.find(state.transactions, { 'transactionId': txn.transactionId });
+        if (transaction) {
+            transaction.category = txn.code;
+        }
     }
 }
 

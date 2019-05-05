@@ -12,7 +12,7 @@
     <b-row>
       <b-col lg="4">
         <Widget title="Monthly Savings" refresh settings>
-          <p class="fs-mini text-muted">This chart shows the average savings on the last 4 months.</p>
+          <p class="fs-mini text-muted">The graph below shows average savings as well as total savings for a four months period.</p>
           <SavingsChart :currentMonth="currentMonth"/>
         </Widget>
       </b-col>

@@ -22,7 +22,8 @@ const state = {
   totalAvailableBalance: 0,
   account: {},
   balance: 0,
-  hasAccounts: undefined
+  hasAccounts: undefined,
+  isLoadingAccounts: false
 }
 
 const getters = {
@@ -46,9 +47,11 @@ const getters = {
 
 const actions = {
   async loadAccountSummary({ commit }) {
+    state.isLoadingAccounts= true;
     try {
       const response = await axios.get('/accounts');
       commit('SET_ACCOUNTS', response.data);
+      state.isLoadingAccounts= false;
     } catch (error) {
       if (error && error.response && error.response.status === 404) {
         state.hasAccounts = false;

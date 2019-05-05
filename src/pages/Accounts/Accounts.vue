@@ -4,7 +4,11 @@
       <div>
         <h1 class="page-title">
           My Accounts
-          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
+          <a
+            href="#"
+            @click="showModal"
+            class="float-right btn-md btn btn-outline-primary"
+          >
             <i class="fa fa-plus mr-2"/>Add
           </a>
         </h1>
@@ -42,6 +46,9 @@
       </div>
     </div>
     <span>&nbsp;</span>
+    <span class="float-right" v-if="isLoadingAccounts">
+      <i class="la la-refresh la-spin"/> Loading...
+    </span>
     <div v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
@@ -98,6 +105,7 @@ import NoAccountMessage from "./NoAccountMessage";
 import moment from "moment";
 import _ from "lodash";
 import { mapGetters, mapState } from "vuex";
+import { clearInterval } from "timers";
 
 Vue.filter("formatDate", function(value) {
   if (value) {
@@ -115,9 +123,7 @@ export default {
     NoAccountMessage
   },
   data() {
-    return {
-      isLoading: false
-    };
+    return {};
   },
   methods: {
     showModal() {
@@ -166,13 +172,28 @@ export default {
         noAccountMsgInstance.$mount();
         this.$refs.container.appendChild(noAccountMsgInstance.$el);
       }
+    },
+    init() {
+      //if the actual page is not this, stop the interval
+      if (!this.$refs.container) {
+        try{
+          clearInterval(this.interval);
+        }catch{
+          //nothing
+        }
+        return false;
+      }
+
+      this.$store.dispatch("accounts/loadAccountSummary");
+      this.$store.dispatch("accounts/loadAccountBalances");
+      this.showLinkAccountMessage(this.hasAccounts);
     }
   },
   created() {},
   mounted() {
-    this.$store.dispatch("accounts/loadAccountSummary");
-    this.$store.dispatch("accounts/loadAccountBalances");
-    this.showLinkAccountMessage(this.hasAccounts);
+    const me = this;
+    me.interval = setInterval(() => me.init(), 10000);
+    me.init();
   },
   computed: {
     ...mapGetters("accounts", ["accountsByCategory"]),
@@ -181,7 +202,8 @@ export default {
       "balances",
       "totalBalance",
       "totalAvailableBalance",
-      "categories"
+      "categories",
+      "isLoadingAccounts"
     ])
   },
   watch: {

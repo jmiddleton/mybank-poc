@@ -16,6 +16,7 @@ import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 import axios from "axios";
 import moment from "moment";
+import { clearInterval } from "timers";
 
 export default {
   name: "AverageSavingsChart",
@@ -39,10 +40,10 @@ export default {
       }
     },
     createChart() {
-      if(!this.$refs.savingsChart){
+      if (!this.$refs.savingsChart) {
         return;
       }
-      
+
       if (this.data.length == 0) {
         return (this.$refs.savingsChart.innerText = "No data found");
       }
@@ -77,6 +78,17 @@ export default {
     },
     loadSavings() {
       const me = this;
+
+      //if the actual page is not this, stop the interval
+      if (!this.$refs.savingsChart) {
+        try {
+          clearInterval(this.interval);
+        } catch {
+          //nothing
+        }
+        return false;
+      }
+
       me.isLoading = true;
       axios
         .get(
@@ -99,7 +111,7 @@ export default {
   mounted() {
     const me = this;
 
-    setInterval(() => me.loadSavings(), 10000);
+    this.interval = setInterval(() => me.loadSavings(), 30000);
     me.loadSavings();
 
     window.addEventListener("resize", me.loadSavings);

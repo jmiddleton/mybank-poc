@@ -2,6 +2,7 @@
   <section class="h-100 mb-0">
     <div>
       <div ref="savingsChart" :style="{ height: '150px' }"/>
+      <h6 class="m-0 text-right">TOTAL SAVINGS: <strong>${{totalSavings.toFixed(2)}}</strong></h6>
     </div>
   </section>
 </template>
@@ -23,7 +24,8 @@ export default {
   props: ["currentMonth"],
   data() {
     return {
-      data: []
+      data: [],
+      totalSavings:0
     };
   },
   methods: {
@@ -31,6 +33,10 @@ export default {
       if (this.data.length == 0) {
         return (this.$refs.savingsChart.innerText = "No data found");
       }
+
+      this.totalSavings = this.data.reduce(function(sum, saving) {
+        return sum + saving.totalSavings;
+      }, 0);
 
       $(this.$refs.savingsChart).html("");
       Morris.Line({

@@ -11,7 +11,7 @@
       <NavLink
         header="Accounts"
         link="/app/accounts"
-        iconName="flaticon-home"
+        iconName="flaticon-layers"
         index="accounts"
         isHeader
       />

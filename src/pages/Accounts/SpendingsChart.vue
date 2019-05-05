@@ -18,6 +18,7 @@ import "imports-loader?jQuery=jquery,this=>window!govpredict-morris/morris";
 /* eslint-enable */
 import axios from "axios";
 import moment from "moment";
+import { clearInterval } from "timers";
 
 const { Morris } = window;
 
@@ -42,10 +43,6 @@ export default {
       }
     },
     createChart() {
-      if(!this.$refs.spendingsChart){
-        return;
-      }
-      
       if (this.data.length == 0) {
         return (this.$refs.spendingsChart.innerText = "No data found");
       }
@@ -71,13 +68,24 @@ export default {
     },
     loadSpendings() {
       const me = this;
+
+      //if the actual page is not this, stop the interval
+      if (!this.$refs.spendingsChart) {
+        try {
+          clearInterval(this.interval);
+        } catch {
+          //nothing
+        }
+        return false;
+      }
+
       me.isLoading = true;
       axios
         .get("/analytics/spendings/" + moment().format("YYYY-MM"))
         .then(r => r.data)
         .then(spendings => {
           if (spendings && spendings.data && me.data != undefined) {
-            me.getSpendingsData(spendings.data.spendings)
+            me.getSpendingsData(spendings.data.spendings);
             me.createChart();
           }
           me.isLoading = false;
@@ -87,7 +95,7 @@ export default {
   mounted() {
     const me = this;
 
-    setInterval(() => me.loadSpendings(), 10000);
+    this.interval = setInterval(() => me.loadSpendings(), 30000);
     me.loadSpendings();
   }
 };
