@@ -231,7 +231,8 @@ export default {
           labelBoxBorderColor: "none",
           container: this.$refs.categoryLegends,
           noColumns: 4
-        }
+        },
+        colors: ['#1b11ff', '#a0ff4c', '#837fff', '#ffac4c', '#f9ff4c', '#ff524c', '#76b5ff', '#ff332a']
       });
     }
   },

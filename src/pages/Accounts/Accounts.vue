@@ -46,7 +46,7 @@
       </div>
     </div>
     <span>&nbsp;</span>
-    <span class="float-right" v-if="isLoadingAccounts">
+    <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
       <i class="la la-refresh la-spin"/> Loading...
     </span>
     <div v-if="hasAccounts">

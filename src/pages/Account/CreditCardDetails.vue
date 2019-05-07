@@ -123,9 +123,9 @@ export default {
     },
     getCurrentBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance.balanceUType === "deposit") {
+      if (balance && balance.balanceUType === "deposit") {
         return balance.deposit.currentBalance.amount;
-      } else if (balance.balanceUType === "lending") {
+      } else if (balance && balance.balanceUType === "lending") {
         return balance.lending.accountBalance.amount;
       }
       return "";

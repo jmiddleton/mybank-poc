@@ -1,28 +1,31 @@
 import axios from 'axios';
 import _ from "lodash";
+import clean from "obj-clean";
 
 const state = {
     transactions: [],
-    nextkey: '',
     message: 'Load more...',
-    categories: []
+    categories: [],
+    filter: {
+        firstPage: true,
+        category: '',
+        month: '',
+        pagesize: 25,
+        nextkey: ''
+    },
 }
 
 const actions = {
-    loadTransactionsByAccountId({ commit }, filter) {
+    loadTransactionsByAccountId({ commit }, accountId) {
+        const filter = state.filter;
+
         if (filter.firstPage) {
-            state.nextkey = '';
+            filter.nextkey = '';
             state.transactions = [];
         }
         axios
-            .get("/accounts/" + filter.accountId + "/transactions", {
-                params: {
-                    "page-size": 25,
-                    "text": "searchtext",
-                    "start-time": "",
-                    "end-time": "",
-                    "nextkey": state.nextkey
-                }
+            .get("/accounts/" + accountId + "/transactions", {
+                params: clean(state.filter)
             })
             .then(r => r.data)
             .then(txnResult => {
@@ -35,7 +38,7 @@ const actions = {
     },
     async changeCategory({ commit }, txn) {
         if (txn && txn.accountId) {
-            const accountId = txn.accountId.substring(1, txn.accountId.indexOf('#'));
+            const accountId = txn.accountId.substring(0, txn.accountId.indexOf('#'));
             await axios.put('/accounts/' + accountId + "/transactions/" + txn.transactionId, txn);
             commit('SET_CATEGORY', txn);
         }
@@ -63,7 +66,7 @@ const mutations = {
     SET_CATEGORY(state, txn) {
         const transaction = _.find(state.transactions, { 'transactionId': txn.transactionId });
         if (transaction) {
-            transaction.category = txn.code;
+            transaction.category = txn.category;
         }
     }
 }

@@ -149,7 +149,7 @@ export default {
     refreshAccount(accountId, bankcode) {
       const authState = {
         nonce: "stateKey-fadfadfadf3413",
-        redirectTo: "/app/accounts/" + accountId,
+        redirectTo: "/app/termdeposit/" + accountId,
         bankcode: bankcode,
         accountId: accountId,
         postAuthCodeTo: "/accounts/" + accountId + "/refresh"

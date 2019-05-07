@@ -1,6 +1,39 @@
 <template>
-  <div class="table-responsive">
-    <h4>Transaction History</h4>
+  <div>
+    <h4>
+      Transaction History
+      <div class="float-right">
+        <b-dropdown
+          :text="filter.category !== '' ? filter.category : 'Filter by Category'"
+          variant="outline-primary"
+          class="m-1"
+        >
+          <b-dropdown-item @click="setCategoryFilter('')">
+            <span class="category thumb-sm">...</span>
+            Filter by Category
+          </b-dropdown-item>
+          <b-dropdown-item
+            @click="setCategoryFilter(cat.code)"
+            :key="cat.code"
+            v-for="cat in categories"
+          >
+            <span class="category thumb-sm">
+              <img :src="'/img/categories/' + cat.code + '.png'" alt="...">
+            </span>
+            {{cat.name}}
+          </b-dropdown-item>
+        </b-dropdown>
+        <vue-monthly-picker
+          @selected="handleSelect"
+          class="outline-primary btn btn-md"
+          dateFormat="YYYY-MM"
+          clearable
+          v-model="selectedMonth"
+        ></vue-monthly-picker>
+
+        <b-button class="btn btn-success btn-md" @click="searchTransactions()">Filter</b-button>
+      </div>
+    </h4>
     <table
       v-if="transactions && transactions.length > 0"
       class="table table-striped table-lg mt-lg mb-0"
@@ -46,18 +79,18 @@
         <td class="description-left">
           <p class="mb-0">
             <span v-if="txn.status === 'PENDING'" class="badge badge-warning badge-pill">Pending</span>
-            <span> {{txn.description}} - {{txn.merchantName}}</span>
+            <span>{{txn.description}} - {{txn.merchantName}}</span>
           </p>
           <div>
             <small>
               <span class="fw-semi-bold">Ref:</span>
               {{txn.reference | truncate(15, '...')}}
             </small>
-            </div>
-            <div v-if="txn.valueDateTime">
+          </div>
+          <div v-if="txn.valueDateTime">
             <small>
               <span class="fw-semi-bold">Value date:</span>
-              <span> {{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
+              <span>{{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </div>
         </td>
@@ -84,25 +117,38 @@
 <script>
 import Widget from "@/components/Widget/Widget";
 import { mapState } from "vuex";
+import VueMonthlyPicker from "vue-monthly-picker";
 
 export default {
   name: "TransactionTable",
-  components: { Widget },
+  components: { Widget, VueMonthlyPicker },
   data() {
     return {
-      accountId: ""
+      accountId: "",
+      selectedMonth: ""
     };
   },
   methods: {
     getTransactionsByAccountId(isFirstPage) {
-      this.$store.dispatch("transactions/loadTransactionsByAccountId", {
-        accountId: this.accountId,
-        firstPage: isFirstPage
-      });
+      this.filter.firstPage = isFirstPage;
+
+      this.$store.dispatch(
+        "transactions/loadTransactionsByAccountId",
+        this.accountId
+      );
     },
     changeCategory(txn, code) {
       txn.category = code;
       this.$store.dispatch("transactions/changeCategory", txn);
+    },
+    searchTransactions() {
+      this.getTransactionsByAccountId(true);
+    },
+    setCategoryFilter(code) {
+      this.filter.category = code;
+    },
+    handleSelect(value) {
+      this.filter.month = value.format("YYYY-MM");
     }
   },
   created() {
@@ -116,11 +162,15 @@ export default {
     "transactions",
     "message",
     "nextkey",
-    "categories"
+    "categories",
+    "filter"
   ]),
   filters: {
     truncate: function(text, length, suffix) {
-      return text.substring(0, length) + suffix;
+      if (text) {
+        return text.substring(0, length) + suffix;
+      }
+      return "";
     }
   }
 };
