@@ -13,39 +13,7 @@
           </a>
         </h1>
       </div>
-      <div class="d-none d-md-block">
-        <b-row>
-          <b-col lg="4" xs="12">
-            <Widget class="h-100 mb-0">
-              TOTAL BALANCE
-              <div class="row flex-nowrap">
-                <div xs="3">
-                  <span class="widget-icon">
-                    <i class="glyphicon glyphicon-usd text-success"></i>
-                  </span>
-                </div>
-                <div xs="9" class="col">
-                  <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="mt">
-                  <small>Available</small>
-                  <h5>$ {{totalAvailableBalance}}</h5>
-                </div>
-              </div>
-            </Widget>
-          </b-col>
-          <b-col lg="4" xs="12">
-            <SpendingsChart/>
-          </b-col>
-          <b-col lg="4" xs="12">
-            <AverageSavingsChart/>
-          </b-col>
-        </b-row>
-      </div>
     </div>
-    <span>&nbsp;</span>
     <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
       <i class="la la-refresh la-spin"/> Loading...
     </span>
@@ -98,8 +66,6 @@
 <script>
 import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
-import AverageSavingsChart from "./AverageSavingsChart";
-import SpendingsChart from "./SpendingsChart";
 import BanksModal from "./BanksModal";
 import NoAccountMessage from "./NoAccountMessage";
 import moment from "moment";
@@ -117,8 +83,6 @@ export default {
   name: "Accounts",
   components: {
     Widget,
-    AverageSavingsChart,
-    SpendingsChart,
     BanksModal,
     NoAccountMessage
   },
@@ -176,9 +140,9 @@ export default {
     init() {
       //if the actual page is not this, stop the interval
       if (!this.$refs.container) {
-        try{
+        try {
           clearInterval(this.interval);
-        }catch{
+        } catch {
           //nothing
         }
         return false;

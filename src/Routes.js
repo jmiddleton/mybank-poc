@@ -21,7 +21,7 @@ import UnlinkAccountPage from '@/pages/Account/UnlinkAccount';
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
 
-import SpendingPage from '@/pages/Analytics/Spending';
+import DashboardPage from '@/pages/Dashboard/Dashboard';
 import CallbackPage from '@/pages/LandingPage/Callback';
 import BankCallbackPage from '@/pages/LandingPage/BankCallback';
 import ProfilePage from '@/pages/Profile/Profile';
@@ -66,6 +66,10 @@ const router = new Router({
           component: BankCallbackPage
         },
         {
+          path: 'dashboard',
+          name: 'Dashboard',
+          component: DashboardPage,
+        },{
           path: 'accounts',
           name: 'Accounts',
           component: Accounts,
@@ -99,11 +103,6 @@ const router = new Router({
           path: 'transfers',
           name: 'TransfersNewPage',
           component: TransfersPage,
-        },
-        {
-          path: 'spending',
-          name: 'SpendingPage',
-          component: SpendingPage
         },
         {
           path: 'payees',

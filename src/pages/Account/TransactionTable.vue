@@ -4,13 +4,13 @@
       Transaction History
       <div class="float-right">
         <b-dropdown
-          :text="filter.category !== '' ? filter.category : 'Filter by Category'"
+          :text="filter.category !== '' ? filter.category : 'All categories'"
           variant="outline-primary"
           class="m-1"
         >
           <b-dropdown-item @click="setCategoryFilter('')">
             <span class="category thumb-sm">...</span>
-            Filter by Category
+            All categories
           </b-dropdown-item>
           <b-dropdown-item
             @click="setCategoryFilter(cat.code)"
@@ -31,7 +31,7 @@
           v-model="selectedMonth"
         ></vue-monthly-picker>
 
-        <b-button class="btn btn-success btn-md" @click="searchTransactions()">Filter</b-button>
+        <b-button class="btn-success btn-md" @click="searchTransactions()">Filter</b-button>
       </div>
     </h4>
     <table

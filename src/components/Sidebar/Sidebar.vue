@@ -5,21 +5,21 @@
     @mouseleave="sidebarMouseLeave"
   >
     <header class="logo">
-      <router-link to="/app/accounts"><span class="text-warning">My</span> Bank</router-link>
+      <router-link to="/app/dashboard"><span class="text-warning">My</span> Bank</router-link>
     </header>
     <ul class="nav">
+      <NavLink
+        header="My Dashboard"
+        link="/app/dashboard"
+        iconName="flaticon-home"
+        index="dashboard"
+        isHeader
+      />
       <NavLink
         header="Accounts"
         link="/app/accounts"
         iconName="flaticon-layers"
         index="accounts"
-        isHeader
-      />
-      <NavLink
-        header="Spending"
-        link="/app/spending"
-        iconName="fi flaticon-controls"
-        index="spending"
         isHeader
       />
       <NavLink
