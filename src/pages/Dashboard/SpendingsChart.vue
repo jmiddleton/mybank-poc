@@ -1,7 +1,7 @@
 <template>
   <section class="h-100 mb-0 widget">
     SPENDINGS
-    <span class="float-right" v-if="isLoading">
+    <span class="float-right" v-if="isLoadingSpendings">
       <i class="la la-refresh la-spin"/> Loading...
     </span>
     <div>
@@ -19,31 +19,41 @@ import "imports-loader?jQuery=jquery,this=>window!govpredict-morris/morris";
 import axios from "axios";
 import moment from "moment";
 import { clearInterval } from "timers";
-
+import { mapState } from "vuex";
 const { Morris } = window;
+
+const mformat = "YYYY-MM";
 
 export default {
   name: "SpendingsChart",
   data() {
-    return { data: [], isLoading: false };
+    return {
+      data: []
+    };
   },
   methods: {
-    getSpendingsData(spendings) {
+    processData(spendings) {
       this.data = [];
-
       if (!spendings) {
         return this.data;
       }
 
+      const current = moment().month();
+
       for (let i = 0; i < spendings.length; i++) {
-        this.data.push({
-          label: spendings[i].category,
-          value: spendings[i].totalSpent
-        });
+        if (moment(spendings[i].month.substring(0, 7), mformat).month() === current) {
+          this.data.push({
+            label: spendings[i].category,
+            value: spendings[i].totalSpent
+          });
+        }
       }
     },
     createChart() {
-      if (this.data.length == 0) {
+      if (!this.$refs.spendingsChart) {
+        return;
+      }
+      if (this.spendings.length == 0) {
         return (this.$refs.spendingsChart.innerText = "No data found");
       }
 
@@ -65,38 +75,17 @@ export default {
           "#20B6B6"
         ]
       });
-    },
-    loadSpendings() {
-      const me = this;
-
-      //if the actual page is not this, stop the interval
-      if (!this.$refs.spendingsChart) {
-        try {
-          clearInterval(this.interval);
-        } catch {
-          //nothing
-        }
-        return false;
-      }
-
-      me.isLoading = true;
-      axios
-        .get("/analytics/spendings/" + moment().format("YYYY-MM"))
-        .then(r => r.data)
-        .then(spendings => {
-          if (spendings && spendings.data && me.data != undefined) {
-            me.getSpendingsData(spendings.data.spendings);
-            me.createChart();
-          }
-          me.isLoading = false;
-        });
     }
   },
-  mounted() {
-    const me = this;
-
-    this.interval = setInterval(() => me.loadSpendings(), 30000);
-    me.loadSpendings();
+  mounted() {},
+  computed: {
+    ...mapState("analytics", ["spendings", "isLoadingSpendings"])
+  },
+  watch: {
+    spendings(newValue) {
+      this.processData(newValue);
+      this.createChart();
+    }
   }
 };
 </script>

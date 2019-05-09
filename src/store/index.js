@@ -7,6 +7,7 @@ import layout from './layout';
 import payeesModule from './modules/payees.js';
 import accountsModule from './modules/accounts.js';
 import transactionsModule from './modules/transactions.js';
+import analyticsModule from './modules/analytics.js';
 //import router from '../Routes';
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     layout,
     payees: payeesModule,
     accounts: accountsModule,
-    transactions: transactionsModule
+    transactions: transactionsModule,
+    analytics: analyticsModule
   },
   state: {
   },

@@ -14,13 +14,15 @@
                   </span>
                 </div>
                 <div xs="9" class="col">
-                  <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p>
+                  <!-- <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p> -->
+                  <p class="h1 m-0 fw-normal text-right">47452.45</p>
                 </div>
               </div>
               <div class="text-right">
                 <div class="mt">
                   <small>Available</small>
-                  <h5>$ {{totalAvailableBalance}}</h5>
+                  <!-- <h5>$ {{totalAvailableBalance}}</h5> -->
+                  <h5>$ 2253.20</h5>
                 </div>
               </div>
             </Widget>
@@ -28,50 +30,7 @@
         </b-col>
         <b-col lg="3" sm="6" xs="12">
           <div class="pb-xlg h-100">
-            <Widget class="h-100 mb-0" title="Account Overview" close>
-              <div class="d-flex align-items-center mb-sm">
-                <p class="width-150">
-                  <small>Savings</small>
-                </p>
-                <div style="width: calc(100% - 150px)">
-                  <trend
-                    :data="getRandomData()"
-                    :gradient="['#ffc247','#ff5932']"
-                    auto-draw
-                    stroke-width="6px"
-                    smooth
-                  />
-                </div>
-              </div>
-              <div class="d-flex align-items-center mb-sm">
-                <p class="width-150">
-                  <small>Deposits</small>
-                </p>
-                <div style="width: calc(100% - 150px)">
-                  <trend
-                    :data="getRandomData()"
-                    :gradient="['#9964e3','#1c96e3']"
-                    auto-draw
-                    stroke-width="6px"
-                    smooth
-                  />
-                </div>
-              </div>
-              <div class="d-flex align-items-center">
-                <p class="width-150">
-                  <small>Credit Cards</small>
-                </p>
-                <div style="width: calc(100% - 150px)">
-                  <trend
-                    :data="getRandomData()"
-                    :gradient="['#3abf94', '#2ac65d']"
-                    auto-draw
-                    stroke-width="6px"
-                    smooth
-                  />
-                </div>
-              </div>
-            </Widget>
+            <Cashflow/>
           </div>
         </b-col>
         <b-col lg="3" sm="6" xs="12">
@@ -87,21 +46,21 @@
       </b-row>
     </div>
     <div>
-      <!-- <small>[{{currentMonth}}]</small>
+      <small>[{{currentMonth}}]</small>
       <div role="group" class="btn-group">
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(-1)">Previous</button>
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(0)">Current</button>
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(1)">Next</button>
-      </div>-->
+      </div>
     </div>
     <div class="analyticsSide">
       <b-row>
         <b-col lg="4">
-          <Widget title="Monthly Savings" refresh settings>
+          <Widget title="Top Merchant" refresh settings>
             <p
               class="fs-mini text-muted"
-            >The graph below shows average savings as well as total savings for a four months period.</p>
-            <SavingsChart :currentMonth="currentMonth"/>
+            >The graph below shows the top merchante spendings.</p>
+            <!-- <SavingsChart :currentMonth="currentMonth"/> -->
           </Widget>
         </b-col>
         <b-col lg="4">
@@ -156,6 +115,7 @@ require("../../core/jquery.flot.orderBars.js");
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";
 import SavingsChart from "./SavingsChart";
+import Cashflow from "./Cashflow";
 
 import axios from "axios";
 import moment from "moment";
@@ -168,7 +128,8 @@ export default {
     Widget,
     SavingsChart,
     SpendingsChart,
-    AverageSavingsChart
+    AverageSavingsChart,
+    Cashflow
   },
   data() {
     return {
@@ -180,19 +141,14 @@ export default {
     };
   },
   methods: {
-    getRandomData() {
-      const arr = [];
-
-      for (let i = 0; i < 25; i += 1) {
-        arr.push(Math.random().toFixed(1) * 10);
-      }
-
-      return arr;
-    },
     generateSlidebarData() {
       this.slidebarData = [];
-      this.$refs.spendingSidebar.innerText = "";
 
+      if (!this.$refs.spendingSidebar) {
+        return;
+      }
+
+      this.$refs.spendingSidebar.innerText = "";
       if (!this.rawSpendings) {
         return this.slidebarData;
       }
@@ -358,7 +314,13 @@ export default {
   },
   created() {
     this.currentMonth = moment().format(mformat);
+    const query = {
+      month: this.currentMonth,
+      monthsToPrefetch: 5
+    };
+
     this.loadSpending();
+    this.$store.dispatch("analytics/loadSpendings", query);
 
     window.addEventListener("resize", this.loadSpending);
   },
