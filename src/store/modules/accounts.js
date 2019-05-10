@@ -34,6 +34,7 @@ const getters = {
       return result;
     }, {});
 
+    //TODO: sort accounts by categoriesMap
     // result = _.sortBy(result, function(a, b){
     //   state.categories.indexOf(a.key) - state.categories.indexOf(b.key);
     // });

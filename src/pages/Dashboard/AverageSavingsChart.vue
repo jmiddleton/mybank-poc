@@ -16,9 +16,7 @@ import $ from "jquery";
 import "imports-loader?jQuery=jquery,this=>window!flot";
 import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.pie";
 /* eslint-enable */
-import axios from "axios";
 import moment from "moment";
-import { clearInterval } from "timers";
 import { mapState } from "vuex";
 
 export default {
@@ -78,23 +76,9 @@ export default {
         },
         colors: ["#78c448"]
       });
-    },
-    loadSavings() {
-      //if the actual page is not this, stop the interval
-      // if (!this.$refs.savingsChart) {
-      //   try {
-      //     clearInterval(this.interval);
-      //   } catch {
-      //     //nothing
-      //   }
-      //   return false;
-      // }
     }
   },
   mounted() {
-    // const me = this;
-    // this.interval = setInterval(() => me.loadSavings(), 30000);
-
     const query = {
       month: moment().format("YYYY-MM"),
       monthsToPrefetch: 3

@@ -9,7 +9,7 @@
         <div style="width: calc(100% - 100px)">
           <trend
             :data="getRandomData()"
-            :gradient="['#ffc247','#ff5932']"
+            :gradient="['#9964e3','#1c96e3']"
             auto-draw
             stroke-width="6px"
             smooth
@@ -23,7 +23,7 @@
         <div style="width: calc(100% - 100px)">
           <trend
             :data="spendingsTrend"
-            :gradient="['#9964e3','#1c96e3']"
+            :gradient="['#ffc247','#ff5932']"
             auto-draw
             stroke-width="6px"
             smooth
@@ -37,7 +37,7 @@
         <div style="width: calc(100% - 100px)">
           <trend
             :data="savingsTrend"
-            :gradient="['#3abf94', '#2ac65d']"
+            :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
             auto-draw
             stroke-width="6px"
             smooth
@@ -69,7 +69,7 @@ export default {
     getRandomData() {
       const arr = [];
 
-      for (let i = 0; i < 25; i += 1) {
+      for (let i = 0; i < 10; i += 1) {
         arr.push(Math.random().toFixed(1) * 10);
       }
       return arr;

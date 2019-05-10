@@ -7,6 +7,8 @@ const state = {
     isLoadingSavings: false,
     spendings: [],
     isLoadingSpendings: true,
+    merchants: [],
+    isLoadingMerchants: true
 }
 
 const actions = {
@@ -41,6 +43,21 @@ const actions = {
         } catch (error) {
             console.log(error);
         }
+    },
+    async loadMerchants({ commit }, query) {
+        try {
+            state.isLoadingMerchants = true;
+            const response = await axios.get(
+                "/analytics/merchants/" + query.month,
+                {
+                    params: { monthsToPrefetch: query.monthsToPrefetch | 0 }
+                }
+            );
+            commit('SET_MERCHANTS', response.data);
+            state.isLoadingMerchants = false;
+        } catch (error) {
+            console.log(error);
+        }
     }
     // },
     // async loadCurrentSpendings({ commit }) {
@@ -71,6 +88,9 @@ const mutations = {
     },
     SET_SPENDINGS(state, spendings) {
         state.spendings = spendings.data.spendings;
+    },
+    SET_MERCHANTS(state, merchants) {
+        state.merchants = merchants.data.merchants;
     },
     SET_CURRENT_SPENDING(state, spendings) {
         state.currentSpendings = spendings.data.spendings;

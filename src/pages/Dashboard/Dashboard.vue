@@ -5,27 +5,7 @@
       <b-row>
         <b-col lg="3" sm="6" xs="12">
           <div class="pb-xlg h-100">
-            <Widget class="h-100 mb-0">
-              TOTAL BALANCE
-              <div class="row flex-nowrap">
-                <div xs="3">
-                  <span class="widget-icon">
-                    <i class="glyphicon glyphicon-usd text-success"></i>
-                  </span>
-                </div>
-                <div xs="9" class="col">
-                  <!-- <p class="h1 m-0 fw-normal text-right">{{totalBalance}}</p> -->
-                  <p class="h1 m-0 fw-normal text-right">47452.45</p>
-                </div>
-              </div>
-              <div class="text-right">
-                <div class="mt">
-                  <small>Available</small>
-                  <!-- <h5>$ {{totalAvailableBalance}}</h5> -->
-                  <h5>$ 2253.20</h5>
-                </div>
-              </div>
-            </Widget>
+            <Balances/>
           </div>
         </b-col>
         <b-col lg="3" sm="6" xs="12">
@@ -45,8 +25,8 @@
         </b-col>
       </b-row>
     </div>
-    <div>
-      <small>[{{currentMonth}}]</small>
+    <div class="text-right">
+      <span>[{{currentMonth}}] </span>
       <div role="group" class="btn-group">
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(-1)">Previous</button>
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(0)">Current</button>
@@ -56,15 +36,7 @@
     <div class="analyticsSide">
       <b-row>
         <b-col lg="4">
-          <Widget title="Top Merchant" refresh settings>
-            <p
-              class="fs-mini text-muted"
-            >The graph below shows the top merchante spendings.</p>
-            <!-- <SavingsChart :currentMonth="currentMonth"/> -->
-          </Widget>
-        </b-col>
-        <b-col lg="4">
-          <Widget title="Monthly Spending" refresh settings>
+          <Widget title="Monthly Spending" collapse refresh>
             <p class="fs-mini text-muted">
               Visualizes spendings by category on the current month.
               You can also see previous months when you navigate with top buttons.
@@ -92,12 +64,20 @@
           </Widget>
         </b-col>
         <b-col lg="4">
-          <Widget title="Spending by Category" refresh settings>
+          <Widget title="Spending by Category" collapse refresh>
             <p
               class="fs-mini text-muted"
             >Tracks spendings divided by category for the last 3 months.</p>
             <div ref="categoryChart" :style="{ height: '345px' }"/>
             <div ref="categoryLegends" style="categoryLegends"></div>
+          </Widget>
+        </b-col>
+        <b-col lg="4">
+          <Widget title="Top Merchant" collapse refresh>
+            <p
+              class="fs-mini text-muted"
+            >The graph below shows the top merchante spendings.</p>
+            <MerchantsChart :currentMonth="currentMonth"/>
           </Widget>
         </b-col>
       </b-row>
@@ -114,8 +94,9 @@ import "imports-loader?jQuery=jquery,this=>window!flot/jquery.flot.time";
 require("../../core/jquery.flot.orderBars.js");
 import AverageSavingsChart from "./AverageSavingsChart";
 import SpendingsChart from "./SpendingsChart";
-import SavingsChart from "./SavingsChart";
+import MerchantsChart from "./MerchantsChart";
 import Cashflow from "./Cashflow";
+import Balances from "./Balances";
 
 import axios from "axios";
 import moment from "moment";
@@ -126,10 +107,11 @@ export default {
   name: "Dashboard",
   components: {
     Widget,
-    SavingsChart,
+    MerchantsChart,
     SpendingsChart,
     AverageSavingsChart,
-    Cashflow
+    Cashflow,
+    Balances
   },
   data() {
     return {
@@ -316,7 +298,7 @@ export default {
     this.currentMonth = moment().format(mformat);
     const query = {
       month: this.currentMonth,
-      monthsToPrefetch: 5
+      monthsToPrefetch: 6
     };
 
     this.loadSpending();
