@@ -1,6 +1,17 @@
 <template>
-  <section class="categoriesList">
-    <div>
+  <Widget
+    title="Top Merchant"
+    navigate
+    collapse
+    refresh
+    @refreshed="handleRefresh"
+    @previous="changeMonth"
+    @current="changeMonth"
+    @next="changeMonth"
+  >
+    <p class="fs-mini text-muted">The graph below shows the top merchante spendings.</p>
+
+    <div class="categoriesList">
       <label ref="merchantsSidebar"/>
       <div v-for="merchant in slidebarData" :key="merchant.id" class="categoryItem sidebarAlert">
         <span class="float-right">
@@ -9,14 +20,15 @@
         <small>{{merchant.title}}</small>
         <div class="sidebarProgress progress-md">
           <b-progress :variant="merchant.color" :value="merchant.total" :max="maxvalue"/>
-          <small>{{merchant.footer}}</small>
+          <small class="float-right">{{merchant.footer}}</small>
         </div>
       </div>
     </div>
-  </section>
+  </Widget>
 </template>
 
 <script>
+import Widget from "@/components/Widget/Widget";
 import moment from "moment";
 import { mapState } from "vuex";
 
@@ -24,10 +36,15 @@ const mformat = "YYYY-MM";
 
 export default {
   name: "MerchantsChart",
-  props: ["currentMonth"],
+  //props: ["currentMonth"],
+  components: {
+    Widget
+  },
   data() {
     return {
-      slidebarData: []
+      slidebarData: [],
+      maxvalue: 0,
+      currentMonth: ""
     };
   },
   methods: {
@@ -78,10 +95,31 @@ export default {
         monthsToPrefetch: 0
       };
       this.$store.dispatch("analytics/loadMerchants", query);
+    },
+    handleRefresh(event) {
+      this.loadMerchants(this.currentMonth);
+    },
+    changeMonth(month) {
+      
+      if (month === 0) {
+        this.currentMonth = moment().format(mformat);
+      } else {
+        this.currentMonth = moment(this.currentMonth, mformat)
+          .add(month, "months")
+          .format(mformat);
+      }
+
+      const mcurrent = moment(this.currentMonth, mformat);
+      if (
+        mcurrent.month() > moment().month() &&
+        mcurrent.year() > moment().year()
+      ) {
+        return;
+      }
     }
   },
   mounted() {
-    this.loadMerchants(moment().format(mformat));
+    this.currentMonth = moment().format(mformat);
   },
   computed: {
     ...mapState("analytics", ["merchants"])
@@ -96,3 +134,5 @@ export default {
   }
 };
 </script>
+
+<style src="./Dashboard.scss" lang="scss" scoped/>

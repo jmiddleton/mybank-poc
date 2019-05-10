@@ -1,6 +1,3 @@
-import photo1 from '@/assets/tables/1.jpg';
-import photo2 from '@/assets/tables/2.jpg';
-import photo3 from '@/assets/tables/3.jpg';
 
 export default [
   {
@@ -23,13 +20,13 @@ export default [
     Fooby Inc. </p>`,
     attachments: [
       {
-        photo: photo1,
+        photo: '',
         photoName: 'some-cool-photo1.jpg',
         weight: '568K',
         id: 0,
       },
       {
-        photo: photo2,
+        photo: '',
         photoName: 'some-cool-photo2.jpg',
         weight: '568K',
         id: 1,
@@ -46,15 +43,7 @@ export default [
     date: 'Aug 14',
     unreaded: false,
     draft: true,
-    content: '<h1>THIS IS HTML!!!!</h1>',
-    attachments: [
-      {
-        photo: photo3,
-        photoName: 'some-cool-photo1.jpg',
-        weight: '568K',
-        id: 0,
-      },
-    ],
+    content: '<h1>THIS IS HTML!!!!</h1>'
   },
   {
     id: 2,

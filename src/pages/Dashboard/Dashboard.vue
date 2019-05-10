@@ -26,7 +26,7 @@
       </b-row>
     </div>
     <div class="text-right">
-      <span>[{{currentMonth}}] </span>
+      <span>[{{currentMonth}}]</span>
       <div role="group" class="btn-group">
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(-1)">Previous</button>
         <button class="btn btn-outline-info btn-xs" @click="changeMonth(0)">Current</button>
@@ -68,17 +68,12 @@
             <p
               class="fs-mini text-muted"
             >Tracks spendings divided by category for the last 3 months.</p>
-            <div ref="categoryChart" :style="{ height: '345px' }"/>
+            <div ref="categoryChart" :style="{ height: '320px' }"/>
             <div ref="categoryLegends" style="categoryLegends"></div>
           </Widget>
         </b-col>
         <b-col lg="4">
-          <Widget title="Top Merchant" collapse refresh>
-            <p
-              class="fs-mini text-muted"
-            >The graph below shows the top merchante spendings.</p>
-            <MerchantsChart :currentMonth="currentMonth"/>
-          </Widget>
+          <MerchantsChart :currentMonth="currentMonth"/>
         </b-col>
       </b-row>
     </div>

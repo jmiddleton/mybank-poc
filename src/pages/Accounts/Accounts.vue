@@ -87,7 +87,7 @@ export default {
     NoAccountMessage
   },
   data() {
-    return {};
+    return { isMessageShow: false };
   },
   methods: {
     showModal() {
@@ -130,11 +130,12 @@ export default {
       return "";
     },
     showLinkAccountMessage(hasAccounts) {
-      if (hasAccounts === false) {
+      if (hasAccounts === false && !this.isMessageShow) {
         var NoAccountMessageClass = Vue.extend(NoAccountMessage);
         var noAccountMsgInstance = new NoAccountMessageClass();
         noAccountMsgInstance.$mount();
         this.$refs.container.appendChild(noAccountMsgInstance.$el);
+        this.isMessageShow = true;
       }
     },
     init() {
@@ -156,6 +157,7 @@ export default {
   created() {},
   mounted() {
     const me = this;
+    this.isMessageShow = false;
     me.interval = setInterval(() => me.init(), 10000);
     me.init();
   },

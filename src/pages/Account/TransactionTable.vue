@@ -104,8 +104,8 @@
     </span>
 
     <button
-      :disabled="!nextkey || nextkey === ''"
-      v-if="nextkey && nextkey.length > 0"
+      :disabled="!filter.nextkey || filter.nextkey === ''"
+      v-if="filter.nextkey && filter.nextkey.length > 0"
       class="width-250 btn btn-outline-primary"
       v-on:click="getTransactionsByAccountId(false)"
     >Load More...</button>
@@ -161,7 +161,6 @@ export default {
   computed: mapState("transactions", [
     "transactions",
     "message",
-    "nextkey",
     "categories",
     "filter"
   ]),

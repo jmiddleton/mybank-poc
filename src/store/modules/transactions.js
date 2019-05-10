@@ -55,8 +55,8 @@ const mutations = {
         }
 
         const nextLink = new URLSearchParams(txnResult.links.next);
-        state.nextkey = nextLink.get("nextkey");
-        if (!state.nextkey) {
+        state.filter.nextkey = nextLink.get("nextkey");
+        if (!state.filter.nextkey) {
             state.message = 'No more transactions';
         }
     },
