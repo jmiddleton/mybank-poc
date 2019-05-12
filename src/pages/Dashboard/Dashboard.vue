@@ -37,10 +37,11 @@
       <b-row>
         <b-col lg="4">
           <Widget title="Monthly Spending" collapse refresh>
-            <p class="fs-mini text-muted">
-              Visualizes spendings by category on the current month.
-              You can also see previous months when you navigate with top buttons.
-            </p>
+            <p class="fs-mini text-muted">Visualizes monthly spending grouped by category.</p>
+            <center>
+              Total spent:
+              <strong>$ {{totalSpent}}</strong>
+            </center>
             <div class="categoriesList">
               <label ref="spendingSidebar"/>
               <div
@@ -63,15 +64,16 @@
             </div>
           </Widget>
         </b-col>
-        <b-col lg="4">
+        <b-col lg="8">
           <Widget title="Spending by Category" collapse refresh>
-            <p
-              class="fs-mini text-muted"
-            >Tracks spendings divided by category for the last 3 months.</p>
-            <div ref="categoryChart" :style="{ height: '320px' }"/>
-            <div ref="categoryLegends" style="categoryLegends"></div>
+            <p class="fs-mini text-muted">Tracks spendings by category over the last 3 months.</p>
+            <div>
+              <svg ref="nvd3ChartBarSvg"></svg>
+            </div>
           </Widget>
         </b-col>
+      </b-row>
+      <b-row>
         <b-col lg="4">
           <MerchantsChart :currentMonth="currentMonth"/>
         </b-col>
@@ -95,6 +97,8 @@ import Balances from "./Balances";
 
 import axios from "axios";
 import moment from "moment";
+import d3 from "d3";
+import nv from "nvd3";
 
 const mformat = "YYYY-MM";
 
@@ -114,12 +118,14 @@ export default {
       slidebarData: [],
       barchartData: [],
       currentMonth: 0,
-      maxvalue: 100
+      maxvalue: 100,
+      totalSpent: 0
     };
   },
   methods: {
     generateSlidebarData() {
       this.slidebarData = [];
+      this.totalSpent = 0;
 
       if (!this.$refs.spendingSidebar) {
         return;
@@ -138,6 +144,8 @@ export default {
         }
 
         const value = Math.abs(spend.totalSpent);
+        this.totalSpent = this.totalSpent + value;
+
         var serie = {
           id: i,
           title: spend.category,
@@ -219,66 +227,63 @@ export default {
         const spend = this.rawSpendings[i];
         const month = spend.month.substring(0, 7);
 
-        var serie = _.find(this.barchartData, { label: spend.category });
+        var serie = _.find(this.barchartData, { key: spend.category });
         if (!serie) {
           serie = {
-            data: [],
-            label: spend.category,
-            bars: {
-              show: true,
-              barWidth: 15 * 24 * 60 * 60 * 300,
-              fill: 0.65,
-              lineWidth: 1,
-              order: order++
-            }
+            values: [],
+            area: true,
+            type: "line",
+            key: spend.category,
+            yAxis: order++
           };
+
           this.barchartData.push(serie);
         }
-        serie.data.push([
-          moment(month, mformat).valueOf(),
-          Math.abs(spend.totalSpent)
-        ]);
+        serie.values.push({
+          x: moment(month, mformat).valueOf(),
+          y: Math.abs(spend.totalSpent)
+        });
       }
 
       if (this.barchartData.length === 0) {
-        return (this.$refs.categoryChart.innerText = "No data found");
+        return (this.$refs.nvd3ChartBarSvg.innerText = "No data found");
       } else {
-        this.$refs.categoryChart.innerText = "";
+        this.$refs.nvd3ChartBarSvg.innerText = "";
       }
     },
     createCategoryChart() {
       this.getCategoryChartData();
 
-      $.plot($(this.$refs.categoryChart), this.barchartData, {
-        xaxis: {
-          mode: "time",
-          tickLength: 0,
-          tickSize: [1, "month"],
-          axisLabel: "Month",
-          axisLabelUseCanvas: true,
-          axisLabelFontSizePixels: 10,
-          axisLabelPadding: 10
-        },
-        grid: {
-          hoverable: true,
-          borderWidth: 0
-        },
-        legend: {
-          backgroundColor: "transparent",
-          labelBoxBorderColor: "none",
-          container: this.$refs.categoryLegends,
-          noColumns: 4
-        },
-        colors: [
-          "#1b11ff",
-          "#a0ff4c",
-          "#837fff",
-          "#ffac4c",
-          "#f9ff4c",
-          "#ff524c",
-          "#76b5ff",
-          "#ff332a"
-        ]
+      nv.addGraph(() => {
+        const bar = nv.models
+          .multiBarChart()
+          .margin({ left: 38, bottom: 30, right: 0 })
+          .showControls(false)
+          .color([
+            "#1b11ff",
+            "#a0ff4c",
+            "#837fff",
+            "#ffac4c",
+            "#f9ff4c",
+            "#ff524c",
+            "#76b5ff",
+            "#ff332a"
+          ]);
+        bar.legend.rightAlign(false);
+        bar.xAxis
+          .showMaxMin(false)
+          .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
+        bar.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
+
+        d3.select(this.$refs.nvd3ChartBarSvg)
+          .style("height", "355px")
+          .datum(
+            this.barchartData.map(el => {
+              el.area = true; // eslint-disable-line
+              return el;
+            })
+          )
+          .call(bar);
       });
     }
   },

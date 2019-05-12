@@ -4,19 +4,17 @@
       <div>
         <h1 class="page-title">
           My Accounts
-          <a
-            href="#"
-            @click="showModal"
-            class="float-right btn-md btn btn-outline-primary"
-          >
+          <small>
+            <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
+              <i class="la la-refresh la-spin"/> Loading...
+            </span>
+          </small>
+          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
             <i class="fa fa-plus mr-2"/>Add
           </a>
         </h1>
       </div>
     </div>
-    <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
-      <i class="la la-refresh la-spin"/> Loading...
-    </span>
     <div v-if="hasAccounts">
       <b-row v-for="(accounts, category) in accountsByCategory" :key="category">
         <b-col>
