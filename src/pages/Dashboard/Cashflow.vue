@@ -75,17 +75,20 @@ export default {
       return arr;
     },
     processSavings() {
-      this.savingsTrend = [];
+      //savings starts on zero
+      this.savingsTrend = [0];
       this.savings.forEach(s => {
         this.savingsTrend.push(s.totalSavings);
       });
     },
     processSpendings() {
-      this.spendingsTrend = [];
+      this.spendingsTrend = [0];
       this.spendingsTrend = _(this.spendings)
         .groupBy(spend => spend.month.substring(0, 7))
         .map((value, key) => Math.floor(_.sumBy(value, "totalSpent")))
         .value();
+      //this gives a end
+      this.spendingsTrend.push(0);
     }
   },
   watch: {
@@ -95,9 +98,6 @@ export default {
     spendings(newValue) {
       this.processSpendings();
     }
-  },
-  mounted() {
-    
   },
   computed: {
     ...mapState("analytics", ["savings", "spendings"])

@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       ticks: [],
-      data: []
+      data: [],
+      timer: null
     };
   },
   methods: {
@@ -47,6 +48,8 @@ export default {
       }
       if (this.savings.length == 0) {
         return (this.$refs.savingsChart.innerText = "No data found");
+      } else {
+        this.processData(this.savings);
       }
 
       return $.plot($(this.$refs.savingsChart), this.data, {
@@ -76,16 +79,29 @@ export default {
         },
         colors: ["#78c448"]
       });
+    },
+    loadSavings() {
+      const query = {
+        month: moment().format("YYYY-MM"),
+        monthsToPrefetch: 3
+      };
+
+      if (!this.$refs.savingsChart) {
+        try {
+          clearInterval(this.timer);
+        } catch {
+          //nothing
+        }
+        return;
+      }
+
+      this.$store.dispatch("analytics/loadSavings", query);
     }
   },
   mounted() {
-    const query = {
-      month: moment().format("YYYY-MM"),
-      monthsToPrefetch: 3
-    };
-
-    this.$store.dispatch("analytics/loadSavings", query);
-
+    const me = this;
+    this.timer = setInterval(() => me.loadSavings(), 10000);
+    this.loadSavings();
     window.addEventListener("resize", this.loadSavings);
   },
   computed: {
@@ -93,7 +109,6 @@ export default {
   },
   watch: {
     savings(newValue) {
-      this.processData(newValue);
       this.createChart();
     }
   }

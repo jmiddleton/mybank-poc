@@ -1,0 +1,284 @@
+{
+  "accounts": {
+    "data": {
+      "accounts": [
+        {
+          "accountId": "a12345",
+          "displayName": "Flexible Saving II",
+          "nickname": "string",
+          "maskedNumber": "53680358603450-3",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
+          "productName": "Flexible savings account"
+        },
+        {
+          "accountId": "451212111",
+          "displayName": "Term Deposit",
+          "nickname": "string",
+          "maskedNumber": "TD-3431922",
+          "openStatus": "OPEN",
+          "isOwned": "true",
+          "productCategory": "TERM_DEPOSITS",
+          "productName": "High Interest Savings Account"
+        }
+      ]
+    },
+    "links": {
+      "self": "string",
+      "first": "string",
+      "prev": "string",
+      "next": "string",
+      "last": "string"
+    },
+    "meta": {
+      "totalRecords": 0,
+      "totalPages": 0
+    }
+  },
+  "accountDetails": [
+    {
+      "accountId": "a12345",
+      "displayName": "Flexible Saving II",
+      "nickname": "string",
+      "maskedNumber": "536803 5860345-0",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "TRANS_AND_SAVINGS_ACCOUNTS",
+      "productName": "Flexible Saving II",
+      "bsb": "string",
+      "accountNumber": "string",
+      "bundleName": "string",
+      "specificAccountUType": "depositRates",
+      "depositRates": [
+        {
+          "depositRateType": "FIXED",
+          "rate": "2.50",
+          "additionalInfoUri": "https://www.westpac.com.au/personal-banking/bank-accounts/savings-accounts/life/?layout=full&cid=wc:dp:LifeSEM_1811:sem::life&utm_source=&utm_medium=sem&utm_campaign=LifeSEM_1811&param=saving%20account&param=e&gclid=EAIaIQobChMIi7mbu-eX4QIVDRSPCh39dAeoEAAYASAAEgJkwfD_BwE&gclsrc=aw.ds"
+        },
+        {
+          "depositRateType": "BONUS",
+          "rate": "2.80"
+        }
+      ]
+    },
+    {
+      "accountId": "451212111",
+      "displayName": "Term Deposit",
+      "nickname": "string",
+      "maskedNumber": "TD-3431922",
+      "openStatus": "OPEN",
+      "isOwned": "true",
+      "productCategory": "TERM_DEPOSITS",
+      "productName": "Term Deposit",
+      "bundleName": "string",
+      "specificAccountUType": "termDeposit",
+      "termDeposit": {
+        "lodgementDate": "2018-02-12T12:00:00",
+        "maturityDate": "2019-07-12T12:00:00",
+        "maturityAmount": "0",
+        "maturityCurrency": "AUD",
+        "maturityInstructions": "ROLLED_OVER"
+      }
+    }
+  ],
+  "balances": {
+    "data": {
+      "balances": [
+        {
+          "accountId": "a12345",
+          "balanceUType": "deposit",
+          "deposit": {
+            "currentBalance": {
+              "amount": "3444.93",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "1234",
+              "currency": "AUD"
+            }
+          }
+        },
+        {
+          "accountId": "451212111",
+          "balanceUType": "deposit",
+          "deposit": {
+            "currentBalance": {
+              "amount": "135002",
+              "currency": "AUD"
+            },
+            "availableBalance": {
+              "amount": "135000",
+              "currency": "AUD"
+            }
+          }
+        }
+      ]
+    },
+    "links": {
+      "self": "string",
+      "first": "string",
+      "prev": "string",
+      "next": "string",
+      "last": "string"
+    },
+    "meta": {
+      "totalRecords": 0,
+      "totalPages": 0
+    }
+  },
+  "transactions": [
+    {
+      "accountId": "451212111",
+      "data": {
+        "transactions": [
+          {
+            "accountId": "451212111",
+            "transactionId": "1",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "description": "Deposit",
+            "postingDateTime": "2019-02-12T12:43:00",
+            "valueDateTime": "2019-01-12T15:43:00",
+            "executionDateTime": "2019-01-25T15:43:00",
+            "amount": "10000",
+            "currency": "AUD",
+            "reference": "FGSFGSFG-44",
+            "merchantName": "Transfer from saving account",
+            "merchantCategoryCode": "0732"
+          },
+          {
+            "postingDateTime": "2019-05-02T00:00:00",
+            "amount": "1900",
+            "description": "Transfer from xx0715 CommBank app",
+            "cba_balance": "2176.77",
+            "cba_category": "Exclude",
+            "accountId": "451212111",
+            "transactionId": "nb4pm9JdOl1234",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "merchantCategoryCode": "Transfer",
+            "merchantName": ""
+          }
+        ]
+      }
+    },
+    {
+      "accountId": "a12345",
+      "data": {
+        "transactions": [
+          {
+            "postingDateTime": "2019-05-09T00:00:00",
+            "amount": "-3000.00",
+            "description": "Transfer to other Bank CommBank app Rogel lending",
+            "cba_balance": "+2341.03",
+            "cba_category": "Transfer",
+            "accountId": "a12345",
+            "transactionId": "a9xpl0el4",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "merchantCategoryCode": "Transfer"
+          },
+          {
+            "postingDateTime": "2019-05-09T00:00:00",
+            "amount": "+5200.00",
+            "description": "Transfer from xx9370 CommBank app",
+            "cba_balance": "+5341.03",
+            "cba_category": "Income",
+            "accountId": "a12345",
+            "transactionId": "q9LnZwh_Fe",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "merchantCategoryCode": "Income"
+          },
+          {
+            "postingDateTime": "2019-05-09T00:00:00",
+            "amount": "-12.00",
+            "description": "Soul Origin - The Gal Sydney NS",
+            "cba_balance": "+141.03",
+            "cba_category": "Food & dining",
+            "accountId": "a12345",
+            "transactionId": "NYdP3s3Zv9",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "valueDateTime": "2019-05-07T00:00:00",
+            "reference": "Tap and Pay xx0715",
+            "merchantCategoryCode": "Food & dining",
+            "merchantName": "Soul"
+          },
+          {
+            "postingDateTime": "2019-05-09T00:00:00",
+            "amount": "-12.50",
+            "description": "BLACK DUCK ESPRSO CF RICHMOND NS",
+            "cba_balance": "+153.03",
+            "cba_category": "Auto & transport",
+            "accountId": "a12345",
+            "transactionId": "IU1u68E3er",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "valueDateTime": "2019-05-05T00:00:00",
+            "reference": "Tap and Pay xx0715",
+            "merchantCategoryCode": "Auto & transport",
+            "merchantName": "BLACK"
+          },
+          {
+            "postingDateTime": "2019-05-08T00:00:00",
+            "amount": "-43.78",
+            "description": "DOLCE VITA FINE FOOD KOGARAH NS",
+            "cba_balance": "+165.53",
+            "cba_category": "Food & dining",
+            "accountId": "a12345",
+            "transactionId": "T9Fcf3amzB",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "valueDateTime": "2019-05-04T00:00:00",
+            "reference": "Tap and Pay xx0715",
+            "merchantCategoryCode": "Food & dining",
+            "merchantName": "DOLCE"
+          },
+          {
+            "postingDateTime": "2019-05-08T00:00:00",
+            "amount": "-57.19",
+            "description": "7-ELEVEN 2239 KOGARAH NS",
+            "cba_balance": "+209.31",
+            "cba_category": "Auto & transport",
+            "accountId": "a12345",
+            "transactionId": "8ArWWx9fym",
+            "isDetailAvailable": false,
+            "type": "PAYMENT",
+            "status": "POSTED",
+            "currency": "AUD",
+            "valueDateTime": "2019-05-05T00:00:00",
+            "reference": "Tap and Pay xx0715",
+            "merchantCategoryCode": "Auto & transport",
+            "merchantName": "7-ELEVEN"
+          }
+        ]
+      },
+      "links": {
+        "self": "string",
+        "first": "string",
+        "prev": "string",
+        "next": "string",
+        "last": "string"
+      },
+      "meta": {
+        "totalRecords": 55,
+        "totalPages": 3
+      }
+    }
+  ]
+}

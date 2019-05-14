@@ -91,6 +91,9 @@ https://medium.com/@serverlessguru/deploy-reactjs-app-with-s3-static-hosting-f64
 
 ### Test data
 
-change db.json and push it to your git repo. Check https://my-json-server.typicode.com howto to get the data accessible on internet.
+Locally run the following json server
 
-Example URL: https://my-json-server.typicode.com/jmiddleton/mybank-poc
+```
+cd mybank-poc
+json-server --watch data/sample-api-data.json --routes data/routes.json --id accountId --port 4000
+```

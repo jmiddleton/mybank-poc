@@ -1,9 +1,6 @@
 <template>
   <section class="h-100 mb-0 widget">
     SPENDINGS
-    <span class="float-right" v-if="isLoadingSpendings">
-      <i class="la la-refresh la-spin"/> Loading...
-    </span>
     <div>
       <div class="widgetBody widget-body" ref="spendingsChart" :style="{ height: '150px' }"/>
     </div>
@@ -18,7 +15,6 @@ import "imports-loader?jQuery=jquery,this=>window!govpredict-morris/morris";
 /* eslint-enable */
 import axios from "axios";
 import moment from "moment";
-import { clearInterval } from "timers";
 import { mapState } from "vuex";
 const { Morris } = window;
 
@@ -28,20 +24,26 @@ export default {
   name: "SpendingsChart",
   data() {
     return {
+      timer: null,
       data: []
     };
   },
   methods: {
     processData(spendings) {
       this.data = [];
-      if (!spendings) {
+      if (!spendings || this.data.length > 0) {
         return this.data;
       }
 
       const current = moment().month();
 
       for (let i = 0; i < spendings.length; i++) {
-        if (moment(spendings[i].month.substring(0, 7), mformat).month() === current) {
+        const actual = moment(
+          spendings[i].month.substring(0, 7),
+          mformat
+        ).month();
+
+        if (actual === current) {
           this.data.push({
             label: spendings[i].category,
             value: spendings[i].totalSpent
@@ -53,8 +55,10 @@ export default {
       if (!this.$refs.spendingsChart) {
         return;
       }
-      if (this.spendings.length == 0) {
+      if (this.currentSpendings.length == 0) {
         return (this.$refs.spendingsChart.innerText = "No data found");
+      } else {
+        this.processData(this.currentSpendings);
       }
 
       $(this.$refs.spendingsChart).html("");
@@ -77,13 +81,12 @@ export default {
       });
     }
   },
-  mounted() {},
+
   computed: {
-    ...mapState("analytics", ["spendings", "isLoadingSpendings"])
+    ...mapState("analytics", ["currentSpendings"])
   },
   watch: {
-    spendings(newValue) {
-      this.processData(newValue);
+    currentSpendings(newValue) {
       this.createChart();
     }
   }

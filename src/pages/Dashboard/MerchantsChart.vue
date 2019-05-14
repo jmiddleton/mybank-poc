@@ -1,10 +1,9 @@
 <template>
   <Widget
-    title="Top Merchant"
+    :title="'<h5>Top Merchant - <small>' + currentMonth + '</small></h5>'"
+    customHeader
     navigate
     collapse
-    refresh
-    @refreshed="handleRefresh"
     @previous="changeMonth"
     @current="changeMonth"
     @next="changeMonth"

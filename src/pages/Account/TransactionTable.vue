@@ -89,7 +89,7 @@
           </div>
           <div v-if="txn.valueDateTime">
             <small>
-              <span class="fw-semi-bold">Value date:</span>
+              <span class="fw-semi-bold">Value date: </span>
               <span>{{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </div>
