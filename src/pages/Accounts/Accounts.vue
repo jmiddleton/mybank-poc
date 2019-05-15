@@ -4,11 +4,11 @@
       <div>
         <h1 class="page-title">
           My Accounts
-          <small>
-            <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
+          <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
+            <p class="fs-mini text-muted">
               <i class="la la-refresh la-spin"/> Loading...
-            </span>
-          </small>
+            </p>
+          </span>
           <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
             <i class="fa fa-plus mr-2"/>Add
           </a>

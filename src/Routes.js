@@ -13,10 +13,10 @@ import GoogleMapPage from '@/pages/Maps/Google';
 
 // Main
 import Accounts from '@/pages/Accounts/Accounts';
-import AccountDetails from '@/pages/Account/AccountDetails';
-import CreditCardDetails from '@/pages/Account/CreditCardDetails';
-import TermDepositDetails from '@/pages/Account/TermDepositDetails';
-import UnlinkAccountPage from '@/pages/Account/UnlinkAccount';
+import AccountDetails from '@/pages/AccountDetails/AccountDetails';
+import CreditCardDetails from '@/pages/AccountDetails/CreditCardDetails';
+import TermDepositDetails from '@/pages/AccountDetails/TermDepositDetails';
+import UnlinkAccountPage from '@/pages/AccountDetails/UnlinkAccount';
 
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';

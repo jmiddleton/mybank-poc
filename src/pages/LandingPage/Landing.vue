@@ -10,7 +10,7 @@
           <div class="col px-0">
             <div class="row">
               <div class="col-md-6 order-md-2">
-                <img src="img/main-logo.svg" class="img-fluid floating">
+                <img src="img/main-logo.png" class="img-fluid">
               </div>
               <div class="col-lg-6">
                 <h1 class="text-white">MyBank Account Aggregator</h1>

@@ -77,6 +77,17 @@ Please make sure you have configured your environment for production. Create a f
 - VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
 - VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]
 
+### Security
+
+Update the config of Auth0 - Identity Provider in ```auth_config.json``` 
+
+```
+{
+    "domain": "[YOUR AUTH0 DOMAIN i.e. dev-mybank.au.auth0.com]",
+    "clientId": "[YOUR_AUTH0_CLIENT_ID]"
+}
+```
+
 ### Deploy static website to AWS S3
 To deploy the static website to AWS S3, just execute:
 

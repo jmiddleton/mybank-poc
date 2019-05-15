@@ -2,7 +2,7 @@
   <div class="dashboard-page">
     <h1 class="page-title">
       My Dashboard
-      <span class="float-right" v-if="isLoadingSpendings">
+      <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
         <p class="fs-mini text-muted">
           <i class="la la-refresh la-spin"/> Loading...
         </p>
@@ -82,25 +82,27 @@ export default {
     };
   },
   methods: {
-    loadSpendings() {
+    loadCashflow() {
+      const currentMonth= moment().format(mformat);
       const query = {
-        month: moment().format(mformat),
+        month: currentMonth,
         monthsToPrefetch: 2
       };
 
       this.$store.dispatch("analytics/loadSpendings", query);
+      this.$store.dispatch("analytics/loadCashflow", currentMonth);
     }
   },
   mounted() {
     const me = this;
 
     if (this.timer === null) {
-      this.timer = setInterval(() => me.loadSpendings(), 30000);
+      this.timer = setInterval(() => me.loadCashflow(), 30000);
     }
-    this.loadSpendings();
+    this.loadCashflow();
   },
   computed: {
-    ...mapState("analytics", ["isLoadingSpendings"])
+    ...mapState("analytics", ["isLoadingCashflow", "isLoadingSpendings"])
   }
 };
 </script>

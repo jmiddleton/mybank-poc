@@ -14,7 +14,9 @@ const state = {
     monthlySpendings: [],
     isLoadingMontlySpendings: true,
     merchants: [],
-    isLoadingMerchants: true
+    isLoadingMerchants: true,
+    cashflow: [],
+    isLoadingCashflow: true
 }
 
 const actions = {
@@ -100,6 +102,16 @@ const actions = {
         } catch (error) {
             console.log(error);
         }
+    },
+    async loadCashflow({ commit }, month) {
+        try {
+            state.isLoadingCashflow = true;
+            const response = await axios.get("/analytics/cashflow/" + month);
+            commit('SET_CASHFLOW_DATA', response.data);
+            state.isLoadingCashflow = false;
+        } catch (error) {
+            console.log(error);
+        }
     }
 };
 
@@ -128,7 +140,10 @@ const mutations = {
                 return spend && spend.month.indexOf(current) >= 0;
             });
         }
-    }
+    },
+    SET_CASHFLOW_DATA(state, cashflow) {
+        state.cashflow = cashflow.data;
+    },
 }
 
 export default {

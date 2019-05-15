@@ -6,10 +6,7 @@
           <i class="la la-bars la-lg"/>
         </a>
         <a class="fs-lg d-lg-none" href="#" @click="switchSidebarMethod">
-          <span class="rounded rounded-lg bg-gray text-white d-md-none">
-            <i class="la la-bars la-lg"/>
-          </span>
-          <i class="la la-bars la-lg d-sm-down-none ml-4"/>
+          <i class="la la-bars la-lg d-block ml-4"/>
         </a>
       </b-nav-item>
     </b-nav>

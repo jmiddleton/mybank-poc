@@ -3,12 +3,10 @@
     CASHFLOW
     <div>
       <div class="d-flex align-items-center mb-sm">
-        <p class="width-100">
-          <small>Income</small>
-        </p>
-        <div style="width: calc(100% - 100px)">
+        <h6 style="width: 90px;">Income</h6>
+        <div style="width: 160px;">
           <trend
-            :data="getRandomData()"
+            :data="incomesTrend"
             :gradient="['#9964e3','#1c96e3']"
             auto-draw
             stroke-width="6px"
@@ -17,10 +15,8 @@
         </div>
       </div>
       <div class="d-flex align-items-center mb-sm">
-        <p class="width-100">
-          <small>Spending</small>
-        </p>
-        <div style="width: calc(100% - 100px)">
+        <h6 style="width: 90px;">Spending</h6>
+        <div style="width: 160px;">
           <trend
             :data="spendingsTrend"
             :gradient="['#ffc247','#ff5932']"
@@ -31,10 +27,8 @@
         </div>
       </div>
       <div class="d-flex align-items-center">
-        <p class="width-100">
-          <small>Savings</small>
-        </p>
-        <div style="width: calc(100% - 100px)">
+        <h6 style="width: 90px;">Savings</h6>
+        <div style="width: 160px;">
           <trend
             :data="savingsTrend"
             :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
@@ -61,46 +55,46 @@ export default {
   components: {},
   data() {
     return {
+      incomesTrend: [],
       savingsTrend: [],
       spendingsTrend: []
     };
   },
   methods: {
-    getRandomData() {
-      const arr = [];
-
-      for (let i = 0; i < 10; i += 1) {
-        arr.push(Math.random().toFixed(1) * 10);
-      }
-      return arr;
+    processIncome() {
+      //savings starts on zero
+      this.incomesTrend = [0];
+      this.cashflow.incomes.forEach(s => {
+        this.incomesTrend.push(s.totalIncome);
+      });
     },
     processSavings() {
       //savings starts on zero
       this.savingsTrend = [0];
-      this.savings.forEach(s => {
+      this.cashflow.savings.forEach(s => {
         this.savingsTrend.push(s.totalSavings);
       });
     },
     processSpendings() {
       this.spendingsTrend = [0];
-      this.spendingsTrend = _(this.spendings)
-        .groupBy(spend => spend.month.substring(0, 7))
-        .map((value, key) => Math.floor(_.sumBy(value, "totalSpent")))
-        .value();
-      //this gives a end
-      this.spendingsTrend.push(0);
+      this.cashflow.spendings.forEach(s => {
+        this.spendingsTrend.push(s.totalSpent);
+      });
     }
   },
   watch: {
-    savings(newValue) {
+    cashflow(newValue) {
+      this.processIncome();
       this.processSavings();
-    },
-    spendings(newValue) {
       this.processSpendings();
     }
   },
+  mounted() {
+    //const month = moment().format(mformat);
+    //this.$store.dispatch("analytics/loadCashflow", month);
+  },
   computed: {
-    ...mapState("analytics", ["savings", "spendings"])
+    ...mapState("analytics", ["cashflow"])
   }
 };
 </script>

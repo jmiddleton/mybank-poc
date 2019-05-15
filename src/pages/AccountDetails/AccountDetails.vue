@@ -6,16 +6,23 @@
           <div class="widgetBody widget-body" v-if="account && account.accountId">
             <div v-cloak class="widget-padding-md clearfix bg-primary text-white">
               <h3>{{account.displayName}}</h3>
-              <div class="widgetControls widget-controls">
-                <a @click="refresh()">
-                  <i class="la la-refresh"></i>
-                </a>
-                <a @click="makeTransfer()">
-                  <i class="la la-edit"></i>
-                </a>
-                <a @click="unlinkAccount()">
-                  <i class="la la-unlink"/>
-                </a>
+              <div class="widgetControls">
+                <b-nav>
+                  <b-nav-item-dropdown class="settingsDropdown mr-2" right>
+                    <template slot="button-content">
+                      <i class="text-white la la-lg la-cog"/>
+                    </template>
+                    <b-dropdown-item @click="makeTransfer()">
+                      <i class="la la-lg la-edit"/> Make a Transfer
+                    </b-dropdown-item>
+                    <b-dropdown-item @click="refresh()">
+                      <i class="la la-lg la-refresh"/> Refresh
+                    </b-dropdown-item>
+                    <b-dropdown-item @click="unlinkAccount()">
+                      <i class="la la-lg la-unlink"/> Unlink Account
+                    </b-dropdown-item>
+                  </b-nav-item-dropdown>
+                </b-nav>
               </div>
               <h5>
                 {{account.maskedNumber}}
@@ -71,8 +78,7 @@
                   </a>
                 </h6>
               </b-col>
-            </b-row>
-            &nbsp;
+            </b-row>&nbsp;
             <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
