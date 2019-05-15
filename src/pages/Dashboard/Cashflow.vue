@@ -43,12 +43,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import moment from "moment";
-import _ from "lodash";
 import { mapState } from "vuex";
-
-const mformat = "YYYY-MM";
 
 export default {
   name: "Cashflow",
@@ -83,7 +78,7 @@ export default {
     }
   },
   watch: {
-    cashflow(newValue) {
+    cashflow() {
       this.processIncome();
       this.processSavings();
       this.processSpendings();

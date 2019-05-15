@@ -59,10 +59,12 @@ export default {
 
           this.barchartData.push(serie);
         }
-        serie.values.push({
+
+        const value = {
           x: moment(month, mformat).valueOf(),
           y: Math.abs(spend.totalSpent)
-        });
+        };
+        serie.values.push(value);
       }
 
       if (this.$refs.spendByCatChart) {
@@ -77,7 +79,7 @@ export default {
       this.getCategoryChartData();
 
       nv.addGraph(() => {
-        const bar = nv.models
+        const graph = nv.models
           .multiBarChart()
           .margin({ left: 38, bottom: 30, right: 0 })
           .showControls(false)
@@ -92,21 +94,20 @@ export default {
             "#76b7ff",
             "#7bfabe"
           ]);
-        bar.legend.rightAlign(false);
-        bar.xAxis
+        graph.legend.rightAlign(false);
+        graph.xAxis
           .showMaxMin(false)
           .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
-        bar.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
+        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
 
         d3.select(this.$refs.spendByCatChart)
           .style("height", "355px")
-          .datum(
-            this.barchartData.map(el => {
-              el.area = true; // eslint-disable-line
-              return el;
-            })
-          )
-          .call(bar);
+          .datum(this.barchartData)
+          .transition()
+          .duration(500)
+          .call(graph);
+
+        nv.utils.windowResize(graph.update);
       });
     },
     loadSpendings(month) {
@@ -145,7 +146,10 @@ export default {
     window.removeEventListener("resize", this.createCategoryChart);
   },
   computed: {
-    ...mapState("analytics", ["spendingsByCategory", "isLoadingSpendingsByCategory"])
+    ...mapState("analytics", [
+      "spendingsByCategory",
+      "isLoadingSpendingsByCategory"
+    ])
   },
   watch: {
     currentMonth(newValue) {

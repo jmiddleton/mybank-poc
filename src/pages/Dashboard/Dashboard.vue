@@ -45,6 +45,9 @@
         <b-col lg="4">
           <MerchantsChart/>
         </b-col>
+        <b-col lg="8">
+          <IncomeSpendingsChart/>
+        </b-col>
       </b-row>
     </div>
   </div>
@@ -58,6 +61,7 @@ import SpendingByCategoryBarChart from "./SpendingByCategoryBarChart";
 import SpendingByCategorySlideBar from "./SpendingByCategorySlideBar";
 import Cashflow from "./Cashflow";
 import Balances from "./Balances";
+import IncomeSpendingsChart from "./IncomeSpendingsChart";
 
 import { clearInterval } from "timers";
 import { mapState } from "vuex";
@@ -68,13 +72,14 @@ const mformat = "YYYY-MM";
 export default {
   name: "Dashboard",
   components: {
-    MerchantsChart,
+    Balances,
+    Cashflow,
     SpendingsPieChart,
     AverageSavingsChart,
-    Cashflow,
-    Balances,
+    SpendingByCategorySlideBar,
     SpendingByCategoryBarChart,
-    SpendingByCategorySlideBar
+    MerchantsChart,
+    IncomeSpendingsChart
   },
   data() {
     return {
