@@ -1,6 +1,6 @@
 <template>
   <Widget
-    :title="'<h5>Spending by Category - <small>' + currentMonth + '</small></h5>'"
+    :title="'<h5>Category - <small>' + currentMonth + '</small></h5>'"
     customHeader
     collapse
     navigate
@@ -18,6 +18,7 @@
 <script>
 import Widget from "@/components/Widget/Widget";
 import moment from "moment";
+import _ from "lodash";
 import { mapState } from "vuex";
 import d3 from "d3";
 import nv from "nvd3";
@@ -81,7 +82,7 @@ export default {
       nv.addGraph(() => {
         const graph = nv.models
           .multiBarChart()
-          .margin({ left: 38, bottom: 30, right: 0 })
+          .margin({ left: 45, bottom: 30, right: 0 })
           .showControls(false)
           .color([
             "#c4c2ff",
@@ -101,7 +102,7 @@ export default {
         graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
 
         d3.select(this.$refs.spendByCatChart)
-          .style("height", "355px")
+          .style("height", "340px")
           .datum(this.barchartData)
           .transition()
           .duration(500)
@@ -117,7 +118,7 @@ export default {
       };
       this.$store.dispatch("analytics/loadSpendingsByCategory", query);
     },
-    handleRefresh(event) {
+    handleRefresh() {
       this.loadSpendings(this.currentMonth);
     },
     changeMonth(month) {
@@ -155,7 +156,7 @@ export default {
     currentMonth(newValue) {
       this.loadSpendings(newValue);
     },
-    spendingsByCategory(newValue) {
+    spendingsByCategory() {
       this.createCategoryChart();
     }
   }

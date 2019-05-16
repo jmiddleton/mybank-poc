@@ -1,6 +1,6 @@
 <template>
   <Widget
-    :title="'<h5>Monthly Spending - <small>' + currentMonth + '</small></h5>'"
+    :title="'<h5>Monthly - <small>' + currentMonth + '</small></h5>'"
     customHeader
     collapse
     navigate
@@ -38,8 +38,6 @@
 import Widget from "@/components/Widget/Widget";
 import moment from "moment";
 import { mapState } from "vuex";
-import d3 from "d3";
-import nv from "nvd3";
 
 const mformat = "YYYY-MM";
 
@@ -109,7 +107,7 @@ export default {
       };
       this.$store.dispatch("analytics/loadMonthlySpendings", query);
     },
-    handleRefresh(event) {
+    handleRefresh() {
       this.loadSpendings(this.currentMonth);
     },
     changeMonth(month) {

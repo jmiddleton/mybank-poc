@@ -4,7 +4,7 @@
     customHeader
     collapse
   >
-    <p class="fs-mini text-muted">Shows incomes vs spendings over the last 6 months.</p>
+    <p class="fs-mini text-muted">Shows incomes vs spendings over a period of 6 months.</p>
     <div>
       <svg ref="spendByCatChart"></svg>
     </div>
@@ -80,7 +80,7 @@ export default {
       nv.addGraph(() => {
         const graph = nv.models
           .multiBarChart()
-          .margin({ left: 38, bottom: 30, right: 0 })
+          .margin({ left: 46, bottom: 30, right: 0 })
           .showControls(false)
           .color(["#c4c2ff", "#fa7bb7"]);
         graph.legend.rightAlign(false);
@@ -90,7 +90,7 @@ export default {
         graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
 
         d3.select(this.$refs.spendByCatChart)
-          .style("height", "355px")
+          .style("height", "320px")
           .datum(barchartData)
           .transition()
           .duration(500)

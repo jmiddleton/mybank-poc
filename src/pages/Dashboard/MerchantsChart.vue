@@ -35,7 +35,6 @@ const mformat = "YYYY-MM";
 
 export default {
   name: "MerchantsChart",
-  //props: ["currentMonth"],
   components: {
     Widget
   },
@@ -95,7 +94,7 @@ export default {
       };
       this.$store.dispatch("analytics/loadMerchants", query);
     },
-    handleRefresh(event) {
+    handleRefresh() {
       this.loadMerchants(this.currentMonth);
     },
     changeMonth(month) {
@@ -127,7 +126,7 @@ export default {
     currentMonth(newValue) {
       this.loadMerchants(newValue);
     },
-    merchants(newValue) {
+    merchants() {
       this.generateSlidebarData();
     }
   }
