@@ -2,94 +2,130 @@
   <section class="h-100 mb-0 widget">
     CASHFLOW
     <div>
-      <div class="d-flex align-items-center mb-sm">
-        <h6 style="width: 90px;">Income</h6>
-        <div style="width: 160px;">
-          <trend
-            :data="incomesTrend"
-            :gradient="['#9964e3','#1c96e3']"
-            auto-draw
-            stroke-width="6px"
-            smooth
-          />
-        </div>
-      </div>
-      <div class="d-flex align-items-center mb-sm">
-        <h6 style="width: 90px;">Spending</h6>
-        <div style="width: 160px;">
-          <trend
-            :data="spendingsTrend"
-            :gradient="['#ffc247','#ff5932']"
-            auto-draw
-            stroke-width="6px"
-            smooth
-          />
-        </div>
-      </div>
-      <div class="d-flex align-items-center">
-        <h6 style="width: 90px;">Savings</h6>
-        <div style="width: 160px;">
-          <trend
-            :data="savingsTrend"
-            :gradient="['#6fa8dc', '#42b983', '#2c3e50']"
-            auto-draw
-            stroke-width="6px"
-            smooth
-          />
-        </div>
-      </div>
+      <svg ref="spendByCatChart"></svg>
     </div>
   </section>
 </template>
 
 <script>
+import moment from "moment";
 import { mapState } from "vuex";
+import d3 from "d3";
+import nv from "nvd3";
 
+const mformat = "YYYY-MM";
 export default {
   name: "Cashflow",
   components: {},
   data() {
-    return {
-      incomesTrend: [],
-      savingsTrend: [],
-      spendingsTrend: []
-    };
+    return {};
   },
   methods: {
-    processIncome() {
-      //savings starts on zero
-      this.incomesTrend = [0];
-      this.cashflow.incomes.forEach(s => {
-        this.incomesTrend.push(s.totalIncome);
-      });
+    getIncomeSerie() {
+      const serie = {
+        values: [],
+        area: true,
+        type: "line",
+        key: "Income",
+        yAxis: 1
+      };
+
+      for (let s of this.cashflow.incomes) {
+        if (s.month === moment().format(mformat)) {
+          serie.values.push({
+            x: moment(s.month, mformat).valueOf(),
+            y: s.totalIncome
+          });
+          break;
+        }
+      }
+      return serie;
     },
-    processSavings() {
-      //savings starts on zero
-      this.savingsTrend = [0];
-      this.cashflow.savings.forEach(s => {
-        this.savingsTrend.push(s.totalSavings);
-      });
+    getSpendingsSerie() {
+      const serie = {
+        values: [],
+        area: true,
+        type: "line",
+        key: "Spending",
+        yAxis: 2
+      };
+
+      for (let s of this.cashflow.spendings) {
+        if (s.month === moment().format(mformat)) {
+          serie.values.push({
+            x: moment(s.month, mformat).valueOf(),
+            y: s.totalSpent
+          });
+          break;
+        }
+      }
+      return serie;
     },
-    processSpendings() {
-      this.spendingsTrend = [0];
-      this.cashflow.spendings.forEach(s => {
-        this.spendingsTrend.push(s.totalSpent);
+    getSavingsSerie() {
+      const serie = {
+        values: [],
+        area: true,
+        type: "line",
+        key: "Savings",
+        yAxis: 3
+      };
+
+      for (let s of this.cashflow.savings) {
+        if (s.month === moment().format(mformat)) {
+          serie.values.push({
+            x: moment(s.month, mformat).valueOf(),
+            y: s.totalSavings
+          });
+          break;
+        }
+      }
+      return serie;
+    },
+    createChart() {
+      const barchartData = [];
+      barchartData.push(this.getIncomeSerie());
+      barchartData.push(this.getSpendingsSerie());
+      barchartData.push(this.getSavingsSerie());
+
+      if (this.$refs.spendByCatChart) {
+        if (barchartData.length === 0) {
+          return (this.$refs.spendByCatChart.innerText = "No data found");
+        } else {
+          this.$refs.spendByCatChart.innerText = "";
+        }
+      }
+
+      nv.addGraph(() => {
+        const graph = nv.models
+          .multiBarChart()
+          .margin({ left: 35, bottom: 20, right: 0 })
+          .showControls(false)
+          .color(["#ffc247", "#f55d5d", "#9964e3"]);
+        graph.legend.rightAlign(false).padding(17);
+        graph.xAxis
+          .showMaxMin(false)
+          .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
+        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
+
+        d3.select(this.$refs.spendByCatChart)
+          .datum(barchartData)
+          .transition()
+          .duration(200)
+          .call(graph);
+
+        nv.utils.windowResize(graph.update);
       });
     }
+  },
+  mounted() {},
+  unmounted() {},
+  computed: {
+    ...mapState("analytics", ["cashflow"])
   },
   watch: {
     cashflow() {
-      this.processIncome();
-      this.processSavings();
-      this.processSpendings();
+      this.createChart();
     }
-  },
-  mounted() {
-    //const month = moment().format(mformat);
-    //this.$store.dispatch("analytics/loadCashflow", month);
-  },
-  computed: {
-    ...mapState("analytics", ["cashflow"])
   }
 };
 </script>
