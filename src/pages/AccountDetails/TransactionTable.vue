@@ -89,7 +89,7 @@
           </div>
           <div v-if="txn.valueDateTime">
             <small>
-              <span class="fw-semi-bold">Value date: </span>
+              <span class="fw-semi-bold">Value date:</span>
               <span>{{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
             </small>
           </div>
@@ -108,7 +108,12 @@
       v-if="filter.nextkey && filter.nextkey.length > 0"
       class="width-250 btn btn-outline-primary"
       v-on:click="getTransactionsByAccountId(false)"
-    >Load More...</button>
+    >
+      <span v-if="!isLoading">Load More...</span>
+      <span v-else>
+        <i class="la la-refresh la-spin"/> Loading...
+      </span>
+    </button>
     <span v-else class="center text-danger">
       <h5>{{ message }}</h5>
     </span>
@@ -162,7 +167,8 @@ export default {
     "transactions",
     "message",
     "categories",
-    "filter"
+    "filter",
+    "isLoading"
   ]),
   filters: {
     truncate: function(text, length, suffix) {

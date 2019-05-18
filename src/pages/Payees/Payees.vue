@@ -1,7 +1,11 @@
 <template>
   <div>
-    <h1 class="page-title">Manage Payees</h1>
-    <Widget title customHeader refresh settings>
+    <h1 class="page-title">Manage Payees
+      <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
+            <i class="la la-refresh mr-2"/>Sync Payees
+          </a>
+    </h1>
+    <Widget title customHeader>
       <payee-filter-bar></payee-filter-bar>
       <vuetable
         ref="vuetable"
@@ -36,6 +40,7 @@
         ></vuetable-pagination>
       </div>
     </Widget>
+    <SyncPayees ref="syncPayeesModal"/>
   </div>
 </template>
 
@@ -49,6 +54,7 @@ import Vuetable from "vuetable-2";
 import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
 import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 import PayeeFilterBar from "./PayeeFilterBar.vue";
+import SyncPayees from "./SyncPayees";
 import _ from "lodash";
 import CssConfig from "./VuetableCssConfig.js";
 import axios from "axios";
@@ -65,7 +71,8 @@ export default {
     Vuetable,
     "vuetable-pagination": VuetablePagination,
     VuetablePaginationInfo,
-    PayeeFilterBar
+    PayeeFilterBar,
+    SyncPayees
   },
   data() {
     return {
@@ -87,7 +94,7 @@ export default {
           title: "Description",
           sortField: "description"
         },
-        { name: "created", title: "Created" },
+        { name: "creationDate", title: "Created" },
         {
           name: "actions",
           title: "Actions"
@@ -103,6 +110,9 @@ export default {
     };
   },
   methods: {
+    showModal() {
+      this.$refs.syncPayeesModal.show = true;
+    },
     formatDate(value) {
       if (value == null) return "";
       return moment(new Date(value)).format("YYYY-MM-DD");

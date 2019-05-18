@@ -29,3 +29,36 @@
     }
   }
 ]
+
+
+[
+  '{{repeat(5, 10)}}',
+  {
+    
+    payeeId:'{{guid()}}',
+    description: '{{lorem(1, "words")}}',
+    nickname: '{{firstName()}} {{surname()}}',
+    type: '{{random("DOMESTIC", "BILLER")}}',
+    creationDate: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss Z")}}'
+  }
+]
+
+[
+  '{{repeat(5, 100)}}',
+  {
+    payeeId:'{{guid()}}',
+    description: '{{lorem(1, "words")}}',
+    nickname: '{{firstName()}} {{surname()}}',
+    type: '{{random("DOMESTIC", "BILLER")}}',
+    creationDate: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss")}}',
+    payeeUType: "domestic",
+      "domestic": {
+        "payeeAccountUType": "account",
+        "account": {
+          "accountName": "Matias",
+          "bsb": "098000",
+          "accountNumber": "11223334"
+        }
+      }
+  }
+]

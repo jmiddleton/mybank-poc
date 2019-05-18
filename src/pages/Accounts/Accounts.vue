@@ -4,14 +4,14 @@
       <div>
         <h1 class="page-title">
           My Accounts
+          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
+            <i class="fa fa-plus mr-2"/>Link Account
+          </a>
           <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
             <p class="fs-mini text-muted">
               <i class="la la-refresh la-spin"/> Loading...
             </p>
           </span>
-          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
-            <i class="fa fa-plus mr-2"/>Add
-          </a>
         </h1>
       </div>
     </div>
@@ -48,7 +48,8 @@
                 <b-row class="flex-nowrap">
                   <b-col lg="10"></b-col>
                 </b-row>
-                <h6 class="m-0">{{ account.displayName }}</h6>
+                <h6 v-if="account.nickname" class="m-0">{{account.nickname}}</h6>
+                <h6 v-else class="m-0">{{ account.displayName}}</h6>
                 <p class="value6">{{ account.maskedNumber }}</p>
               </a>
             </div>
@@ -156,7 +157,7 @@ export default {
   mounted() {
     const me = this;
     this.isMessageShow = false;
-    me.interval = setInterval(() => me.init(), 10000);
+    me.interval = setInterval(() => me.init(), 20000);
     me.init();
   },
   computed: {

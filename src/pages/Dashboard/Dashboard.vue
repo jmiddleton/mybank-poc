@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-page">
+  <div class="dashboard-page" ref="dashboardDiv">
     <h1 class="page-title">
       My Dashboard
       <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
@@ -83,11 +83,21 @@ export default {
   },
   data() {
     return {
-      timer: null
+      syncTimer: null
     };
   },
   methods: {
     loadCashflow() {
+
+      if(!this.$refs.dashboardDiv){
+        try {
+          clearInterval(this.syncTimer);
+        } catch {
+          //nothing
+        }
+        return false;
+      }
+
       const currentMonth= moment().format(mformat);
       const query = {
         month: currentMonth,
@@ -101,8 +111,8 @@ export default {
   mounted() {
     const me = this;
 
-    if (this.timer === null) {
-      this.timer = setInterval(() => me.loadCashflow(), 30000);
+    if (this.syncTimer === null) {
+      this.syncTimer = setInterval(() => me.loadCashflow(), 10000);
     }
     this.loadCashflow();
   },

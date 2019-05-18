@@ -5,6 +5,7 @@ import clean from "obj-clean";
 const state = {
     transactions: [],
     message: 'Load more...',
+    isLoading: true,
     categories: [],
     filter: {
         firstPage: true,
@@ -18,6 +19,7 @@ const state = {
 const actions = {
     loadTransactionsByAccountId({ commit }, accountId) {
         const filter = state.filter;
+        state.isLoading = true;
 
         if (filter.firstPage) {
             filter.nextkey = '';
@@ -30,6 +32,7 @@ const actions = {
             .then(r => r.data)
             .then(txnResult => {
                 commit('SET_TXN', txnResult);
+                state.isLoading = false;
             });
     },
     async getCategories({ commit }) {

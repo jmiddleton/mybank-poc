@@ -5,3 +5,31 @@
     font-size: $font-size-sm;
   }
 }
+
+table {
+  td, th {
+    font-weight: $font-weight-normal;
+  }
+
+  tbody tr {
+    &:nth-child(odd) {
+      background: $gray-100;
+    }
+
+    td {
+      min-width: 100px;
+    }
+  }
+}
+
+.notificationIcon {
+  margin-right: 1rem;
+  float: left;
+}
+
+.my-widget-icon {
+  font-size: 42px;
+  height: 60px;
+  line-height: 45px;
+  display: inline-block;
+}

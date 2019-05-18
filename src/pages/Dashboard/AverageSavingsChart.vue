@@ -25,7 +25,7 @@ export default {
     return {
       ticks: [],
       data: [],
-      timer: null
+      syncSavings: null
     };
   },
   methods: {
@@ -88,7 +88,7 @@ export default {
 
       if (!this.$refs.savingsChart) {
         try {
-          clearInterval(this.timer);
+          clearInterval(this.syncSavings);
         } catch {
           //nothing
         }
@@ -100,7 +100,11 @@ export default {
   },
   mounted() {
     const me = this;
-    this.timer = setInterval(() => me.loadSavings(), 10000);
+
+    if (this.syncSavings === null) {
+      this.syncSavings = setInterval(() => me.loadSavings(), 10000);
+    }
+
     this.loadSavings();
     window.addEventListener("resize", this.loadSavings);
   },
