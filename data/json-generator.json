@@ -44,20 +44,27 @@
 ]
 
 [
-  '{{repeat(5, 100)}}',
+  '{{repeat(5, 10)}}',
   {
-    payeeId:'{{guid()}}',
-    description: '{{lorem(1, "words")}}',
+    accountId:'{{guid()}}',
+    payeeId: function (tags) {
+      return this.accountId;
+    },
+    description: '{{lorem(3, "words")}}',
     nickname: '{{firstName()}} {{surname()}}',
-    type: '{{random("DOMESTIC", "BILLER")}}',
+    type: 'DOMESTIC',
     creationDate: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss")}}',
     payeeUType: "domestic",
       "domestic": {
         "payeeAccountUType": "account",
         "account": {
-          "accountName": "Matias",
-          "bsb": "098000",
-          "accountNumber": "11223334"
+          "accountName": '{{firstName()}}',
+          "bsb": function (tags) {
+            return '0' + tags.integer(10000, 99999);
+          },
+          "accountNumber": function (tags) {
+            return '0' + tags.integer(1000000, 9999999);
+          }
         }
       }
   }

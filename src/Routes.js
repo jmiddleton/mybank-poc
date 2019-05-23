@@ -17,6 +17,7 @@ import AccountDetails from '@/pages/AccountDetails/AccountDetails';
 import CreditCardDetails from '@/pages/AccountDetails/CreditCardDetails';
 import TermDepositDetails from '@/pages/AccountDetails/TermDepositDetails';
 import UnlinkAccountPage from '@/pages/AccountDetails/UnlinkAccount';
+import LoanDetails from '@/pages/AccountDetails/LoanDetails';
 
 import PayeesPage from '@/pages/Payees/Payees';
 import CreatePayeesPage from '@/pages/Payees/CreatePayee';
@@ -85,9 +86,14 @@ const router = new Router({
           component: CreditCardDetails,
         },
         {
-          path: 'termdeposit/:accountId',
+          path: 'termdeposits/:accountId',
           name: 'TermDepositDetails',
           component: TermDepositDetails,
+        },
+        {
+          path: 'loans/:accountId',
+          name: 'LoanDetails',
+          component: LoanDetails,
         },
         {
           path: 'unlink/:accountId',

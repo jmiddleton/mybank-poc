@@ -4,16 +4,16 @@
       <b-col>
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-padding-md clearfix bg-danger text-white">
-              <h2>{{account.displayName}}</h2>
+            <div v-cloak class="widget-padding-md clearfix bg-info text-white">
+              <h3>{{account.displayName}}</h3>
               <div class="widgetControls">
-                <b-nav class="ml-auto">
+                <b-nav>
                   <b-nav-item-dropdown class="settingsDropdown mr-2" right>
                     <template slot="button-content">
                       <i class="text-white la la-lg la-cog"/>
                     </template>
-                    <b-dropdown-item @click="makeTransfer()">
-                      <i class="la la-lg la-edit"/> Make a Transfer
+                    <b-dropdown-item @click="makePayment()">
+                      <i class="la la-lg la-edit"/> Make a Payment
                     </b-dropdown-item>
                     <b-dropdown-item @click="refresh()">
                       <i class="la la-lg la-refresh"/> Refresh
@@ -24,10 +24,10 @@
                   </b-nav-item-dropdown>
                 </b-nav>
               </div>
-              <h4>
+              <h5>
                 {{account.maskedNumber}}
                 <span class="badge badge-success">{{account.openStatus}}</span>
-              </h4>
+              </h5>
               <span
                 v-if="account.updated"
                 class="btn btn-outline btn-xs"
@@ -60,25 +60,37 @@
                   >
                 </span>
               </b-col>
-              <b-col
-                lg="1"
-                v-for="rate in account.depositRates"
-                :key="rate.depositRateType"
-                class="profileStat stat-item"
-              >
-                <p class="profileStatValue value text-left">{{rate.rate}}%</p>
-                <h6 class="text-left text-nowrap">
-                  {{rate.depositRateType}} &nbsp;
-                  <a
-                    v-if="rate.additionalInfoUri !== undefined && rate.additionalInfoUri !== ''"
-                    target="new"
-                    :href="rate.additionalInfoUri"
-                  >
-                    <span class="fa fa-external-link"></span>
-                  </a>
-                </h6>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.loan">
+                <p
+                  class="profileStatValue value text-left text-nowrap"
+                >{{account.loan.originalStartDate | date('DD MMM YY')}}</p>
+                <h6 class="text-left">START DATE</h6>
               </b-col>
-            </b-row>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.loan">
+                <p
+                  class="profileStatValue value text-left text-nowrap"
+                >{{account.loan.loanEndDate | date('DD MMM YY')}}</p>
+                <h6 class="text-left">END DATE</h6>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.loan">
+                <p
+                  class="profileStatValue value text-left text-nowrap"
+                >$ {{account.loan.originalLoanAmount}}</p>
+                <h6 class="text-left">AMOUNT</h6>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.loan">
+                <p
+                  class="profileStatValue value text-left text-nowrap"
+                >{{account.loan.nextInstalmentDate | date('DD MMM YY')}}</p>
+                <h6 class="text-left">NEXT PAYMENT DATE</h6>
+              </b-col>
+              <b-col lg="1" class="profileStat stat-item" v-if="account.loan">
+                <p
+                  class="profileStatValue value text-left text-nowrap"
+                >$ {{account.loan.minInstalmentAmount}}</p>
+                <h6 class="text-left">NEXT PAYMENT</h6>
+              </b-col>
+            </b-row>&nbsp;
             <div>
               <transaction-table ref="txnTable"></transaction-table>
             </div>
@@ -93,15 +105,8 @@ import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
 import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
-import moment from "moment";
 import axios from "axios";
 import _ from "lodash";
-
-Vue.filter("formatDate", function(value) {
-  if (value) {
-    return moment(value).format("DD MMM");
-  }
-});
 
 export default {
   components: {
@@ -110,7 +115,6 @@ export default {
   },
   data() {
     return {
-      aunlink:"",
       accountId: "",
       auth: {}
     };
@@ -138,7 +142,7 @@ export default {
             }
           });
       } catch (error) {
-        if (error.response && error.response.status === 404) {
+        if (error && error.response && error.response.status === 404) {
           axios
             .get("/banks/" + this.account.institution)
             .then(r => r.data)
@@ -156,7 +160,7 @@ export default {
     refreshAccount(accountId, bankcode) {
       const authState = {
         nonce: "stateKey-fadfadfadf3413",
-        redirectTo: "/app/termdeposits/" + accountId,
+        redirectTo: "/app/accounts/" + accountId,
         bankcode: bankcode,
         accountId: accountId,
         postAuthCodeTo: "/accounts/" + accountId + "/refresh"
@@ -164,7 +168,7 @@ export default {
       localStorage.setItem("auth_state", JSON.stringify(authState));
       this.$router.push({ path: "/app/bankcallback/" });
     },
-    makeTransfer() {
+    makePayment() {
       this.$router.push({ path: "/app/transfers/" + this.accountId });
     },
     unlinkAccount() {

@@ -31,6 +31,7 @@
     "jquery-sparkline": "2.4.0",
     "jquery-ui": "^1.12.1",
     "line-awesome": "icons8/line-awesome",
+    "lodash": "^4.17.11",
     "messenger": "git+https://github.com/HubSpot/messenger.git#v1.4.2",
     "moment": "^2.24.0",
     "nprogress": "^0.2.0",

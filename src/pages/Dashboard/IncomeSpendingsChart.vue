@@ -82,7 +82,7 @@ export default {
           .multiBarChart()
           .margin({ left: 46, bottom: 30, right: 0 })
           .showControls(false)
-          .color(["#c4c2ff", "#fa7bb7"]);
+          .color(["#ffc247", "#f55d5d"]);
         graph.legend.rightAlign(false);
         graph.xAxis
           .showMaxMin(false)

@@ -84,13 +84,7 @@
           <div>
             <small>
               <span class="fw-semi-bold">Ref:</span>
-              {{txn.reference | truncate(15, '...')}}
-            </small>
-          </div>
-          <div v-if="txn.valueDateTime">
-            <small>
-              <span class="fw-semi-bold">Value date:</span>
-              <span>{{txn.valueDateTime | date('DD/MM/YYYY')}}</span>
+              {{txn.reference | truncate(20, '...')}}
             </small>
           </div>
         </td>

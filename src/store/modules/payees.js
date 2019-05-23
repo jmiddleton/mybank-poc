@@ -2,10 +2,14 @@ import axios from 'axios';
 
 const state = {
   payeesList: [],
-  payee: {}
+  payee: {},
+  deletedpayee: undefined
 }
 
 const mutations = {
+  PAYEE_DELETED(state, payee) {
+    state.deletedpayee= payee;
+  },
   SET_PAYEE(state, payee) {
     state.payee = payee;
   },
@@ -58,12 +62,13 @@ const actions = {
   createPayee({ commit }, newPayee) {
     axios.post('/payees', newPayee);
   },
-  deletePayee({ commit }, payeeId) {
-    axios.delete('/payees/' + payeeId);
-    //.then(function (response) {
-    //let index = state.payeesList.data.indexOf(response);
-    //state.payeesList.data.splice(index, 1);
-    //});
+  async deletePayee({ commit }, payee) {
+    try {
+      await axios.delete('/payees/' + payee.payeeId);
+      commit('PAYEE_DELETED', payee);
+    } catch (error) {
+      //commit('ERROR');
+    }
   },
   updatePayee({ commit }, payee) {
     axios.put('/payees/' + payee.payeeId, payee);

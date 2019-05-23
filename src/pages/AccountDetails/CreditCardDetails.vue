@@ -77,7 +77,7 @@
               <b-col lg="1" class="profileStat stat-item" v-if="account.creditCard">
                 <p
                   class="profileStatValue value text-left text-nowrap"
-                >{{account.creditCard.paymentDueDate | date('DD MMMM')}}</p>
+                >{{account.creditCard.paymentDueDate | date('DD MMM')}}</p>
                 <h6 class="text-left">DUE DATE</h6>
               </b-col>
             </b-row>

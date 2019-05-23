@@ -1,44 +1,39 @@
 <template>
   <div>
-    <h1 class="page-title">Manage Payees
-      <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
-            <i class="la la-refresh mr-2"/>Sync Payees
-          </a>
+    <h1 class="page-title">
+      Manage Payees
+      <a
+        href="#"
+        @click="showModal"
+        class="float-right btn-md btn btn-outline-primary"
+      >
+        <i class="la la-refresh mr-2"/>Sync Payees
+      </a>
     </h1>
     <Widget title customHeader>
       <payee-filter-bar></payee-filter-bar>
-      <vuetable
-        ref="vuetable"
-        :fields="fields"
-        :api-mode="false"
-        :data-manager="dataManager"
-        track-by="payeeId"
-        :sort-order="sortOrder"
-        pagination-path="pagination"
-        :css="css.table"
-        @vuetable:pagination-data="onPaginationData"
-      >
-        <template slot="actions" slot-scope="props">
-          <div class="table-button-container">
-            <button class="btn btn-xs btn-outline-success" @click="editRow(props.rowData)">
-              <span class="fa fa-edit"></span>
-            </button>
-            &nbsp;
-            <button class="btn btn-xs btn-outline-danger" @click="deleteRow(props.rowData)">
-              <span class="fa fa-trash"></span>
-            </button>
-          </div>
-        </template>
-      </vuetable>
-      <div class="ui basic segment grid">
-        <vuetable-pagination-info ref="paginationInfo" :css="css.paginationInfo"></vuetable-pagination-info>
-
-        <vuetable-pagination
-          ref="pagination"
-          :css="css.pagination"
-          @vuetable-pagination:change-page="onChangePage"
-        ></vuetable-pagination>
+      <div id="checkboxes">
+        <div v-for="(stack,index) in banks" :key="index" class="form-check form-check-inline">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="stack.checked"
+            v-on:change="onFilterBank"
+          >
+          <label class="form-check-label">{{ stack.value }}</label>
+        </div>
+      </div>&nbsp;
+      <div class="card-columns">
+        <payee-card v-for="(payee, index) in displayPayeesList" :key="index" :payee="payee"></payee-card>
       </div>
+      <button
+        v-if="page < totalNumberOfPages"
+        type="button"
+        @click="page++"
+        class="btn btn-sm btn-outline-primary"
+      >Load more...</button>
+      <span class="float-right">Total records: {{filteredPayeesList.length}}</span>
+      <!-- <span v-else>No more data found</span> -->
     </Widget>
     <SyncPayees ref="syncPayeesModal"/>
   </div>
@@ -50,171 +45,116 @@ import VueEvents from "vue-events";
 import Widget from "@/components/Widget/Widget";
 import "imports-loader?jQuery=jquery,this=>window!jquery-sparkline"; // eslint-disable-line
 import "imports-loader?$=jquery,this=>window!messenger/build/js/messenger"; // eslint-disable-line
-import Vuetable from "vuetable-2";
-import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
-import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 import PayeeFilterBar from "./PayeeFilterBar.vue";
 import SyncPayees from "./SyncPayees";
+import PayeeCard from "./PayeeCard";
+
 import _ from "lodash";
-import CssConfig from "./VuetableCssConfig.js";
 import axios from "axios";
-import moment from "moment";
+import { mapState } from "vuex";
 
 const { Messenger } = window;
-
 Vue.use(VueEvents);
 
 export default {
   name: "Payees",
   components: {
     Widget,
-    Vuetable,
-    "vuetable-pagination": VuetablePagination,
-    VuetablePaginationInfo,
     PayeeFilterBar,
-    SyncPayees
+    SyncPayees,
+    "payee-card": PayeeCard
   },
   data() {
     return {
-      checkboxes1: [false, false, false, false],
-      perPage: 20,
-      localData: [],
-      fields: [
+      perPage: 12,
+      totalNumberOfPages: 1000000,
+      page: 1,
+      payeesList: [],
+      filteredPayeesList: [],
+      displayPayeesList: [],
+      banks: [
         {
-          name: "payeeId",
-          visible: false
-        },
-        {
-          name: "nickname",
-          title: "Name",
-          sortField: "nickname"
-        },
-        {
-          name: "description",
-          title: "Description",
-          sortField: "description"
-        },
-        { name: "creationDate", title: "Created" },
-        {
-          name: "actions",
-          title: "Actions"
+          checked: false,
+          value: "cba"
         }
-      ],
-      sortOrder: [
-        {
-          field: "nickname",
-          direction: "asc"
-        }
-      ],
-      css: CssConfig
+      ]
     };
   },
   methods: {
     showModal() {
       this.$refs.syncPayeesModal.show = true;
     },
-    formatDate(value) {
-      if (value == null) return "";
-      return moment(new Date(value)).format("YYYY-MM-DD");
-    },
-    onPaginationData(paginationData) {
-      this.$refs.pagination.setPaginationData(paginationData);
-      this.$refs.paginationInfo.setPaginationData(paginationData);
-    },
-    onChangePage(page) {
-      this.$refs.vuetable.changePage(page);
+    onFilterBank() {
+      //TODO: return payees only for the selected banks
+      this.displayPayeesList = _.filter(this.payeesList, function() {
+        return true;
+      });
     },
     onFilterSet(filterText) {
       this.searchFor = filterText;
-      if (this.$refs.vuetable !== undefined) {
-        this.$refs.vuetable.refresh();
-      }
+
+      // the text should be case insensitive
+      let txt = new RegExp(this.searchFor, "i");
+
+      // search on name, description
+      this.filteredPayeesList = _.filter(this.payeesList, function(item) {
+        return (
+          item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
+        );
+      });
+      this.page = 1;
+      this.totalNumberOfPages = Math.ceil(this.filteredPayeesList.length / this.perPage);
+      this.displayPayeesList = this.paginate(this.filteredPayeesList);
     },
-    editRow(data) {
-      this.$router.push({ path: "/app/payees/" + data.payeeId });
+    onDeleteItem() {
+      this.init();
     },
-    deleteRow(data) {
-      if (confirm("Are you sure you want to delete the record?")) {
-        this.$store.dispatch("payees/deletePayee", data.payeeId);
-
-        let index = this.localData.indexOf(data);
-        this.localData.splice(index, 1);
-
-        if (this.$refs.vuetable !== undefined) {
-          this.$refs.vuetable.refresh();
-        }
-
-        Messenger().post({
-          extraClasses: this.locationClasses,
-          message: data.name + " was deleted successfully!!!",
-          type: "success",
-          showCloseButton: true
-        });
-      }
+    init() {
+      axios
+        .get("/payees")
+        .then(r => r.data)
+        .then(payees => {
+          this.payeesList = payees;
+          this.filteredPayeesList = payees;
+          this.displayPayeesList = this.paginate(this.payeesList);
+          this.totalNumberOfPages = Math.ceil(payees.length / this.perPage);
+        })
+        .catch(function() {});
     },
-    dataManager(sortOrder, pagination) {
-      let local = this.localData;
-      if (local === undefined || local.length < 1) return;
-
-      if (this.searchFor) {
-        // the text should be case insensitive
-        let txt = new RegExp(this.searchFor, "i");
-
-        // search on name, description
-        local = _.filter(local, function(item) {
-          return (
-            item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
-          );
-        });
+    paginate(list) {
+      if (this.page > this.totalNumberOfPages) {
+        return;
       }
+      let page = this.page;
+      let perPage = this.perPage;
+      let to = page * perPage;
 
-      // sortOrder can be empty, so we have to check for that as well
-      // if (sortOrder.length > 0) {
-      //   console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
-      //   local = _.orderBy(
-      //     local,
-      //     sortOrder[0].sortField,
-      //     sortOrder[0].direction
-      //   );
-      // }
-
-      pagination = this.$refs.vuetable.makePagination(
-        local.length,
-        this.perPage
-      );
-      let from = pagination.from - 1;
-      let to = from + this.perPage;
-
-      return {
-        pagination: pagination,
-        data: _.slice(local, from, to)
-      };
+      return list.slice(0, to);
     }
   },
   created() {
-    axios
-      .get("/payees")
-      .then(r => r.data)
-      .then(payees => {
-        payees.forEach(element => {
-          element.created = this.formatDate(element.created);
-          this.localData.push(element);
-        });
-      })
-      .catch(function() {});
-  },
-  watch: {
-    localData() {
-      this.$refs.vuetable.refresh();
-    }
+    this.init();
   },
   mounted() {
-    //FIX: this is only used to load payees in the store but not used here.
-    //vuetable tries to load the data before this method is executed.
-    //https://glebbahmutov.com/blog/vue-vuex-rest-todomvx/
-    //this.$store.dispatch('payees/loadPayees');
+    //TODO: get payees from store this.$store.dispatch('payees/loadPayees');
     this.$events.$on("filter-set", eventData => this.onFilterSet(eventData));
     this.$events.$on("delete-item", eventData => this.onDeleteItem(eventData));
+  },
+  computed: {
+    ...mapState("payees", ["deletedpayee"])
+  },
+  watch: {
+    page() {
+      this.displayPayeesList = this.paginate(this.filteredPayeesList);
+    },
+    deletedpayee(value) {
+      Messenger().post({
+        message: value.nickname + " was deleted successfully!!!",
+        type: "success",
+        showCloseButton: true
+      });
+      this.init();
+    }
   }
 };
 </script>

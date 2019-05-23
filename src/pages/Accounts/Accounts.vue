@@ -4,7 +4,11 @@
       <div>
         <h1 class="page-title">
           My Accounts
-          <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
+          <a
+            href="#"
+            @click="showModal"
+            class="float-right btn-md btn btn-outline-primary"
+          >
             <i class="fa fa-plus mr-2"/>Link Account
           </a>
           <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
@@ -23,15 +27,19 @@
             <div class="clearfix">
               <a @click="getAccountDetails(account)">
                 <b-row class="flex-nowrap justify-content-between">
-                  <b-col lg="2">
-                    <span class="thumb my-widget-icon">
+                  <b-col lg="4">
+                    <span class="notificationIcon thumb-sm">
                       <img
                         :src="require('../../assets/banks/' + account.institution + '.png')"
                         alt="..."
                       >
                     </span>
+                    <div>
+                      <h6 v-if="account.nickname" class="m-0">{{account.nickname}}</h6>
+                      <h6 v-else class="m-0">{{ account.displayName}}</h6>
+                    </div>
                   </b-col>
-                  <b-col lg="6"></b-col>
+                  <b-col lg="4"></b-col>
                   <b-col lg="2">
                     <p
                       class="h6 m-0 fw-normal text-right"
@@ -48,9 +56,13 @@
                 <b-row class="flex-nowrap">
                   <b-col lg="10"></b-col>
                 </b-row>
-                <h6 v-if="account.nickname" class="m-0">{{account.nickname}}</h6>
-                <h6 v-else class="m-0">{{ account.displayName}}</h6>
-                <p class="value6">{{ account.maskedNumber }}</p>
+                <div>
+                  <span class="value6">{{ account.maskedNumber }}</span>
+                  <small
+                    v-if="account.lastUpdated"
+                    class="float-right"
+                  >Updated: {{ account.lastUpdated | fromNow}}</small>
+                </div>
               </a>
             </div>
           </Widget>
@@ -72,9 +84,9 @@ import _ from "lodash";
 import { mapGetters, mapState } from "vuex";
 import { clearInterval } from "timers";
 
-Vue.filter("formatDate", function(value) {
+Vue.filter("fromNow", function(value) {
   if (value) {
-    return moment(value).format("DD MMM");
+    return moment(value).fromNow();
   }
 });
 
@@ -98,8 +110,10 @@ export default {
         this.$router.push({ path: "/app/accounts/" + account.accountId });
       } else if (account.productCategory === "CRED_AND_CHRG_CARDS") {
         this.$router.push({ path: "/app/creditcards/" + account.accountId });
-      } else {
-        this.$router.push({ path: "/app/termdeposit/" + account.accountId });
+      } else if (account.productCategory === "TERM_DEPOSITS") {
+        this.$router.push({ path: "/app/termdeposits/" + account.accountId });
+      } else if (account.productCategory.indexOf("_LOANS") >= 0) {
+        this.$router.push({ path: "/app/loans/" + account.accountId });
       }
     },
     getAvailableBalance(accountId) {
