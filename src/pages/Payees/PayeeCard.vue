@@ -1,5 +1,5 @@
 <template>
-  <div class="card p-3">
+  <div class="card p-1">
     <span class="badge fw-thin rounded-0" style="position: absolute; top: 0px; left: 0px;">
       <img
         v-if="payee.institution"
@@ -7,6 +7,14 @@
         :src="require('../../assets/banks/'+payee.institution+'.png')"
       >
     </span>
+    <div style="position: absolute; top: 0px; right: 5px;">
+      <a class="text-secondary" @click="deleteRow(payee)">
+        <span class="glyphicon glyphicon-edit"></span>
+      </a>&nbsp;
+      <a class="text-secondary" @click="editRow(payee)">
+        <span class="glyphicon glyphicon-trash"></span>
+      </a>
+    </div>
     <div class="text-center">
       <img
         v-if="payee.type === 'DOMESTIC'"
@@ -26,14 +34,6 @@
       <div>
         <h5 class="card-title">{{ payee.nickname | capitalize }}</h5>
         <p>{{ payee.description }}</p>
-      </div>
-      <div class="text-center">
-        <a class="text-danger" @click="deleteRow(payee)">
-          <span class="fa fa-edit"></span> Delete
-        </a>&nbsp;&nbsp;
-        <a class="text-success" @click="editRow(payee)">
-          <span class="fa fa-trash"></span> Edit
-        </a>
       </div>
     </div>
   </div>

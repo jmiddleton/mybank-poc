@@ -87,13 +87,13 @@ export default {
       this.filter();
     },
     onFilterSet(filterText) {
-      this.searchFor= filterText;
+      this.searchFor = filterText;
       this.filter();
     },
     filter() {
       const banks = this.banksFilter;
       const isFilteredByBank = _.find(banks, ["checked", true]) != undefined;
-      this.filteredPayeesList= this.payeesList;
+      this.filteredPayeesList = this.payeesList;
 
       if (isFilteredByBank) {
         this.filteredPayeesList = _.filter(this.payeesList, function(payee) {
@@ -108,7 +108,9 @@ export default {
       if (this.searchFor) {
         // the text should be case insensitive
         let txt = new RegExp(this.searchFor, "i");
-        this.filteredPayeesList = _.filter(this.filteredPayeesList, function(item) {
+        this.filteredPayeesList = _.filter(this.filteredPayeesList, function(
+          item
+        ) {
           return (
             item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
           );
@@ -144,6 +146,7 @@ export default {
         .value();
 
       filter.forEach(s => {
+        this.banksFilter.slice(0, 0);
         this.banksFilter.push({ checked: false, value: s });
       });
     },
