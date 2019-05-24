@@ -85,15 +85,16 @@ export default {
           .margin({ left: 45, bottom: 30, right: 0 })
           .showControls(false)
           .color([
-            "#c4c2ff",
-            "#fa7bb7",
-            "#b7fa7b",
-            "#3689ff",
-            "#8056ff",
-            "#c9c8d5",
-            "#c2dfff",
-            "#76b7ff",
-            "#7bfabe"
+            "#ffc247",
+            "#f55d5d",
+            "#9964e3",
+            "#78c448",
+            "#547fff",
+            "#17a2b8",
+            "#E4A537",
+            "#B62070",
+            "#A7B620",
+            "#20B6B6"
           ]);
         graph.legend.rightAlign(false);
         graph.xAxis

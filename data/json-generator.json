@@ -69,3 +69,27 @@
       }
   }
 ]
+
+[
+  '{{repeat(10, 20)}}',
+  {
+    accountId:'{{guid()}}',
+    payeeId: function (tags) {
+      return this.accountId;
+    },
+    description: '{{lorem(3, "words")}}',
+    nickname: '{{firstName()}} {{surname()}}',
+    type: "BILLER",
+    creationDate: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-ddThh:mm:ss")}}',
+    payeeUType: "biller",
+    "biller": {
+        "billerCode": function (tags) {
+            return '' + tags.integer(100000, 999999);
+          },
+        "crn": function (tags) {
+            return '' + tags.integer(1000000000, 99999999999);
+          },
+        "billerName": '{{company()}}'
+      }
+  }
+]

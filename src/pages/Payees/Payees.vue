@@ -1,26 +1,29 @@
 <template>
   <div>
     <h1 class="page-title">
-      Manage Payees
-      <a
-        href="#"
-        @click="showModal"
-        class="float-right btn-md btn btn-outline-primary"
-      >
+      Payees
+      <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
         <i class="la la-refresh mr-2"/>Sync Payees
       </a>
     </h1>
     <Widget title customHeader>
-      <payee-filter-bar></payee-filter-bar>
+      <payee-filter-bar/>
       <div id="checkboxes">
-        <div v-for="(stack,index) in banks" :key="index" class="form-check form-check-inline">
+        <div v-for="bank in banksFilter" :key="bank.value" class="form-check form-check-inline">
           <input
             class="form-check-input"
             type="checkbox"
-            v-model="stack.checked"
+            v-model="bank.checked"
             v-on:change="onFilterBank"
           >
-          <label class="form-check-label">{{ stack.value }}</label>
+          <label class="form-check-label">
+            <img
+              v-if="bank.value !== 'undefined'"
+              class="thumb-xs"
+              :src="require('../../assets/banks/'+bank.value+'.png')"
+            >
+            {{ bank.value }}
+          </label>
         </div>
       </div>&nbsp;
       <div class="card-columns">
@@ -66,18 +69,14 @@ export default {
   },
   data() {
     return {
-      perPage: 12,
+      perPage: 24,
       totalNumberOfPages: 1000000,
       page: 1,
       payeesList: [],
       filteredPayeesList: [],
       displayPayeesList: [],
-      banks: [
-        {
-          checked: false,
-          value: "cba"
-        }
-      ]
+      banksFilter: [],
+      searchFor: undefined
     };
   },
   methods: {
@@ -85,26 +84,38 @@ export default {
       this.$refs.syncPayeesModal.show = true;
     },
     onFilterBank() {
-      //TODO: return payees only for the selected banks
-      this.displayPayeesList = _.filter(this.payeesList, function() {
-        return true;
-      });
+      this.filter();
     },
     onFilterSet(filterText) {
-      this.searchFor = filterText;
+      this.searchFor= filterText;
+      this.filter();
+    },
+    filter(filterText) {
+      const banks = this.banksFilter;
+      const isFilteredByBank = _.find(banks, ["checked", true]) != undefined;
+      this.filteredPayeesList= this.payeesList;
 
-      // the text should be case insensitive
-      let txt = new RegExp(this.searchFor, "i");
+      if (isFilteredByBank) {
+        this.filteredPayeesList = _.filter(this.payeesList, function(payee) {
+          return (
+            _.find(banks, function(o) {
+              return o.value === payee.institution && o.checked;
+            }) !== undefined
+          );
+        });
+      }
 
-      // search on name, description
-      this.filteredPayeesList = _.filter(this.payeesList, function(item) {
-        return (
-          item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
-        );
-      });
-      this.page = 1;
-      this.totalNumberOfPages = Math.ceil(this.filteredPayeesList.length / this.perPage);
-      this.displayPayeesList = this.paginate(this.filteredPayeesList);
+      if (this.searchFor) {
+        // the text should be case insensitive
+        let txt = new RegExp(this.searchFor, "i");
+        this.filteredPayeesList = _.filter(this.filteredPayeesList, function(item) {
+          return (
+            item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
+          );
+        });
+      }
+
+      this.initDisplayList(this.filteredPayeesList);
     },
     onDeleteItem() {
       this.init();
@@ -116,10 +127,25 @@ export default {
         .then(payees => {
           this.payeesList = payees;
           this.filteredPayeesList = payees;
-          this.displayPayeesList = this.paginate(this.payeesList);
-          this.totalNumberOfPages = Math.ceil(payees.length / this.perPage);
+          this.initDisplayList(payees);
+          this.initBankSelects(payees);
         })
         .catch(function() {});
+    },
+    initDisplayList(payees) {
+      this.page = 1;
+      this.totalNumberOfPages = Math.ceil(payees.length / this.perPage);
+      this.displayPayeesList = this.paginate(payees);
+    },
+    initBankSelects(payees) {
+      let filter = _.chain(payees)
+        .groupBy("institution")
+        .keys()
+        .value();
+
+      filter.forEach(s => {
+        this.banksFilter.push({ checked: false, value: s });
+      });
     },
     paginate(list) {
       if (this.page > this.totalNumberOfPages) {
