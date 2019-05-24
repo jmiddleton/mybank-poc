@@ -87,12 +87,12 @@ export default {
       barchartData.push(this.getSpendingsSerie());
       barchartData.push(this.getSavingsSerie());
 
-      if (this.$refs.spendByCatChart) {
-        if (barchartData.length === 0) {
-          return (this.$refs.spendByCatChart.innerText = "No data found");
-        } else {
-          this.$refs.spendByCatChart.innerText = "";
-        }
+      //TODO: check if incomeSerie.values or spendingsSerie.values or .. is 0
+      //barchartData has 3 entries but without empty values array
+      if (barchartData.length === 0) {
+        return (this.$refs.spendByCatChart.innerText = "No data found");
+      } else {
+        this.$refs.spendByCatChart.innerText = "";
       }
 
       nv.addGraph(() => {
@@ -105,7 +105,11 @@ export default {
         graph.xAxis
           .showMaxMin(false)
           .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
-        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
+        graph.yAxis
+          .showMaxMin(false)
+          .tickFormat(d3.format(",f"))
+          .ticks(5);
+        graph.groupSpacing(0.2);
 
         d3.select(this.$refs.spendByCatChart)
           .datum(barchartData)

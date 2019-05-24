@@ -87,13 +87,14 @@ export default {
         graph.xAxis
           .showMaxMin(false)
           .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
-        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f"));
+        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f")).ticks(8);
+        graph.groupSpacing(0.6);
 
         d3.select(this.$refs.spendByCatChart)
           .style("height", "320px")
           .datum(barchartData)
           .transition()
-          .duration(500)
+          .duration(400)
           .call(graph);
 
         nv.utils.windowResize(graph.update);

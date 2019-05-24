@@ -90,7 +90,7 @@ export default {
       this.searchFor= filterText;
       this.filter();
     },
-    filter(filterText) {
+    filter() {
       const banks = this.banksFilter;
       const isFilteredByBank = _.find(banks, ["checked", true]) != undefined;
       this.filteredPayeesList= this.payeesList;

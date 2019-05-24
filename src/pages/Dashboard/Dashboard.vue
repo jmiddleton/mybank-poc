@@ -1,5 +1,9 @@
 <template>
   <div class="dashboard-page" ref="dashboardDiv">
+    <b-alert v-if="message" show dismissible variant="success">
+      <span class="value6">Welcome to MyBank, </span>
+      {{message}}
+    </b-alert>
     <h1 class="page-title">
       My Dashboard
       <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
@@ -83,13 +87,13 @@ export default {
   },
   data() {
     return {
-      syncTimer: null
+      syncTimer: null,
+      message: ""
     };
   },
   methods: {
     loadCashflow() {
-
-      if(!this.$refs.dashboardDiv){
+      if (!this.$refs.dashboardDiv) {
         try {
           clearInterval(this.syncTimer);
         } catch {
@@ -98,7 +102,7 @@ export default {
         return false;
       }
 
-      const currentMonth= moment().format(mformat);
+      const currentMonth = moment().format(mformat);
       const query = {
         month: currentMonth,
         monthsToPrefetch: 2
@@ -117,7 +121,21 @@ export default {
     this.loadCashflow();
   },
   computed: {
-    ...mapState("analytics", ["isLoadingCashflow", "isLoadingSpendings"])
+    ...mapState("analytics", [
+      "isLoadingCashflow",
+      "isLoadingSpendings",
+      "cashflow"
+    ])
+  },
+  watch: {
+    cashflow(value) {
+      if (value && value.spendings.length == 0) {
+        this.message =
+          "To get started go to Accounts tab and link one or more accounts from your bank.";
+      } else {
+        this.message = undefined;
+      }
+    }
   }
 };
 </script>
