@@ -8,7 +8,8 @@
           <div class="panel-body">
             <form>
               <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-              <b-button variant="success" class="mr-xs" size="sm" v-on:click="submit()">Save</b-button>
+              <b-button variant="success" class="mr-xs" v-on:click="submit()">Save</b-button>
+              <b-button variant="success" class="mr-xs" v-on:click="backToPayeeList()">Back</b-button>
             </form>
           </div>
         </Widget>
@@ -230,7 +231,10 @@ export default {
         message: this.model.nickname + " created successfully!!!",
         type: "success"
       });
-    }
+    },
+    backToPayeeList() {
+      this.$router.push({ path: "/app/payees" });
+    },
   }
 };
 </script>

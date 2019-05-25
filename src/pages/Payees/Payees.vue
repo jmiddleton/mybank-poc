@@ -76,7 +76,8 @@ export default {
       filteredPayeesList: [],
       displayPayeesList: [],
       banksFilter: [],
-      searchFor: undefined
+      searchFor: undefined,
+      type: undefined
     };
   },
   methods: {
@@ -88,6 +89,10 @@ export default {
     },
     onFilterSet(filterText) {
       this.searchFor = filterText;
+      this.filter();
+    },
+    onFilterByType(type) {
+      this.type = type;
       this.filter();
     },
     filter() {
@@ -114,6 +119,15 @@ export default {
           return (
             item.nickname.search(txt) >= 0 || item.description.search(txt) >= 0
           );
+        });
+      }
+
+      if (this.type) {
+        const stype = this.type;
+        this.filteredPayeesList = _.filter(this.filteredPayeesList, function(
+          item
+        ) {
+          return item.type === stype;
         });
       }
 
@@ -167,6 +181,9 @@ export default {
   mounted() {
     //TODO: get payees from store this.$store.dispatch('payees/loadPayees');
     this.$events.$on("filter-set", eventData => this.onFilterSet(eventData));
+    this.$events.$on("filter-by-type", eventData =>
+      this.onFilterByType(eventData)
+    );
     this.$events.$on("delete-item", eventData => this.onDeleteItem(eventData));
   },
   computed: {

@@ -98,7 +98,7 @@ export default {
       nv.addGraph(() => {
         const graph = nv.models
           .multiBarChart()
-          .margin({ left: 35, bottom: 20, right: 0 })
+          .margin({ left: 38, bottom: 20, right: 0 })
           .showControls(false)
           .color(["#ffc247", "#f55d5d", "#9964e3"]);
         graph.legend.rightAlign(false).padding(17);
@@ -109,7 +109,7 @@ export default {
           .showMaxMin(false)
           .tickFormat(d3.format(",f"))
           .ticks(5);
-        graph.groupSpacing(0.2);
+        graph.groupSpacing(0.1);
 
         d3.select(this.$refs.spendByCatChart)
           .datum(barchartData)

@@ -8,10 +8,10 @@
       >
     </span>
     <div style="position: absolute; top: 0px; right: 5px;">
-      <a class="text-secondary" @click="deleteRow(payee)">
+      <a class="text-secondary" @click="editRow(payee)">
         <span class="glyphicon glyphicon-edit"></span>
       </a>&nbsp;
-      <a class="text-secondary" @click="editRow(payee)">
+      <a class="text-secondary" @click="deleteRow(payee)">
         <span class="glyphicon glyphicon-trash"></span>
       </a>
     </div>
