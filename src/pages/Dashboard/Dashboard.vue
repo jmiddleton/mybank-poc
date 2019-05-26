@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-page" ref="dashboardDiv">
     <b-alert v-if="message" show dismissible variant="success">
-      <span class="value6">Welcome to MyBank, </span>
+      <span class="value6">Welcome to MyBank,</span>
       {{message}}
     </b-alert>
     <h1 class="page-title">
@@ -54,6 +54,11 @@
         </b-col>
       </b-row>
     </div>
+    <div class="othersSide">
+      <b-col lg="4" sm="8" xs="12">
+        <SpendingTheMost/>
+      </b-col>
+    </div>
   </div>
 </template>
 
@@ -66,6 +71,7 @@ import SpendingByCategorySlideBar from "./SpendingByCategorySlideBar";
 import Cashflow from "./Cashflow";
 import Balances from "./Balances";
 import IncomeSpendingsChart from "./IncomeSpendingsChart";
+import SpendingTheMost from "./SpendingTheMost";
 
 import { clearInterval } from "timers";
 import { mapState } from "vuex";
@@ -83,7 +89,8 @@ export default {
     SpendingByCategorySlideBar,
     SpendingByCategoryBarChart,
     MerchantsChart,
-    IncomeSpendingsChart
+    IncomeSpendingsChart,
+    SpendingTheMost
   },
   data() {
     return {

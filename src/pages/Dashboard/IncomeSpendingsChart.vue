@@ -1,9 +1,5 @@
 <template>
-  <Widget
-    :title="'<h5>Income vs Spendings</h5>'"
-    customHeader
-    collapse
-  >
+  <Widget :title="'<h5>Income vs Spendings</h5>'" customHeader collapse close>
     <p class="fs-mini text-muted">Shows incomes vs spendings over a period of 6 months.</p>
     <div>
       <svg ref="spendByCatChart"></svg>
@@ -87,7 +83,10 @@ export default {
         graph.xAxis
           .showMaxMin(false)
           .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
-        graph.yAxis.showMaxMin(false).tickFormat(d3.format(",f")).ticks(8);
+        graph.yAxis
+          .showMaxMin(false)
+          .tickFormat(d3.format(",f"))
+          .ticks(8);
         graph.groupSpacing(0.6);
 
         d3.select(this.$refs.spendByCatChart)

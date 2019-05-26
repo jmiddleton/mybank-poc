@@ -16,7 +16,8 @@ const state = {
     merchants: [],
     isLoadingMerchants: true,
     cashflow: [],
-    isLoadingCashflow: true
+    isLoadingCashflow: true,
+    error: ""
 }
 
 const actions = {
@@ -31,7 +32,7 @@ const actions = {
             commit('SET_SAVINGS', response.data);
             state.isLoadingSavings = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     },
     async loadSpendings({ commit }, query) {
@@ -41,7 +42,8 @@ const actions = {
                 "/analytics/spendings/" + query.month,
                 {
                     params: {
-                        monthsToPrefetch: query.monthsToPrefetch | 0
+                        monthsToPrefetch: query.monthsToPrefetch | 0,
+                        'page-size': 50
                     }
                 }
             );
@@ -49,7 +51,7 @@ const actions = {
             commit('SET_CURRENT_SPENDING', response.data);
             state.isLoadingSpendings = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     },
     async loadMonthlySpendings({ commit }, query) {
@@ -59,14 +61,15 @@ const actions = {
                 "/analytics/spendings/" + query.month,
                 {
                     params: {
-                        monthsToPrefetch: query.monthsToPrefetch | 0
+                        monthsToPrefetch: query.monthsToPrefetch | 0,
+                        'page-size': 50
                     }
                 }
             );
             commit('SET_MONTHLY_SPENDINGS', response.data);
             state.isLoadingMontlySpendings = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     },
     async loadMerchants({ commit }, query) {
@@ -76,14 +79,15 @@ const actions = {
                 "/analytics/merchants/" + query.month,
                 {
                     params: {
-                        monthsToPrefetch: query.monthsToPrefetch | 0
+                        monthsToPrefetch: query.monthsToPrefetch | 0,
+                        'page-size': 50
                     }
                 }
             );
             commit('SET_MERCHANTS', response.data);
             state.isLoadingMerchants = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     },
     async loadSpendingsByCategory({ commit }, query) {
@@ -93,14 +97,15 @@ const actions = {
                 "/analytics/spendings/" + query.month,
                 {
                     params: {
-                        monthsToPrefetch: query.monthsToPrefetch | 0
+                        monthsToPrefetch: query.monthsToPrefetch | 0,
+                        'page-size': 50
                     }
                 }
             );
             commit('SET_SPENDINGS_BY_CATEGORY', response.data);
             state.isLoadingSpendingsByCategory = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     },
     async loadCashflow({ commit }, month) {
@@ -110,7 +115,7 @@ const actions = {
             commit('SET_CASHFLOW_DATA', response.data);
             state.isLoadingCashflow = false;
         } catch (error) {
-            console.log(error);
+            state.error = error;
         }
     }
 };

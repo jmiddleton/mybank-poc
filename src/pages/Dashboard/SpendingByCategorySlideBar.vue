@@ -4,6 +4,7 @@
     customHeader
     collapse
     navigate
+    close
     @previous="changeMonth"
     @current="changeMonth"
     @next="changeMonth"

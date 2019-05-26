@@ -1,17 +1,11 @@
 <template>
-  <Widget
-    :title="'<h5>Category - <small>' + currentMonth + '</small></h5>'"
-    customHeader
-    collapse
-    navigate
-    close
-    @previous="changeMonth"
-    @current="changeMonth"
-    @next="changeMonth"
-  >
-    <p class="fs-mini text-muted">Tracks spendings by category over the last 4 months.</p>
+  <Widget :title="'<h5>Top Spending</h5>'" customHeader collapse close>
+    <p class="fs-mini text-muted">
+      The top spending for this month is
+      <strong>{{topCategory}}</strong>.
+    </p>
     <div>
-      <svg ref="spendByCatChart"></svg>
+      <svg ref="topSpendingChart"></svg>
     </div>
   </Widget>
 </template>
@@ -27,18 +21,20 @@ import nv from "nvd3";
 const mformat = "YYYY-MM";
 
 export default {
-  name: "SpendingByCategoryBarChart",
+  name: "SpendingTheMost",
   components: {
     Widget
   },
   data() {
     return {
-      currentMonth: ""
+      currentMonth: "",
+      topCategory: ""
     };
   },
   methods: {
-    getCategoryChartData() {
+    getChartData() {
       this.barchartData = [];
+      let total = 0;
 
       if (!this.spendingsByCategory) {
         return this.barchartData;
@@ -49,21 +45,31 @@ export default {
         return moment(a.month, mformat).isAfter(moment(b.month, mformat));
       });
 
-      var order = 1;
+      //get the most spend category
+      for (let i = 0; i < this.spendingsByCategory.length; i++) {
+        if (this.spendingsByCategory[i].category !== "Uncategorized") {
+          this.topCategory = this.spendingsByCategory[i].category;
+          break;
+        }
+      }
+
       for (let i = 0; i < data.length; i++) {
         const spend = data[i];
         const month = spend.month.substring(0, 7);
+
+        if (this.topCategory !== spend.category) {
+          continue;
+        }
 
         var serie = _.find(this.barchartData, { key: spend.category });
         if (!serie) {
           serie = {
             values: [],
             area: true,
-            type: "line",
+            type: "bar",
             key: spend.category,
-            yAxis: order++
+            yAxis: 1
           };
-
           this.barchartData.push(serie);
         }
 
@@ -71,49 +77,55 @@ export default {
           x: moment(month, mformat).valueOf(),
           y: Math.abs(spend.totalSpent)
         };
-        serie.values.push(value);
-      }
-    },
-    createCategoryChart() {
-      this.getCategoryChartData();
 
-      if (this.$refs.spendByCatChart) {
+        serie.values.push(value);
+        total = total + Math.abs(spend.totalSpent);
+      }
+
+      const serie2 = {
+        values: [],
+        type: "line",
+        key: "Avg",
+        yAxis: 1
+      };
+
+      serie.values.forEach(s => {
+        serie2.values.push({ x: s.x, y: total / serie.values.length });
+      });
+      this.barchartData.push(serie2);
+    },
+    createChart() {
+      this.getChartData();
+
+      if (this.$refs.topSpendingChart) {
         if (this.barchartData.length === 0) {
-          return (this.$refs.spendByCatChart.innerText = "No data found");
+          return (this.$refs.topSpendingChart.innerText = "No data found");
         } else {
-          this.$refs.spendByCatChart.innerText = "";
+          this.$refs.topSpendingChart.innerText = "";
         }
       }
 
       nv.addGraph(() => {
         const graph = nv.models
-          .multiBarChart()
+          .multiChart()
+          .showLegend(false)
           .margin({ left: 45, bottom: 30, right: 0 })
-          .showControls(false)
-          .color([
-            "#ffc247",
-            "#f55d5d",
-            "#9964e3",
-            "#78c448",
-            "#547fff",
-            "#17a2b8",
-            "#E4A537",
-            "#B62070",
-            "#A7B620",
-            "#20B6B6"
-          ]);
-        graph.legend.rightAlign(false);
+          .color(["#9964e3", "#20B6B6"]);
         graph.xAxis
           .showMaxMin(false)
           .tickFormat(d => d3.time.format("%b %d")(new Date(d)));
-        graph.yAxis
+        graph.yAxis1
           .showMaxMin(false)
           .tickFormat(d3.format(",f"))
-          .ticks(8);
-        graph.groupSpacing(0.1);
+          .ticks(5);
+        graph.yAxis2
+          .showMaxMin(false)
+          .tickFormat(d3.format(",f"))
+          .ticks(5);
+        graph.tooltip.enabled(true);
 
-        d3.select(this.$refs.spendByCatChart)
-          .style("height", "340px")
+        d3.select(this.$refs.topSpendingChart)
+          // .style("height", "340px")
           .datum(this.barchartData)
           .transition()
           .duration(300)
@@ -128,34 +140,14 @@ export default {
         monthsToPrefetch: 3
       };
       this.$store.dispatch("analytics/loadSpendingsByCategory", query);
-    },
-    handleRefresh() {
-      this.loadSpendings(this.currentMonth);
-    },
-    changeMonth(month) {
-      if (month === 0) {
-        this.currentMonth = moment().format(mformat);
-      } else {
-        this.currentMonth = moment(this.currentMonth, mformat)
-          .add(month, "months")
-          .format(mformat);
-      }
-
-      const mcurrent = moment(this.currentMonth, mformat);
-      if (
-        mcurrent.month() > moment().month() &&
-        mcurrent.year() > moment().year()
-      ) {
-        return;
-      }
     }
   },
   mounted() {
     this.currentMonth = moment().format(mformat);
-    window.addEventListener("resize", this.createCategoryChart);
+    window.addEventListener("resize", this.createChart);
   },
   unmounted() {
-    window.removeEventListener("resize", this.createCategoryChart);
+    window.removeEventListener("resize", this.createChart);
   },
   computed: {
     ...mapState("analytics", [
@@ -164,11 +156,11 @@ export default {
     ])
   },
   watch: {
-    currentMonth(newValue) {
-      this.loadSpendings(newValue);
-    },
+    // currentMonth(newValue) {
+    //   this.loadSpendings(newValue);
+    // },
     spendingsByCategory() {
-      this.createCategoryChart();
+      this.createChart();
     }
   }
 };
