@@ -54,10 +54,12 @@
         </b-col>
       </b-row>
     </div>
-    <div class="othersSide">
-      <b-col lg="4" sm="8" xs="12">
-        <SpendingTheMost/>
-      </b-col>
+    <div class="analyticsSide">
+      <b-row>
+        <b-col lg="4">
+          <SpendingTheMost/>
+        </b-col>
+      </b-row>
     </div>
   </div>
 </template>

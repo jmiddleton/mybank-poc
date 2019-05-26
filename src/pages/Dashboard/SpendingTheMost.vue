@@ -1,8 +1,9 @@
 <template>
-  <Widget :title="'<h5>Top Spending</h5>'" customHeader collapse close>
+  <Widget :title="'<h5>'+topCategory.category+' history</h5>'" customHeader collapse close>
     <p class="fs-mini text-muted">
       The top spending for this month is
-      <strong>{{topCategory}}</strong>.
+      <strong>{{topCategory.category}}</strong>
+      with an average of <strong>$ {{average}}</strong>.
     </p>
     <div>
       <svg ref="topSpendingChart"></svg>
@@ -28,7 +29,8 @@ export default {
   data() {
     return {
       currentMonth: "",
-      topCategory: ""
+      topCategory: "",
+      average:0
     };
   },
   methods: {
@@ -46,18 +48,21 @@ export default {
       });
 
       //get the most spend category
-      for (let i = 0; i < this.spendingsByCategory.length; i++) {
-        if (this.spendingsByCategory[i].category !== "Uncategorized") {
-          this.topCategory = this.spendingsByCategory[i].category;
-          break;
+      const ccMonth = this.currentMonth;
+      this.topCategory = _.maxBy(this.spendingsByCategory, function(spend) {
+        const month = spend.month.substring(0, 7);
+        if (month == ccMonth && spend.category != "Uncategorized") {
+          return spend.totalSpent;
+        } else {
+          return 0;
         }
-      }
+      });
 
       for (let i = 0; i < data.length; i++) {
         const spend = data[i];
         const month = spend.month.substring(0, 7);
 
-        if (this.topCategory !== spend.category) {
+        if (this.topCategory.category !== spend.category) {
           continue;
         }
 
@@ -93,6 +98,7 @@ export default {
         serie2.values.push({ x: s.x, y: total / serie.values.length });
       });
       this.barchartData.push(serie2);
+      this.average = serie2.values[0].y;
     },
     createChart() {
       this.getChartData();
