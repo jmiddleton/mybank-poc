@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="page-title">Transfer and Payments</h1>
+    <h2 class="page-title">Transfer and Payments</h2>
     <b-row>
       <b-col xs="12" md="6">
         <Widget title>

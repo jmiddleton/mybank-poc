@@ -2,7 +2,7 @@
   <div>
     <div class="dashboard-page">
       <div>
-        <h1 class="page-title">
+        <h2 class="page-title">
           My Accounts
           <a
             href="#"
@@ -16,7 +16,7 @@
               <i class="la la-refresh la-spin"/> Loading...
             </p>
           </span>
-        </h1>
+        </h2>
       </div>
     </div>
     <div v-if="hasAccounts">
@@ -171,7 +171,7 @@ export default {
   mounted() {
     const me = this;
     this.isMessageShow = false;
-    me.interval = setInterval(() => me.init(), 20000);
+    me.interval = setInterval(() => me.init(), 10000);
     me.init();
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.$auth.profile">
-    <h1 class="page-title">Profile</h1>
+    <h2 class="page-title">Profile</h2>
 
     <Widget>
       <div class="widget-top-overflow text-white">

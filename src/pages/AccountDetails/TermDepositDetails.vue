@@ -5,7 +5,7 @@
         <div class="pb-xlg h-100">
           <div class="widgetBody widget-body" v-if="account && account.accountId">
             <div v-cloak class="widget-padding-md clearfix bg-danger text-white">
-              <h2>{{account.displayName}}</h2>
+              <h3>{{account.displayName}}</h3>
               <div class="widgetControls">
                 <b-nav class="ml-auto">
                   <b-nav-item-dropdown class="settingsDropdown mr-2" right>
@@ -24,10 +24,10 @@
                   </b-nav-item-dropdown>
                 </b-nav>
               </div>
-              <h4>
+              <h5>
                 {{account.maskedNumber}}
                 <span class="badge badge-success">{{account.openStatus}}</span>
-              </h4>
+              </h5>
               <span
                 v-if="account.updated"
                 class="btn btn-outline btn-xs"

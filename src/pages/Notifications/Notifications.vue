@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="page-title">Notifications</h1>
+    <h2 class="page-title">Notifications</h2>
         <!-- <Filters :filter="filter" :openMessage="openMessage" :compose="changeCompose"/> -->
         <MessageTable
           :filter="filterValue"

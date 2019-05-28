@@ -4,14 +4,14 @@
       <span class="value6">Welcome to MyBank,</span>
       {{message}}
     </b-alert>
-    <h1 class="page-title">
+    <h2 class="page-title">
       My Dashboard
       <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
         <p class="fs-mini text-muted">
           <i class="la la-refresh la-spin"/> Loading...
         </p>
       </span>
-    </h1>
+    </h2>
     <div class="analyticsSide">
       <b-row>
         <b-col lg="3" sm="6" xs="12">
@@ -57,7 +57,7 @@
     <div class="analyticsSide">
       <b-row>
         <b-col lg="4">
-          <SpendingTheMost/>
+          <AverageSpendingTopCategory/>
         </b-col>
       </b-row>
     </div>
@@ -73,7 +73,7 @@ import SpendingByCategorySlideBar from "./SpendingByCategorySlideBar";
 import Cashflow from "./Cashflow";
 import Balances from "./Balances";
 import IncomeSpendingsChart from "./IncomeSpendingsChart";
-import SpendingTheMost from "./SpendingTheMost";
+import AverageSpendingTopCategory from "./AverageSpendingTopCategory";
 
 import { clearInterval } from "timers";
 import { mapState } from "vuex";
@@ -92,7 +92,7 @@ export default {
     SpendingByCategoryBarChart,
     MerchantsChart,
     IncomeSpendingsChart,
-    SpendingTheMost
+    AverageSpendingTopCategory
   },
   data() {
     return {

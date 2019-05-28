@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1 class="page-title">
-      Payees
+    <h2 class="page-title">
+      My Payees
       <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
         <i class="la la-refresh mr-2"/>Sync Payees
       </a>
-    </h1>
+    </h2>
     <Widget title customHeader>
       <payee-filter-bar/>
       <div id="checkboxes">
@@ -25,6 +25,14 @@
             {{ bank.value }}
           </label>
         </div>
+        <b-button-group class="float-right">
+          <b-button variant="gray">
+            <i class="fa fa-th-list"/>
+          </b-button>
+          <b-button variant="gray" class="active">
+            <i class="fa fa-th-large"/>
+          </b-button>
+        </b-button-group>
       </div>&nbsp;
       <div class="card-columns">
         <payee-card v-for="(payee, index) in displayPayeesList" :key="index" :payee="payee"></payee-card>

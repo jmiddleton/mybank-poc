@@ -100,7 +100,7 @@ export default {
           .multiBarChart()
           .margin({ left: 38, bottom: 20, right: 0 })
           .showControls(false)
-          .color(["#ffc247", "#f55d5d", "#9964e3"]);
+          .color(["#ffc247", "#f55d5d", "#78c448"]);
         graph.legend.rightAlign(false).padding(17);
         graph.xAxis
           .showMaxMin(false)

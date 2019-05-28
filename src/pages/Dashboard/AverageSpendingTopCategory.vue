@@ -22,7 +22,7 @@ import nv from "nvd3";
 const mformat = "YYYY-MM";
 
 export default {
-  name: "SpendingTheMost",
+  name: "AverageSpendingTopCategory",
   components: {
     Widget
   },
@@ -84,7 +84,7 @@ export default {
         };
 
         serie.values.push(value);
-        total = total + Math.abs(spend.totalSpent);
+        total = total + Math.round(Math.abs(spend.totalSpent), 2);
       }
 
       const serie2 = {

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 v-if="payeeId === 'new'" class="page-title">Create Payee</h1>
-    <h1 v-else class="page-title">Update Payee</h1>
+    <h2 v-if="payeeId === 'new'" class="page-title">Create Payee</h2>
+    <h2 v-else class="page-title">Update Payee</h2>
     <b-row>
       <b-col xs="12" md="6">
         <Widget title customHeader refresh settings>
