@@ -10,6 +10,18 @@
         </a>
       </b-nav-item>
     </b-nav>
+    <b-nav>
+      <b-form class="d-sm-down-none ml-5" inline>
+        <b-form-group>
+          <b-input-group class="input-group-no-border">
+            <div class="input-group-addon d-flex align-items-center">
+              <i class="la la-search px-3" />
+            </div>
+            <b-input id="search-input" placeholder="What would you like to do..." />
+          </b-input-group>
+        </b-form-group>
+      </b-form>
+    </b-nav>
     <b-nav class="ml-auto">
       <b-nav-item @click="openNotifications">
         <i class="la la-bell la-lg"/>

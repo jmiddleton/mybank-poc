@@ -2,6 +2,18 @@
   <div class="filter-bar ui basic segment grid">
     <div>
       <b-input-group>
+        <input
+          class="mb-xs"
+          type="text"
+          v-model="filterText"
+          @keyup.enter="doFilter"
+          placeholder="name or description"
+        >
+        <b-input-group-append>
+          <b-button class="mb-xs" variant="danger" @click="doFilter">
+            <i class="fa fa-search"/>
+          </b-button>
+        </b-input-group-append>&nbsp;
         <b-button-group class="mr-2">
           &nbsp;
           <b-button
@@ -23,18 +35,6 @@
             :class="{ active: checkByType[2] }"
           >International</b-button>
         </b-button-group>&nbsp;
-        <input
-          class="mb-xs"
-          type="text"
-          v-model="filterText"
-          @keyup.enter="doFilter"
-          placeholder="name or description"
-        >
-        <b-input-group-append>
-          <b-button class="mb-xs" variant="danger" @click="doFilter">
-            <i class="fa fa-search"/>
-          </b-button>
-        </b-input-group-append>&nbsp;
         <b-button variant="success" class="mb-xs float-right" @click="createPayee()">Create</b-button>
       </b-input-group>
     </div>

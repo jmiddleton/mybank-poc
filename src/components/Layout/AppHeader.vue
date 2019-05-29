@@ -15,15 +15,16 @@
       </div>
 
       <ul class="navbar-nav navbar-nav-hover align-items-lg-center">
-            <span class="nav-link-inner--text">Products</span>
+        <span class="nav-link-inner--text">Products</span>
       </ul>
       <ul class="navbar-nav align-items-lg-center ml-lg-auto">
-        <li class="nav-item d-none d-lg-block ml-lg-4">
-          <a href="#" @click.prevent="login" class="btn btn-neutral btn-icon">
-            <span class="btn-inner--icon">
-              <i class="fa fa-cloud-download mr-2"></i>
-            </span>
-            <span class="nav-link-inner--text">Login</span>
+        <li class="nav-item support-padding">
+          <a class="btn btn-white" href="#">Support</a>
+        </li>
+        <li class="nav-item d-lg-block ml-lg-4">
+          <a class="btn btn-white" href="#" @click.prevent="login">
+            Log in
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
           </a>
         </li>
       </ul>
