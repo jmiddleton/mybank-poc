@@ -148,8 +148,8 @@ export default {
             .then(r => r.data)
             .then(bank => {
               Vue.prototype.$auth.authorise(
-                "/app/accounts/" + this.accountId,
-                "/accounts/" + this.accountId + "/refresh",
+                "/app/loans/" + this.accountId,
+                "/loans/" + this.accountId + "/refresh",
                 bank,
                 this.accountId
               );
@@ -160,10 +160,10 @@ export default {
     refreshAccount(accountId, bankcode) {
       const authState = {
         nonce: "stateKey-fadfadfadf3413",
-        redirectTo: "/app/accounts/" + accountId,
+        redirectTo: "/app/loans/" + accountId,
         bankcode: bankcode,
         accountId: accountId,
-        postAuthCodeTo: "/accounts/" + accountId + "/refresh"
+        postAuthCodeTo: "/loans/" + accountId + "/refresh"
       };
       localStorage.setItem("auth_state", JSON.stringify(authState));
       this.$router.push({ path: "/app/bankcallback/" });

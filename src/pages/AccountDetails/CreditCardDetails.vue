@@ -7,7 +7,7 @@
             <div v-cloak class="widget-padding-md clearfix bg-secondary text-white">
               <h3>{{account.displayName}}</h3>
               <div class="widgetControls">
-                <b-nav class="ml-auto">
+                <b-nav>
                   <b-nav-item-dropdown class="settingsDropdown mr-2" right>
                     <template slot="button-content">
                       <i class="text-white la la-lg la-cog"/>
@@ -92,9 +92,11 @@
   </div>
 </template>
 <script>
+import Vue from "vue";
 import Widget from "@/components/Widget/Widget";
 import { mapState } from "vuex";
 import TransactionTable from "./TransactionTable.vue";
+import axios from "axios";
 import _ from "lodash";
 
 export default {
@@ -145,7 +147,45 @@ export default {
         return balance.lending.accountBalance.amount;
       }
       return "";
-    }
+    },
+    async refresh() {
+      //TODO: if userBankAuth is expired, re-authenticate the user
+      try {
+        await axios
+          .get("/bankauths/" + this.account.institution)
+          .then(r => r.data)
+          .then(auth => {
+            if (auth) {
+              this.refreshAccount(this.accountId, this.account.institution);
+            }
+          });
+      } catch (error) {
+        if (error && error.response && error.response.status === 404) {
+          axios
+            .get("/banks/" + this.account.institution)
+            .then(r => r.data)
+            .then(bank => {
+              Vue.prototype.$auth.authorise(
+                "/app/creditcards/" + this.accountId,
+                "/creditcards/" + this.accountId + "/refresh",
+                bank,
+                this.accountId
+              );
+            });
+        }
+      }
+    },
+    refreshAccount(accountId, bankcode) {
+      const authState = {
+        nonce: "stateKey-1232",
+        redirectTo: "/app/creditcards/" + accountId,
+        bankcode: bankcode,
+        accountId: accountId,
+        postAuthCodeTo: "/creditcards/" + accountId + "/refresh"
+      };
+      localStorage.setItem("auth_state", JSON.stringify(authState));
+      this.$router.push({ path: "/app/bankcallback/" });
+    },
   },
   computed: mapState("accounts", ["account", "balances"])
 };
