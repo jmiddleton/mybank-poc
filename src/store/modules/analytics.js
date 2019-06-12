@@ -108,10 +108,10 @@ const actions = {
             state.error = error;
         }
     },
-    async loadCashflow({ commit }, month) {
+    async loadCashflow({ commit }) {
         try {
             state.isLoadingCashflow = true;
-            const response = await axios.get("/analytics/cashflow/" + month);
+            const response = await axios.get("/analytics/cashflow");
             commit('SET_CASHFLOW_DATA', response.data);
             state.isLoadingCashflow = false;
         } catch (error) {

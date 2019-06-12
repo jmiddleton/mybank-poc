@@ -55,7 +55,6 @@ import Vue from "vue";
 import VueEvents from "vue-events";
 import Widget from "@/components/Widget/Widget";
 import "imports-loader?jQuery=jquery,this=>window!jquery-sparkline"; // eslint-disable-line
-import "imports-loader?$=jquery,this=>window!messenger/build/js/messenger"; // eslint-disable-line
 import PayeeFilterBar from "./PayeeFilterBar.vue";
 import SyncPayees from "./SyncPayees";
 import PayeeCard from "./PayeeCard";
@@ -64,7 +63,6 @@ import _ from "lodash";
 import axios from "axios";
 import { mapState } from "vuex";
 
-const { Messenger } = window;
 Vue.use(VueEvents);
 
 export default {
@@ -202,10 +200,11 @@ export default {
       this.displayPayeesList = this.paginate(this.filteredPayeesList);
     },
     deletedpayee(value) {
-      Messenger().post({
-        message: value.nickname + " was deleted successfully!!!",
-        type: "success",
-        showCloseButton: true
+      this.$notify({
+        group: "payees",
+        type: 'success',
+        title: "Payee",
+        text: value.nickname + " was deleted successfully!!!"
       });
       this.init();
     }

@@ -118,7 +118,7 @@ export default {
       };
 
       this.$store.dispatch("analytics/loadSpendings", query);
-      this.$store.dispatch("analytics/loadCashflow", currentMonth);
+      this.$store.dispatch("analytics/loadCashflow");
     }
   },
   mounted() {

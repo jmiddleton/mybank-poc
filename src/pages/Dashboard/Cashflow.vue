@@ -30,14 +30,18 @@ export default {
         yAxis: 1
       };
 
-      for (let s of this.cashflow.incomes) {
-        if (s.month === moment().format(mformat)) {
-          serie.values.push({
-            x: moment(s.month, mformat).valueOf(),
-            y: s.totalIncome
-          });
-          break;
+      if (this.cashflow.incomes && this.cashflow.incomes.length > 0) {
+        for (let s of this.cashflow.incomes) {
+          if (s.month === moment().format(mformat)) {
+            serie.values.push({
+              x: moment(s.month, mformat).valueOf(),
+              y: s.totalIncome
+            });
+            break;
+          }
         }
+      } else {
+        this.createDefault(serie);
       }
       return serie;
     },
@@ -50,14 +54,18 @@ export default {
         yAxis: 2
       };
 
-      for (let s of this.cashflow.spendings) {
-        if (s.month === moment().format(mformat)) {
-          serie.values.push({
-            x: moment(s.month, mformat).valueOf(),
-            y: s.totalSpent
-          });
-          break;
+      if (this.cashflow.spendings && this.cashflow.spendings.length > 0) {
+        for (let s of this.cashflow.spendings) {
+          if (s.month === moment().format(mformat)) {
+            serie.values.push({
+              x: moment(s.month, mformat).valueOf(),
+              y: s.totalSpent
+            });
+            break;
+          }
         }
+      } else {
+        this.createDefault(serie);
       }
       return serie;
     },
@@ -70,16 +78,27 @@ export default {
         yAxis: 3
       };
 
-      for (let s of this.cashflow.savings) {
-        if (s.month === moment().format(mformat)) {
-          serie.values.push({
-            x: moment(s.month, mformat).valueOf(),
-            y: s.totalSavings
-          });
-          break;
+      if (this.cashflow.savings && this.cashflow.savings.length > 0) {
+        for (let s of this.cashflow.savings) {
+          if (s.month === moment().format(mformat)) {
+            serie.values.push({
+              x: moment(s.month, mformat).valueOf(),
+              y: s.totalSavings
+            });
+            break;
+          }
         }
+      } else {
+        this.createDefault(serie);
       }
       return serie;
+    },
+    createDefault(serie) {
+      serie.values = [];
+      serie.values.push({
+        x: moment(moment().format(mformat)).valueOf(),
+        y: 0.0
+      });
     },
     createChart() {
       const barchartData = [];
@@ -100,7 +119,7 @@ export default {
           .multiBarChart()
           .margin({ left: 38, bottom: 20, right: 0 })
           .showControls(false)
-          .color(["#ffc247", "#f55d5d", "#78c448"]);
+          .color(["#ffc247", "#f55d5d", "#547fff"]);
         graph.legend.rightAlign(false).padding(17);
         graph.xAxis
           .showMaxMin(false)

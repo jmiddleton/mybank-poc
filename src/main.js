@@ -15,6 +15,7 @@ import App from './App';
 import VueDateFns from "vue-date-fns";
 import AuthPlugin from "./auth";
 import Argon from "./core/argon-kit";
+import Notifications from 'vue-notification';
 
 Vue.use(Argon);
 Vue.use(VueDateFns);
@@ -28,6 +29,7 @@ Vue.use(VueGoogleMaps, {
   },
 });
 Vue.use(AuthPlugin);
+Vue.use(Notifications);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

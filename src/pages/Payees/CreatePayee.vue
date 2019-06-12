@@ -21,9 +21,6 @@
 <script>
 import Widget from "@/components/Widget/Widget";
 import axios from "axios";
-import "imports-loader?$=jquery,this=>window!messenger/build/js/messenger"; // eslint-disable-line
-
-const { Messenger } = window;
 
 export default {
   components: {
@@ -186,7 +183,6 @@ export default {
         validateAfterChanged: true,
         validateAsync: true
       },
-      locationClasses: "messenger-fixed messenger-on-bottom messenger-on-right"
     };
   },
   created() {
@@ -201,10 +197,11 @@ export default {
           } else {
             this.model = {};
             this.payeeId = "new";
-            Messenger().post({
-              extraClasses: this.locationClasses,
-              message: "Payee not found",
-              theme: "air"
+            this.$notify({
+              group: "payees",
+              type: "warn",
+              title: "Payee",
+              text: "Payee not found"
             });
           }
         })
@@ -226,15 +223,16 @@ export default {
         this.$store.dispatch("payees/createPayee", this.model);
       }
 
-      Messenger().post({
-        extraClasses: this.locationClasses,
-        message: this.model.nickname + " created successfully!!!",
-        type: "success"
+      this.$notify({
+        group: "payees",
+        type: "success",
+        title: "Payee",
+        text: this.model.nickname + " created successfully!!!"
       });
     },
     backToPayeeList() {
       this.$router.push({ path: "/app/payees" });
-    },
+    }
   }
 };
 </script>

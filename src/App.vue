@@ -7,6 +7,7 @@
             </fade-transition>
         </main>
         <router-view name="footer"></router-view>
+        <notifications group="payees" position="bottom right"/>
     </div>
 </template>
 <script>
