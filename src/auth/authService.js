@@ -94,7 +94,7 @@ class AuthService extends EventEmitter {
         );
     }
 
-    authorise(redirectTo, postTo, bank, accountId, extra_scopes) {
+    authorise(redirectTo, postTo, bank, accountId, extraScopes, consentDuration) {
         if (bank && bank.oidc_config && bank.oidc_config.metadata) {
             const meta = bank.oidc_config.metadata;
             const stateKey = this.getUUID();
@@ -104,12 +104,14 @@ class AuthService extends EventEmitter {
                 redirectTo: redirectTo,
                 bankcode: bank.code,
                 accountId: accountId,
-                postAuthCodeTo: postTo
+                postAuthCodeTo: postTo,
+                consent_duration: consentDuration,
+                scopes: extraScopes
             };
             localStorage.setItem('auth_state', JSON.stringify(authState));
 
             var auth_url = meta.authorization_endpoint;
-            auth_url = auth_url + "?response_type=code&scope=" + bank.oidc_config.scope + extra_scopes;
+            auth_url = auth_url + "?response_type=code&scope=" + bank.oidc_config.scope + extraScopes;
             auth_url = auth_url + "&client_id=" + bank.oidc_config.client_id;
             auth_url = auth_url + "&redirect_uri=" + bank.oidc_config.redirect_uri;
             auth_url = auth_url + "&state=" + stateKey;

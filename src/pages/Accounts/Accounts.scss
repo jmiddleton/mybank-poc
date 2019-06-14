@@ -27,4 +27,34 @@ table {
   display: inline-block;
 }
 
+.bankList
+{
+   height: 340px;
+   overflow-y: auto;
+}
+
+.scrolledList
+{
+   height: 290px;
+   overflow-y: auto;
+}
+
+.news-list .icon {
+  line-height: 35px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 17px;
+}
+.news-list .icon, .grid-page .news-list img {
+  float: left;
+  height: 40px;
+  width: 40px;
+}
+.news-list .news-item-info {
+  margin-left: 50px;
+}
+.text-white {
+  color: #fff !important;
+}
+
 [v-cloak] {display: none}

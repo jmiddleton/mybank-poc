@@ -22,7 +22,9 @@ export default {
         const auth_state = JSON.parse(localStorage.getItem("auth_state"));
         const auth_details = {
           bank_code: auth_state.bankcode,
-          auth_code: this.$route.query.code
+          auth_code: this.$route.query.code,
+          consent_duration: auth_state.consent_duration,
+          consent_scopes: auth_state.scopes
         };
 
         //create/update userBankAuth AND update bank data

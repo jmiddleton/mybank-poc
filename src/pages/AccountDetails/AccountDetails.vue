@@ -83,6 +83,12 @@
               <transaction-table ref="txnTable"></transaction-table>
             </div>
           </div>
+          <div v-else class="widgetBody widget-body">
+            <b-alert show dismissible variant="danger">
+              <p>It seems there is a problem with MyBank servers but we are not able to retrieve Account Details for this account.
+              <br/>Please check again in few minutes, otherwise call us at 1800 123 45678</p>
+            </b-alert>
+          </div>
         </div>
       </b-col>
     </b-row>
