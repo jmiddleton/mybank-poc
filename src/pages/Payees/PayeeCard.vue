@@ -23,7 +23,7 @@
       >
       <img
         v-if="payee.type === 'BILLER'"
-        class="icon-size thumb-sm"
+        class="icon-size thumb-md"
         :src="require('../../assets/banks/bpay.png')"
       >
       <img

@@ -15,16 +15,22 @@
         <b-form-group>
           <b-input-group class="input-group-no-border">
             <div class="input-group-addon d-flex align-items-center">
-              <i class="la la-search px-3" />
+              <i class="la la-search px-3"/>
             </div>
-            <b-input id="search-input" placeholder="What would you like to do..." />
+            <b-input id="search-input" placeholder="What would you like to do..."/>
           </b-input-group>
         </b-form-group>
       </b-form>
     </b-nav>
     <b-nav class="ml-auto">
+      <b-nav-item @click="openScheduledPayments">
+        <i class="glyphicon glyphicon-glyph-calendar px-2 iconSize text-blue"/>
+        <span>2 scheduled payments</span>
+      </b-nav-item>
+    </b-nav>
+    <b-nav class="ml-auto">
       <b-nav-item @click="openNotifications">
-        <i class="la la-bell la-lg"/>
+        <i class="la la-bell la-lg iconSize"/>
         <span class="circle bg-warning text-white fw-bold">4</span>
       </b-nav-item>
       <b-nav-item-dropdown
@@ -46,9 +52,12 @@
         </b-dropdown-item>
         <b-dropdown-divider/>
         <b-dropdown-item-button @click="logout">
-          <i class="la la-sign-out"/> Log Out
+          <i class="la la-power-off"/> Log Out
         </b-dropdown-item-button>
       </b-nav-item-dropdown>
+      <b-nav-item @click="logout">
+        <i class="la la-power-off px-2"/>
+      </b-nav-item>
     </b-nav>
   </b-navbar>
 </template>
@@ -103,10 +112,12 @@ export default {
     },
     openNotifications() {
       this.$router.push("/app/notifications");
+    },
+    openScheduledPayments(){
+      this.$router.push("/app/regularPayments");
     }
   },
-  created() {
-  }
+  created() {}
 };
 </script>
 

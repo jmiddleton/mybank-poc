@@ -39,6 +39,13 @@
         isHeader
       />
       <NavLink
+        header="Bills & Future Payments"
+        link="/app/regularPayments"
+        iconName="flaticon-calendar"
+        index="regularPayments"
+        isHeader
+      />
+      <NavLink
         header="Notifications"
         link="/app/notifications"
         iconName="flaticon-star"

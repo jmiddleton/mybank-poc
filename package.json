@@ -42,6 +42,7 @@
     "vue-form-generator": "^2.3.4",
     "vue-form-json": "^1.1.0",
     "vue-form-wizard": "^0.8.4",
+    "vue-light-timeline": "^1.0.3",
     "vue-monthly-picker": "^0.2.6",
     "vue-notification": "^1.3.16",
     "vue-router": "^3.0.1",

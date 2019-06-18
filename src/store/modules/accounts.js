@@ -18,6 +18,7 @@ const state = {
   categories: categoriesMap,
   accounts: [],
   balances: [],
+  scheduledPayments: [],
   totalBalance: 0,
   totalAvailableBalance: 0,
   account: {},
@@ -74,6 +75,14 @@ const actions = {
     } catch (error) {
       commit('SET_BALANCES');
     }
+  },
+  async loadScheduledPayments({ commit }) {
+    try {
+      const response = await axios.get('/payments')
+      commit('SET_SCHEDULED_PAYMENTS', response.data);
+    } catch (error) {
+      commit('SET_SCHEDULED_PAYMENTS');
+    }
   }
 };
 
@@ -112,7 +121,12 @@ const mutations = {
         }
       });
     }
-  }
+  },
+  SET_SCHEDULED_PAYMENTS(state, response) {
+    if (response) {
+      state.scheduledPayments = response.data;
+    }
+  },
 }
 
 export default {

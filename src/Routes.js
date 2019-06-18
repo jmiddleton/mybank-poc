@@ -27,6 +27,7 @@ import CallbackPage from '@/pages/LandingPage/Callback';
 import BankCallbackPage from '@/pages/LandingPage/BankCallback';
 import ProfilePage from '@/pages/Profile/Profile';
 import NotificationsPage from '@/pages/Notifications/Notifications';
+import RegularPaymentsPage from '@/pages/RegularPayments/RegularPayments';
 
 import AppHeader from "@/components/Layout/AppHeader";
 import AppFooter from "@/components/Layout/AppFooter";
@@ -134,6 +135,11 @@ const router = new Router({
           path: 'notifications',
           name: 'Notifications',
           component: NotificationsPage,
+        },
+        {
+          path: 'regularPayments',
+          name: 'RegularPayments',
+          component: RegularPaymentsPage,
         },
       ],
     },
