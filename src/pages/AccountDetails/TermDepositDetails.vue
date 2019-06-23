@@ -3,8 +3,8 @@
     <b-row>
       <b-col>
         <div class="pb-xlg h-100">
-          <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-padding-md clearfix bg-danger text-white">
+          <div v-cloak class="widgetBody widget-body" v-if="account && account.accountId">
+            <div class="widget-padding-md clearfix bg-danger text-white">
               <h3>{{account.displayName}}</h3>
               <div class="widgetControls">
                 <b-nav class="ml-auto">
@@ -53,7 +53,7 @@
             <b-row>
               <b-col lg="1" class="profileContactContainer">
                 <span class="thumb-lg mb-3" v-if="account !== undefined">
-                  <img
+                  <img v-cloak 
                     :src="require('../../assets/banks/' + account.institution + '.png')"
                     alt="..."
                     class="profileAvatar rounded-circle"

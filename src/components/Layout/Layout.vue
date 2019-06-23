@@ -1,42 +1,51 @@
 <template>
-<div :class="{root: true, sidebarClose, sidebarStatic}">
-  <Sidebar />
-  <div class="wrap">
-    <Header />
-    <v-touch class="content" @swipeleft="handleSwipe" @swiperight="handleSwipe" :swipe-options="{direction: 'horizontal', threshold: 100}">
+  <div :class="{root: true, sidebarClose, sidebarStatic}">
+    <Sidebar/>
+    <div class="wrap">
+      <Header/>
+      <div class="content fadeInUp">
+        <transition name="router-animation">
+          <router-view/>
+        </transition>
+        <footer class="contentFooter">Sing Vue Version - Made by Jorge</footer>
+      </div>
+      
+      <!-- v-touch class="content" @swipeleft="handleSwipe" @swiperight="handleSwipe" :swipe-options="{direction: 'horizontal', threshold: 100}">
       <router-view />
       <footer class="contentFooter">
         Sing Vue Version - Made by Jorge
         </footer>
-    </v-touch>
+      </v-touch-->
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
-import Sidebar from '@/components/Sidebar/Sidebar';
-import Header from '@/components/Header/Header';
+import Sidebar from "@/components/Sidebar/Sidebar";
+import Header from "@/components/Header/Header";
 
-import './Layout.scss';
+import "./Layout.scss";
 
 export default {
-  name: 'Layout',
+  name: "Layout",
   components: { Sidebar, Header },
   methods: {
-    ...mapActions(
-      'layout', ['switchSidebar', 'handleSwipe', 'changeSidebarActive'],
-    ),
+    ...mapActions("layout", [
+      "switchSidebar",
+      "handleSwipe",
+      "changeSidebarActive"
+    ])
   },
   computed: {
-    ...mapState('layout', {
+    ...mapState("layout", {
       sidebarClose: state => state.sidebarClose,
       sidebarStatic: state => state.sidebarStatic
-    }),
+    })
   },
   created() {
-    const staticSidebar = JSON.parse(localStorage.getItem('sidebarStatic'));
+    const staticSidebar = JSON.parse(localStorage.getItem("sidebarStatic"));
 
     if (staticSidebar) {
       this.$store.state.layout.sidebarStatic = true;
@@ -46,7 +55,7 @@ export default {
         this.changeSidebarActive(null);
       }, 2500);
     }
-  },
+  }
 };
 </script>
 

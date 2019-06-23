@@ -24,14 +24,12 @@
     </b-nav>
     <b-nav class="ml-auto">
       <b-nav-item @click="openScheduledPayments">
-        <i class="glyphicon glyphicon-glyph-calendar px-2 iconSize text-blue"/>
-        <span>2 scheduled payments</span>
+        <i class="glyphicon glyphicon-glyph-calendar px-2 iconSize text-grey"/>
+        <span class="circle bg-danger text-white">2</span>
       </b-nav-item>
-    </b-nav>
-    <b-nav class="ml-auto">
       <b-nav-item @click="openNotifications">
-        <i class="la la-bell la-lg iconSize"/>
-        <span class="circle bg-warning text-white fw-bold">4</span>
+        <i class="la la-bell la-lg"/>
+        <span class="circle bg-warning text-white">4</span>
       </b-nav-item>
       <b-nav-item-dropdown
         id="basic-nav-dropdown"
@@ -64,7 +62,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import $ from "jquery";
 
 export default {
   name: "Headed",

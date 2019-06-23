@@ -7,7 +7,6 @@ import Vue from "vue";
 import LightTimeline from "vue-light-timeline";
 import moment from "moment";
 import { mapState } from "vuex";
-import $ from "jquery";
 
 Vue.use(LightTimeline);
 

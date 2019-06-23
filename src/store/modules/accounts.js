@@ -19,6 +19,7 @@ const state = {
   accounts: [],
   balances: [],
   scheduledPayments: [],
+  directDebits: [],
   totalBalance: 0,
   totalAvailableBalance: 0,
   account: {},
@@ -49,11 +50,11 @@ const getters = {
 
 const actions = {
   async loadAccountSummary({ commit }) {
-    state.isLoadingAccounts= true;
+    state.isLoadingAccounts = true;
     try {
       const response = await axios.get('/accounts');
       commit('SET_ACCOUNTS', response.data);
-      state.isLoadingAccounts= false;
+      state.isLoadingAccounts = false;
     } catch (error) {
       if (error && error.response && error.response.status === 404) {
         state.hasAccounts = false;
@@ -82,6 +83,14 @@ const actions = {
       commit('SET_SCHEDULED_PAYMENTS', response.data);
     } catch (error) {
       commit('SET_SCHEDULED_PAYMENTS');
+    }
+  },
+  async loadDirectDebits({ commit }) {
+    try {
+      const response = await axios.get('/direct-debits')
+      commit('SET_DIRECT_DEBITS', response.data);
+    } catch (error) {
+      commit('SET_DIRECT_DEBITS');
     }
   }
 };
@@ -125,6 +134,11 @@ const mutations = {
   SET_SCHEDULED_PAYMENTS(state, response) {
     if (response) {
       state.scheduledPayments = response.data;
+    }
+  },
+  SET_DIRECT_DEBITS(state, response) {
+    if (response) {
+      state.directDebits = response.data;
     }
   },
 }

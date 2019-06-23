@@ -3,8 +3,8 @@
     <b-row>
       <b-col>
         <div class="pb-xlg h-100">
-          <div class="widgetBody widget-body" v-if="account && account.accountId">
-            <div v-cloak class="widget-padding-md clearfix bg-secondary text-white">
+          <div v-cloak class="widgetBody widget-body" v-if="account && account.accountId">
+            <div class="widget-padding-md clearfix bg-secondary text-white">
               <h3>{{account.displayName}}</h3>
               <div class="widgetControls">
                 <b-nav>
