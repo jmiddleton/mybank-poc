@@ -131,7 +131,7 @@ export default {
         graph.tooltip.enabled(true);
 
         d3.select(this.$refs.topSpendingChart)
-          // .style("height", "340px")
+          .style("height", "200px")
           .datum(this.barchartData)
           .transition()
           .duration(300)

@@ -17,9 +17,16 @@ axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
 axios.interceptors.response.use((response) => {
   return response;
 }, function (error) {
-  if (error.response && error.response.status === 401) {
+  if (error && error.message && error.message === "Network Error") {
+    Vue.prototype.$auth.setErrorMessage(
+      {
+        message: "MyBank server is currently not able to process your request." +
+          " Please try in few seconds.",
+        variant: "danger"
+      }
+    );
+  } else if (error.response && error.response.status === 401) {
     Vue.prototype.$auth.logout();
-    //router.push("/error");
   }
   return Promise.reject(error);
 });

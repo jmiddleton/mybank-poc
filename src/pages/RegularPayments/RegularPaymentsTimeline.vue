@@ -1,9 +1,12 @@
 <template>
-  <light-timeline :items="scheduledItems"/>
+  <Widget :title="'<h5>Upcoming Payments</h5>'" customHeader>
+    <light-timeline :items="scheduledItems"/>
+  </Widget>
 </template>
 
 <script>
 import Vue from "vue";
+import Widget from "@/components/Widget/Widget";
 import LightTimeline from "vue-light-timeline";
 import moment from "moment";
 import { mapState } from "vuex";
@@ -14,6 +17,9 @@ export default {
   name: "RegularPaymentsTimeline",
   props: {
     options: { default: () => ({}) }
+  },
+  components: {
+    Widget
   },
   data() {
     return {

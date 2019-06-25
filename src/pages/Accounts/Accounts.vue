@@ -1,5 +1,12 @@
 <template>
   <div>
+    <b-alert
+      v-if="message"
+      class="alert-transparent"
+      show
+      dismissible
+      :variant="messageVariant"
+    >{{message}}</b-alert>
     <div class="dashboard-page">
       <div>
         <h2 class="page-title">
@@ -98,11 +105,15 @@ export default {
     NoAccountMessage
   },
   data() {
-    return { isMessageShow: false };
+    return { isMessageShow: false, message: "", messageVariant: "" };
   },
   methods: {
     showModal() {
       this.$refs.banksModal.show = true;
+    },
+    handleNetworkError(msg) {
+      this.message = msg.message;
+      this.messageVariant = msg.variant;
     },
     getAccountDetails(account) {
       //TODO: externalise this in a key-value pair map.

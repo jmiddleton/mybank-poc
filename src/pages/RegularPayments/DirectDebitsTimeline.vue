@@ -1,9 +1,12 @@
 <template>
-  <light-timeline :items="directDebitItems"/>
+  <Widget :title="'<h5>Authorised Direct Debits</h5>'" customHeader>
+    <light-timeline :items="directDebitItems"/>
+  </Widget>
 </template>
 
 <script>
 import Vue from "vue";
+import Widget from "@/components/Widget/Widget";
 import LightTimeline from "vue-light-timeline";
 import moment from "moment";
 import { mapState } from "vuex";
@@ -14,6 +17,9 @@ export default {
   name: "DirectDebitsTimeline",
   props: {
     options: { default: () => ({}) }
+  },
+  components: {
+    Widget
   },
   data() {
     return {

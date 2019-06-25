@@ -4,6 +4,7 @@ import clean from "obj-clean";
 
 const state = {
     transactions: [],
+    latestTransactions: [],
     message: 'Load more...',
     isLoading: true,
     categories: [],
@@ -17,6 +18,14 @@ const state = {
 }
 
 const actions = {
+    loadLatestTransactions({ commit }) {
+        axios
+            .get("/transactions?q=latest")
+            .then(r => r.data)
+            .then(txnResult => {
+                commit('SET_LATEST_TXN', txnResult);
+            });
+    },
     loadTransactionsByAccountId({ commit }, accountId) {
         const filter = state.filter;
         state.isLoading = true;
@@ -49,18 +58,25 @@ const actions = {
 };
 
 const mutations = {
+    SET_LATEST_TXN(state, txnResult) {
+        if (txnResult && txnResult.data && txnResult.data.transactions) {
+            state.latestTransactions = txnResult.data.transactions;
+        }
+    },
     SET_TXN(state, txnResult) {
         state.message = 'Load more...';
 
-        var txns = txnResult.data.transactions;
-        for (let i = 0; i < txns.length; i++) {
-            state.transactions.push(txns[i]);
-        }
+        if (txnResult && txnResult.data && txnResult.data.transactions) {
+            var txns = txnResult.data.transactions;
+            for (let i = 0; i < txns.length; i++) {
+                state.transactions.push(txns[i]);
+            }
 
-        const nextLink = new URLSearchParams(txnResult.links.next);
-        state.filter.nextkey = nextLink.get("nextkey");
-        if (!state.filter.nextkey) {
-            state.message = 'No more transactions';
+            const nextLink = new URLSearchParams(txnResult.links.next);
+            state.filter.nextkey = nextLink.get("nextkey");
+            if (!state.filter.nextkey) {
+                state.message = 'No more transactions';
+            }
         }
     },
     SET_CATEGORIES(state, categories) {

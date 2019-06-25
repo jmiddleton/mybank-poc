@@ -1,14 +1,19 @@
 <template>
   <div>
+    <b-alert
+      v-if="message"
+      class="alert-transparent"
+      show
+      dismissible
+      :variant="messageVariant"
+    >{{message}}</b-alert>
     <h2 class="page-title">Bills & Upcoming Payments</h2>
     <b-row>
       <b-col xs="12" md="6">
-          <h5>Upcoming Payments</h5>
-          <RegularPaymentsTimeline/>
+        <RegularPaymentsTimeline/>
       </b-col>
       <b-col xs="12" md="6">
-          <h5>Authorised Direct Debits</h5>
-          <DirectDebitsTimeline/>
+        <DirectDebitsTimeline/>
       </b-col>
     </b-row>
   </div>
@@ -23,9 +28,14 @@ export default {
   name: "RegularPayments",
   components: { Widget, RegularPaymentsTimeline, DirectDebitsTimeline },
   data() {
-    return {};
+    return { message: "", messageVariant: "" };
   },
-  methods: {},
+  methods: {
+    handleNetworkError(msg) {
+      this.message = msg.message;
+      this.messageVariant = msg.variant;
+    }
+  },
   created() {}
 };
 </script>

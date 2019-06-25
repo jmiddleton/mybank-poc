@@ -121,6 +121,7 @@
 .categoryLegends {
   width: 600px;
 }
+
 .notificationIcon {
   margin-right: 1rem;
   float: left;
@@ -133,3 +134,9 @@
     padding-right: 1.25rem;
     margin-bottom: 1rem;
 }
+
+.bankIcon {
+  margin-right: 2px;
+}
+
+@include thumb('.thumb-xss', 16px);

@@ -113,7 +113,7 @@ export default {
         graph.groupSpacing(0.1);
 
         d3.select(this.$refs.spendByCatChart)
-          .style("height", "340px")
+          .style("height", "320px")
           .datum(this.barchartData)
           .transition()
           .duration(300)

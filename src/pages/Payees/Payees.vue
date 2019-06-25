@@ -1,5 +1,12 @@
 <template>
   <div>
+    <b-alert
+      v-if="message"
+      class="alert-transparent"
+      show
+      dismissible
+      :variant="messageVariant"
+    >{{message}}</b-alert>
     <h2 class="page-title">
       My Payees
       <a href="#" @click="showModal" class="float-right btn-md btn btn-outline-primary">
@@ -83,7 +90,9 @@ export default {
       displayPayeesList: [],
       banksFilter: [],
       searchFor: undefined,
-      type: undefined
+      type: undefined,
+      message: "",
+      messageVariant: ""
     };
   },
   methods: {
@@ -170,6 +179,10 @@ export default {
         this.banksFilter.push({ checked: false, value: s });
       });
     },
+    handleNetworkError(msg) {
+      this.message = msg.message;
+      this.messageVariant = msg.variant;
+    },
     paginate(list) {
       if (this.page > this.totalNumberOfPages) {
         return;
@@ -202,7 +215,7 @@ export default {
     deletedpayee(value) {
       this.$notify({
         group: "payees",
-        type: 'success',
+        type: "success",
         title: "Payee",
         text: value.nickname + " was deleted successfully!!!"
       });

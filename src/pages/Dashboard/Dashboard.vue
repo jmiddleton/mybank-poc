@@ -1,65 +1,80 @@
 <template>
-  <div class="dashboard-page" ref="dashboardDiv">
-    <b-alert v-if="message" show dismissible variant="success">
+  <div>
+    <b-alert
+      v-if="message"
+      class="alert-transparent"
+      show
+      dismissible
+      :variant="messageVariant"
+    >{{message}}</b-alert>
+    <b-alert v-if="wmessage" class="alert-transparent" show dismissible variant="success">
       <span class="value6">Welcome to MyBank,</span>
-      {{message}}
+      {{wmessage}}
     </b-alert>
-    <h2 class="page-title">
-      My Dashboard
-      <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
-        <p class="fs-mini text-muted">
-          <i class="la la-refresh la-spin"/> Loading...
-        </p>
-      </span>
-    </h2>
-    <div class="analyticsSide">
-      <b-row>
-        <b-col lg="3" sm="6" xs="12">
-          <div class="pb-xlg h-100">
-            <Balances/>
-          </div>
-        </b-col>
-        <b-col lg="3" sm="6" xs="12">
-          <div class="pb-xlg h-100">
-            <Cashflow/>
-          </div>
-        </b-col>
-        <b-col lg="3" sm="6" xs="12">
-          <div class="pb-xlg h-100">
-            <SpendingsPieChart/>
-          </div>
-        </b-col>
-        <b-col lg="3" sm="6" xs="12">
-          <div class="pb-xlg h-100">
-            <AverageSavingsChart/>
-          </div>
-        </b-col>
-      </b-row>
-    </div>
-    <div class="analyticsSide">
-      <b-row>
-        <b-col lg="4">
-          <SpendingByCategorySlideBar/>
-        </b-col>
-        <b-col lg="8">
-          <SpendingByCategoryBarChart/>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col lg="4">
-          <MerchantsChart/>
-        </b-col>
-        <b-col lg="8">
-          <IncomeSpendingsChart/>
-        </b-col>
-      </b-row>
-    </div>
-    <div class="analyticsSide">
-      <b-row>
-        <b-col lg="4">
-          <AverageSpendingTopCategory/>
-        </b-col>
-      </b-row>
+    <div class="dashboard-page" ref="dashboardDiv">
+      <h2 class="page-title">
+        My Dashboard
+        <span class="float-right" v-if="isLoadingCashflow || isLoadingSpendings">
+          <p class="fs-mini text-muted">
+            <i class="la la-refresh la-spin"/> Loading...
+          </p>
+        </span>
+      </h2>
+      <div class="analyticsSide">
+        <b-row>
+          <b-col lg="3" sm="6" xs="12">
+            <div class="pb-xlg h-100">
+              <Balances/>
+            </div>
+          </b-col>
+          <b-col lg="3" sm="6" xs="12">
+            <div class="pb-xlg h-100">
+              <Cashflow/>
+            </div>
+          </b-col>
+          <b-col lg="3" sm="6" xs="12">
+            <div class="pb-xlg h-100">
+              <SpendingsPieChart/>
+            </div>
+          </b-col>
+          <b-col lg="3" sm="6" xs="12">
+            <div class="pb-xlg h-100">
+              <AverageSavingsChart/>
+            </div>
+          </b-col>
+        </b-row>
+      </div>
+      <div class="analyticsSide">
+        <b-row>
+          <b-col lg="4">
+            <SpendingByCategorySlideBar/>
+          </b-col>
+          <b-col lg="4">
+            <UpcomingPayments/>
+          </b-col>
+          <b-col lg="4">
+            <LatestTransactions/>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col lg="4">
+            <MerchantsChart/>
+          </b-col>
+          <b-col lg="8">
+            <SpendingByCategoryBarChart/>
+          </b-col>
+        </b-row>
+      </div>
+      <div class="analyticsSide">
+        <b-row>
+          <b-col lg="4">
+            <AverageSpendingTopCategory/>
+          </b-col>
+          <b-col lg="8">
+            <IncomeSpendingsChart/>
+          </b-col>
+        </b-row>
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +89,8 @@ import Cashflow from "./Cashflow";
 import Balances from "./Balances";
 import IncomeSpendingsChart from "./IncomeSpendingsChart";
 import AverageSpendingTopCategory from "./AverageSpendingTopCategory";
+import UpcomingPayments from "./UpcomingPayments";
+import LatestTransactions from "./LatestTransactions";
 
 import { clearInterval } from "timers";
 import { mapState } from "vuex";
@@ -92,12 +109,16 @@ export default {
     SpendingByCategoryBarChart,
     MerchantsChart,
     IncomeSpendingsChart,
-    AverageSpendingTopCategory
+    AverageSpendingTopCategory,
+    UpcomingPayments,
+    LatestTransactions
   },
   data() {
     return {
       syncTimer: null,
-      message: ""
+      message: "",
+      wmessage: "",
+      messageVariant: ""
     };
   },
   methods: {
@@ -119,6 +140,10 @@ export default {
 
       this.$store.dispatch("analytics/loadSpendings", query);
       this.$store.dispatch("analytics/loadCashflow");
+    },
+    handleNetworkError(msg) {
+      this.message = msg.message;
+      this.messageVariant = msg.variant;
     }
   },
   mounted() {
@@ -139,10 +164,10 @@ export default {
   watch: {
     cashflow(value) {
       if (value && value.spendings.length == 0) {
-        this.message =
+        this.wmessage =
           "To get started go to Accounts tab and link one or more accounts from your bank.";
       } else {
-        this.message = undefined;
+        this.wmessage = undefined;
       }
     }
   }

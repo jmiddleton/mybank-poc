@@ -12,10 +12,16 @@ export default {
                 if (this.handleLoginEvent) {
                     authRef.addListener('loginEvent', this.handleLoginEvent);
                 }
+                if (this.handleNetworkError) {
+                    authRef.addListener('networkError', this.handleNetworkError);
+                }
             },
             destroyed() {
                 if (this.handleLoginEvent) {
                     authRef.removeListener('loginEvent', this.handleLoginEvent);
+                }
+                if (this.handleNetworkError) {
+                    authRef.removeListener('networkError', this.handleNetworkError);
                 }
             }
         });
