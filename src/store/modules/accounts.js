@@ -20,8 +20,7 @@ const state = {
   balances: [],
   scheduledPayments: [],
   directDebits: [],
-  totalBalance: 0,
-  totalAvailableBalance: 0,
+  totals: new Map(),
   account: {},
   balance: 0,
   hasAccounts: undefined,
@@ -114,20 +113,24 @@ const mutations = {
     }
   },
   SET_BALANCES(state, response) {
-    state.totalBalance = 0;
-    state.totalAvailableBalance = 0;
+    state.totals = new Map();
 
     if (response && response.data) {
       state.balances = response.data.balances;
 
       state.balances.forEach(balance => {
-        if (balance.balanceUType === 'deposit') {
-          state.totalBalance = Math.round(state.totalBalance + parseFloat(balance.deposit.currentBalance.amount), 2);
-          state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.deposit.availableBalance.amount);
-        } else {
-          state.totalBalance = Math.round(state.totalBalance - parseFloat(balance.lending.accountBalance.amount), 2);
-          state.totalAvailableBalance = state.totalAvailableBalance + parseFloat(balance.lending.availableBalance.amount);
+        let total = state.totals.get(balance.productCategory);
+        if (!total) {
+          total = {
+            balance: 0,
+            available: 0
+          };
         }
+
+        total.balance = Math.round(total.balance + parseFloat(balance.currentBalance), 2);
+        total.available = Math.round(total.available + parseFloat(balance.availableBalance), 2);
+
+        state.totals.set(balance.productCategory, total);
       });
     }
   },

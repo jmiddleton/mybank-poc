@@ -40,7 +40,8 @@ export default {
             break;
           }
         }
-      } else {
+      }
+      if (serie.values.length == 0) {
         this.createDefault(serie);
       }
       return serie;
@@ -64,7 +65,8 @@ export default {
             break;
           }
         }
-      } else {
+      }
+      if (serie.values.length == 0) {
         this.createDefault(serie);
       }
       return serie;
@@ -88,7 +90,8 @@ export default {
             break;
           }
         }
-      } else {
+      }
+      if (serie.values.length == 0) {
         this.createDefault(serie);
       }
       return serie;

@@ -65,10 +65,8 @@
                 </b-row>
                 <div>
                   <span class="value6">{{ account.maskedNumber }}</span>
-                  <small
-                    v-if="account.lastUpdated"
-                    class="float-right"
-                  >Updated: {{ account.lastUpdated | fromNow}}</small>
+                  <br>
+                  <small v-if="account.lastUpdated">Updated: {{ account.lastUpdated | fromNow}}</small>
                 </div>
               </a>
             </div>
@@ -131,12 +129,9 @@ export default {
       if (!this.balances) {
         return "";
       }
-
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance && balance.balanceUType === "deposit") {
-        return balance.deposit.availableBalance.amount;
-      } else if (balance && balance.balanceUType === "lending") {
-        return balance.lending.availableBalance.amount;
+      if (balance) {
+        return balance.availableBalance;
       }
       return "";
     },
@@ -144,12 +139,9 @@ export default {
       if (!this.balances) {
         return "";
       }
-
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance && balance.balanceUType === "deposit") {
-        return balance.deposit.currentBalance.amount;
-      } else if (balance && balance.balanceUType === "lending") {
-        return balance.lending.accountBalance.amount;
+      if (balance) {
+        return balance.currentBalance;
       }
       return "";
     },

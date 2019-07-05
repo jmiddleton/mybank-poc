@@ -168,6 +168,7 @@ export default {
           "To get started go to Accounts tab and link one or more accounts from your bank.";
       } else {
         this.wmessage = undefined;
+        this.message = undefined;
       }
     }
   }

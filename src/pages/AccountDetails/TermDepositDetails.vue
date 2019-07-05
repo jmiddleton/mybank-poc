@@ -172,22 +172,18 @@ export default {
     },
     getAvailableBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance && balance.balanceUType === "deposit") {
-        return balance.deposit.availableBalance.amount;
-      } else if (balance && balance.balanceUType === "lending") {
-        return balance.lending.availableBalance.amount;
+      if (balance) {
+        return balance.availableBalance;
       }
       return "";
     },
     getCurrentBalance(accountId) {
       const balance = _.find(this.balances, ["accountId", accountId]);
-      if (balance && balance.balanceUType === "deposit") {
-        return balance.deposit.currentBalance.amount;
-      } else if (balance && balance.balanceUType === "lending") {
-        return balance.lending.accountBalance.amount;
+      if (balance) {
+        return balance.currentBalance;
       }
       return "";
-    }
+    },
   },
   computed: mapState("accounts", ["account", "balances"])
 };
