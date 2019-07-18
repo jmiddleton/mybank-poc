@@ -3,6 +3,42 @@ import moment from 'moment';
 import _ from "lodash";
 
 const mformat = "YYYY-MM";
+
+const categoryConfig = {
+    Business: { icon: "/img/categories/Business.png", color: "#ffc247" },
+    Cash: { icon: "/img/categories/Cash.png", color: "#1EC9E8" },
+    Donations: { icon: "/img/categories/Donations.png", color: "#9964e3" },
+    EatingOut: { icon: "/img/categories/EatingOut.png", color: "#78c448" },
+    Education: { icon: "/img/categories/Education.png", color: "#547fff" },
+    Entertainment: {
+        icon: "/img/categories/Entertainment.png",
+        color: "#17a2b8"
+    },
+    FeesAndInterest: {
+        icon: "/img/categories/FeesAndInterest.png",
+        color: "#E4A537"
+    },
+    General: { icon: "/img/categories/General.png", color: "#B62070" },
+    Groceries: { icon: "/img/categories/Groceries.png", color: "#A7B620" },
+    Health: { icon: "/img/categories/Health.png", color: "#20B6B6" },
+    Housing: { icon: "/img/categories/Housing.png", color: "#ffc247" },
+    Income: { icon: "/img/categories/Income.png", color: "#ffc247" },
+    Others: { icon: "/img/categories/Others.png", color: "#ffc247" },
+    PersonalCare: {
+        icon: "/img/categories/PersonalCare.png",
+        color: "#ffc247"
+    },
+    Shopping: { icon: "/img/categories/Shopping.png", color: "#FF7272" },
+    Transfers: { icon: "/img/categories/Transfers.png", color: "#ffc247" },
+    Transport: { icon: "/img/categories/Transport.png", color: "#CE3D1D" },
+    Travel: { icon: "/img/categories/Travel.png", color: "#9964e3" },
+    Uncategorized: {
+        icon: "/img/categories/Uncategorized.png",
+        color: "#D7E1E9"
+    },
+    Utilities: { icon: "/img/categories/Utilities.png", color: "#ffc247" }
+}
+
 const state = {
     savings: [],
     isLoadingSavings: false,
@@ -17,7 +53,8 @@ const state = {
     isLoadingMerchants: true,
     cashflow: [],
     isLoadingCashflow: true,
-    error: ""
+    error: "",
+    categoryConfig: categoryConfig
 }
 
 const actions = {

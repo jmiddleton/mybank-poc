@@ -2,7 +2,7 @@
   <section class="h-100 mb-0 widget">
     SPENDINGS
     <div>
-      <div class="widgetBody widget-body" ref="spendingsChart" :style="{ height: '150px' }"/>
+      <div class="widgetBody widget-body" ref="spendingsChart" :style="{ height: '150px' }" />
     </div>
   </section>
 </template>
@@ -25,12 +25,15 @@ export default {
   data() {
     return {
       timer: null,
-      data: []
+      data: [],
+      colors: []
     };
   },
   methods: {
     processData(spendings) {
       this.data = [];
+      this.colors = [];
+
       if (!spendings || this.data.length > 0) {
         return this.data;
       }
@@ -48,6 +51,7 @@ export default {
             label: spendings[i].category,
             value: spendings[i].totalSpent
           });
+          this.colors.push(this.categoryConfig[spendings[i].category].color);
         }
       }
     },
@@ -66,24 +70,13 @@ export default {
         element: this.$refs.spendingsChart,
         resize: true,
         data: this.data,
-        colors: [
-          "#ffc247",
-          "#f55d5d",
-          "#9964e3",
-          "#78c448",
-          "#547fff",
-          "#17a2b8",
-          "#E4A537",
-          "#B62070",
-          "#A7B620",
-          "#20B6B6"
-        ]
+        colors: this.colors
       });
     }
   },
 
   computed: {
-    ...mapState("analytics", ["currentSpendings"])
+    ...mapState("analytics", ["currentSpendings", "categoryConfig"])
   },
   watch: {
     currentSpendings(newValue) {

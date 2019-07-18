@@ -11,7 +11,7 @@
   >
     <p class="fs-mini text-muted">Tracks spendings by category over the last 4 months.</p>
     <div>
-      <svg ref="spendByCatChart"></svg>
+      <svg ref="spendByCatChart" />
     </div>
   </Widget>
 </template>
@@ -33,12 +33,14 @@ export default {
   },
   data() {
     return {
-      currentMonth: ""
+      currentMonth: "",
+      colors: []
     };
   },
   methods: {
     getCategoryChartData() {
       this.barchartData = [];
+      this.colors = [];
 
       if (!this.spendingsByCategory) {
         return this.barchartData;
@@ -65,6 +67,7 @@ export default {
           };
 
           this.barchartData.push(serie);
+          this.colors.push(this.categoryConfig[spend.category].color);
         }
 
         const value = {
@@ -90,18 +93,7 @@ export default {
           .multiBarChart()
           .margin({ left: 45, bottom: 30, right: 0 })
           .showControls(false)
-          .color([
-            "#ffc247",
-            "#f55d5d",
-            "#9964e3",
-            "#b844ab",
-            "#547fff",
-            "#17a2b8",
-            "#E4A537",
-            "#B62070",
-            "#A7B620",
-            "#20B6B6"
-          ]);
+          .color(this.colors);
         graph.legend.rightAlign(false);
         graph.xAxis
           .showMaxMin(false)
@@ -160,7 +152,8 @@ export default {
   computed: {
     ...mapState("analytics", [
       "spendingsByCategory",
-      "isLoadingSpendingsByCategory"
+      "isLoadingSpendingsByCategory",
+      "categoryConfig"
     ])
   },
   watch: {
