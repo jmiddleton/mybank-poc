@@ -64,7 +64,7 @@ const actions = {
         try {
             state.isLoadingSavings = true;
             const response = await axios.get(
-                "/analytics/savings/" + month, { "page-size": 4 }
+                "/analytics/savings/" + month, { cache: query.useCache, "page-size": 4 }
             );
             commit('SET_SAVINGS', response.data);
             state.isLoadingSavings = false;
@@ -78,6 +78,7 @@ const actions = {
             const response = await axios.get(
                 "/analytics/spendings/" + query.month,
                 {
+                    cache: query.useCache,
                     params: {
                         monthsToPrefetch: query.monthsToPrefetch | 0,
                         'page-size': 50
@@ -136,7 +137,7 @@ const actions = {
                     params: {
                         monthsToPrefetch: query.monthsToPrefetch | 0,
                         'page-size': 50
-                    }
+                    },
                 }
             );
             commit('SET_SPENDINGS_BY_CATEGORY', response.data);
@@ -145,10 +146,10 @@ const actions = {
             state.error = error;
         }
     },
-    async loadCashflow({ commit }) {
+    async loadCashflow({ commit }, useCache) {
         try {
             state.isLoadingCashflow = true;
-            const response = await axios.get("/analytics/cashflow");
+            const response = await axios.get("/analytics/cashflow", { cache: useCache });
             commit('SET_CASHFLOW_DATA', response.data);
             state.isLoadingCashflow = false;
         } catch (error) {
@@ -159,22 +160,28 @@ const actions = {
 
 const mutations = {
     SET_SAVINGS(state, savings) {
+        state.savings = [];
         state.savings = savings.data.savings;
     },
     SET_SPENDINGS(state, spendings) {
+        state.spendings = [];
         state.spendings = spendings.data.spendings;
     },
     SET_SPENDINGS_BY_CATEGORY(state, spendings) {
+        state.spendingsByCategory = [];
         state.spendingsByCategory = spendings.data.spendings;
     },
     SET_MONTHLY_SPENDINGS(state, spendings) {
+        state.monthlySpendings = [];
         state.monthlySpendings = spendings.data.spendings;
     },
     SET_MERCHANTS(state, merchants) {
+        state.merchants = [];
         state.merchants = merchants.data.merchants;
     },
     SET_CURRENT_SPENDING(state, spendings) {
-        //store current spendings
+        state.currentSpendings = [];
+
         const sps = spendings.data.spendings;
         if (sps) {
             const current = moment().format(mformat);
@@ -184,6 +191,7 @@ const mutations = {
         }
     },
     SET_CASHFLOW_DATA(state, cashflow) {
+        state.cashflow = [];
         state.cashflow = cashflow.data;
     },
 }

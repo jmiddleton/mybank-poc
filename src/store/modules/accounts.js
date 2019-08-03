@@ -96,6 +96,8 @@ const actions = {
 
 const mutations = {
   SET_ACCOUNTS(state, response) {
+    state.accounts = [];
+
     if (response && response.data) {
       state.accounts = response.data.accounts;
       if (state.accounts && state.accounts.length > 0) {
@@ -108,6 +110,7 @@ const mutations = {
     }
   },
   SET_ACCOUNT(state, response) {
+    state.account = [];
     if (response) {
       state.account = response.data;
     }
@@ -135,11 +138,13 @@ const mutations = {
     }
   },
   SET_SCHEDULED_PAYMENTS(state, response) {
+    state.scheduledPayments = [];
     if (response) {
       state.scheduledPayments = response.data;
     }
   },
   SET_DIRECT_DEBITS(state, response) {
+    state.directDebits = [];
     if (response) {
       state.directDebits = response.data;
     }

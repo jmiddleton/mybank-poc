@@ -80,10 +80,11 @@ export default {
         colors: ["#78c448"]
       });
     },
-    loadSavings() {
+    loadSavings(useCache) {
       const query = {
         month: moment().format("YYYY-MM"),
-        monthsToPrefetch: 3
+        monthsToPrefetch: 3,
+        useCache: useCache
       };
 
       if (!this.$refs.savingsChart) {
@@ -102,17 +103,17 @@ export default {
     const me = this;
 
     if (this.syncSavings === null) {
-      this.syncSavings = setInterval(() => me.loadSavings(), 10000);
+      this.syncSavings = setInterval(() => me.loadSavings(true), 10000);
     }
 
-    this.loadSavings();
+    this.loadSavings(true);
     window.addEventListener("resize", this.loadSavings);
   },
   computed: {
     ...mapState("analytics", ["savings", "isLoadingSavings"])
   },
   watch: {
-    savings(newValue) {
+    savings() {
       this.createChart();
     }
   }

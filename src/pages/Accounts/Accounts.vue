@@ -16,11 +16,11 @@
             @click="showModal"
             class="float-right btn-md btn btn-outline-primary"
           >
-            <i class="fa fa-plus mr-2"/>Link Account
+            <i class="fa fa-plus mr-2" />Link Account
           </a>
           <span class="float-right" v-if="hasAccounts && isLoadingAccounts">
             <p class="fs-mini text-muted">
-              <i class="la la-refresh la-spin"/> Loading...
+              <i class="la la-refresh la-spin" /> Loading...
             </p>
           </span>
         </h2>
@@ -39,7 +39,7 @@
                       <img
                         :src="require('../../assets/banks/' + account.institution + '.png')"
                         alt="..."
-                      >
+                      />
                     </span>
                     <div>
                       <h6 v-if="account.nickname" class="m-0">{{account.nickname}}</h6>
@@ -48,15 +48,21 @@
                   </b-col>
                   <b-col lg="4"></b-col>
                   <b-col lg="2">
-                    <p
-                      class="h6 m-0 fw-normal text-right"
-                    >${{ getAvailableBalance(account.accountId) }}</p>
+                    <p class="h6 m-0 fw-normal text-right">
+                      <span
+                        v-if="hasBalance(account.accountId)"
+                      >${{ getAvailableBalance(account.accountId) }}</span>
+                      <i v-else class="la la-refresh la-spin" />
+                    </p>
                     <h6 class="m-0 text-right">AVAILABLE</h6>
                   </b-col>
                   <b-col lg="2">
-                    <p
-                      class="h5 m-0 fw-normal text-right"
-                    >${{ getCurrentBalance(account.accountId) }}</p>
+                    <p class="h5 m-0 fw-normal text-right">
+                      <span
+                        v-if="hasBalance(account.accountId)"
+                      >${{ getCurrentBalance(account.accountId) }}</span>
+                      <i v-else class="la la-refresh la-spin" />
+                    </p>
                     <h6 class="m-0 text-right">BALANCE</h6>
                   </b-col>
                 </b-row>
@@ -65,7 +71,7 @@
                 </b-row>
                 <div>
                   <span class="value6">{{ account.maskedNumber }}</span>
-                  <br>
+                  <br />
                   <small v-if="account.lastUpdated">Updated: {{ account.lastUpdated | fromNow}}</small>
                 </div>
               </a>
@@ -75,7 +81,7 @@
       </b-row>
     </div>
     <div ref="container" class="col-md-12 col-lg-10"></div>
-    <BanksModal ref="banksModal"/>
+    <BanksModal ref="banksModal" />
   </div>
 </template>
 
@@ -135,6 +141,15 @@ export default {
       }
       return "";
     },
+    hasBalance(accountId) {
+      if (this.balances) {
+        const balance = _.find(this.balances, ["accountId", accountId]);
+        if (balance) {
+          return true;
+        }
+      }
+      return false;
+    },
     getCurrentBalance(accountId) {
       if (!this.balances) {
         return "";
@@ -174,7 +189,7 @@ export default {
   mounted() {
     const me = this;
     this.isMessageShow = false;
-    me.interval = setInterval(() => me.init(), 10000);
+    me.interval = setInterval(() => me.init(), 5000);
     me.init();
   },
   computed: {

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import { cacheAdapterEnhancer } from 'axios-extensions'
 import VueAxios from 'vue-axios';
 
 import layout from './layout';
@@ -8,10 +9,10 @@ import payeesModule from './modules/payees.js';
 import accountsModule from './modules/accounts.js';
 import transactionsModule from './modules/transactions.js';
 import analyticsModule from './modules/analytics.js';
-//import router from '../Routes';
 
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
 axios.defaults.headers.common['x-api-key'] = process.env.VUE_APP_API_KEY;
+axios.defaults.adapter= cacheAdapterEnhancer(axios.defaults.adapter, { enabledByDefault: false });
 
 // Add a response interceptor
 axios.interceptors.response.use((response) => {

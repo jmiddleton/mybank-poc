@@ -122,7 +122,7 @@ export default {
     };
   },
   methods: {
-    loadCashflow() {
+    loadCashflow(useCache) {
       if (!this.$refs.dashboardDiv) {
         try {
           clearInterval(this.syncTimer);
@@ -135,11 +135,12 @@ export default {
       const currentMonth = moment().format(mformat);
       const query = {
         month: currentMonth,
-        monthsToPrefetch: 2
+        monthsToPrefetch: 2,
+        useCache: useCache
       };
 
       this.$store.dispatch("analytics/loadSpendings", query);
-      this.$store.dispatch("analytics/loadCashflow");
+      this.$store.dispatch("analytics/loadCashflow", useCache);
     },
     handleNetworkError(msg) {
       this.message = msg.message;
@@ -150,9 +151,9 @@ export default {
     const me = this;
 
     if (this.syncTimer === null) {
-      this.syncTimer = setInterval(() => me.loadCashflow(), 10000);
+      this.syncTimer = setInterval(() => me.loadCashflow(false), 10000);
     }
-    this.loadCashflow();
+    this.loadCashflow(true);
   },
   computed: {
     ...mapState("analytics", [
