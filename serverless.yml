@@ -1,0 +1,12 @@
+name: mybank-poc
+
+website:
+  component: '@serverless/website'
+  inputs:
+    code:
+      src: dist
+      hook: npm run build
+    region: ap-southeast-2
+    env:
+      foo: bar
+    # domain: www.serverless-fullstack.com # Register a custom domain on AWS Route 53 to enable this, AWS Cloudfront and SSL.

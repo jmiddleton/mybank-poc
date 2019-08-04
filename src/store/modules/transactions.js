@@ -9,11 +9,11 @@ const state = {
     isLoading: true,
     categories: [],
     filter: {
-        firstPage: true,
-        category: '',
-        month: '',
-        pagesize: 25,
-        nextkey: ''
+        'firstPage': true,
+        'category': '',
+        'month': '',
+        'page-size': 50,
+        'nextkey': ''
     },
 }
 
