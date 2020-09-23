@@ -1,5 +1,7 @@
 # MyBank Account Aggregator
 
+![Azure Static Web Apps CI/CD](https://github.com/jmiddleton/mybank-poc/workflows/Azure%20Static%20Web%20Apps%20CI/CD/badge.svg?branch=master)
+
 Third Party Provider or TPP allows to securely access customer’s accounts in order to provide consolidated account information. It aggregates accounts from different banks owned by the customer to manage and control them from one central place. 
 
 It also provides analytics to help you stay on track with your spending in just one place. MyBank categories every transaction making it easier to see how your spending affects your planned savings.
