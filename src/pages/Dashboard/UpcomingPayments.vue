@@ -34,7 +34,7 @@ import Widget from "@/components/Widget/Widget";
 import moment from "moment";
 import { mapState } from "vuex";
 
-const mformat = "YYYY-MM";
+//const mformat = "YYYY-MM";
 
 export default {
   name: "UpcomingPayments",

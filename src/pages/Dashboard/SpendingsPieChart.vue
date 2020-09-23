@@ -13,7 +13,6 @@ import $ from "jquery";
 import "imports-loader?jQuery=jquery,this=>window!webpack-raphael/raphael";
 import "imports-loader?jQuery=jquery,this=>window!govpredict-morris/morris";
 /* eslint-enable */
-import axios from "axios";
 import moment from "moment";
 import { mapState } from "vuex";
 const { Morris } = window;
@@ -79,7 +78,7 @@ export default {
     ...mapState("analytics", ["currentSpendings", "categoryConfig"])
   },
   watch: {
-    currentSpendings(newValue) {
+    currentSpendings() {
       this.createChart();
     }
   }
