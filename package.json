@@ -3,7 +3,6 @@
   "version": "4.5.0",
   "private": true,
   "scripts": {
-    "install": "napa",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
