@@ -72,7 +72,7 @@ npm run build
 serve -s dist -l 8888
 ```
 
-Please make sure you have configured your environment for production. Create a file in the root folder with the name ```.env.production.local``` and add the following variables:
+Please make sure you have configured your environment for production. Create a file in the root folder with the name ```.env.production``` and add the following variables:
 
 - VUE_APP_BASE_URL=http://[YOUR_AWS_LAMBDA_ENDPOINT]:[YOUR_AWS_LAMBDA_PORT]/mybank/v1
 - VUE_APP_API_KEY=[YOUR_AWS_LAMBDA_API_KEY]
